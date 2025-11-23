@@ -63,6 +63,10 @@ public class CreateRidesBean implements Serializable{
 	}
 	public void onDateSelect(SelectEvent event) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Data aukeratua: " + event.getObject()));
+		rideGood="";
+	}
+	public void clearGood() {
+		rideGood="";
 	}
 	public void createRides() {
 		if(from==null||to==null||data==null||price==0||price==0) {
@@ -75,10 +79,10 @@ public class CreateRidesBean implements Serializable{
 				rideGood="Ondo sortu da ondorengo ride-a:  " + ride;
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ondo sortu da ondorengo ride-a" + ride));
 			} catch (RideMustBeLaterThanTodayException e) {
-				rideExists="Ride must be Later Than today";
+				rideExists="Datak gaur baina berandoago izan behar du";
 				rideGood="";
 			} catch (RideAlreadyExistException e) {
-				rideExists="Ride already exists";
+				rideExists="Bidaia jadanik existitzen da";
 				rideGood="";
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ride already exists"));
 			}
