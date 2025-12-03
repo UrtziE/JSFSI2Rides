@@ -9,6 +9,7 @@ import java.util.List;
 import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
+import businessLogic.BLFacadeImplementation;
 import domain.Ride;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
@@ -29,7 +30,7 @@ public class CreateRidesBean implements Serializable{
 	private String rideGood="";
 	private String rideExists="";
 	public CreateRidesBean() {
-	
+		blfacade =new BLFacadeImplementation();
 	}
 	public Date getData() {
 		return data;
@@ -73,8 +74,12 @@ public class CreateRidesBean implements Serializable{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Errorea Ride-ak sortzean"));
 		}else {
 			try {
-				blfacade = FacadeBean.getBusinessLogic();
-				Ride ride=blfacade.createRide(from, to, data, places, places, "driver1@gmail.com");
+				List<Float>prezioak= new ArrayList<Float>();
+				List<String> ibilbide= new ArrayList<String>();
+				prezioak.add(price);
+				ibilbide.add(from);
+				ibilbide.add(to);
+				Ride ride=blfacade.createRide(from, to, data, places, prezioak,"driver1@gmail.com",null/*kotxe*/,ibilbide);
 				rideExists="";
 				rideGood="Ondo sortu da ondorengo ride-a:  " + ride;
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ondo sortu da ondorengo ride-a" + ride));

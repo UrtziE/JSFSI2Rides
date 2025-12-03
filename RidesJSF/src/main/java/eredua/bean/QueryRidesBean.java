@@ -11,6 +11,7 @@ import org.primefaces.event.DateViewChangeEvent;
 import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
+import businessLogic.BLFacadeImplementation;
 import domain.Ride;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.SessionScoped;
@@ -25,7 +26,7 @@ import jakarta.inject.Named;
 @ViewScoped
 public class QueryRidesBean implements Serializable {
 	private List<Ride> rides;
-	private BLFacade blfacade;
+	private static BLFacade blfacade =new BLFacadeImplementation();
 	private Date data;
 	private String from;
 	private String to;
@@ -34,7 +35,7 @@ public class QueryRidesBean implements Serializable {
 	private List<Date> egunakBidaiekin = new ArrayList<>();
 
 	public QueryRidesBean() {
-		blfacade = FacadeBean.getBusinessLogic();
+		
 		data=new Date();
 
 	}

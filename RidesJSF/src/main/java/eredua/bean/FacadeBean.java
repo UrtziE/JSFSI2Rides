@@ -2,13 +2,13 @@ package eredua.bean;
 
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
-import dataAccess.DataAccess;
+import dataAccess.HibernateDataAccess;
 
 public class FacadeBean {
 private static FacadeBean singleton = new FacadeBean( );
 private static BLFacade facadeInterface;
 private FacadeBean(){
-try { facadeInterface=new BLFacadeImplementation(new DataAccess()); 
+try { facadeInterface=new BLFacadeImplementation(new HibernateDataAccess()); 
 System.out.println("Sortu da blfacade");}
 catch (Exception e) {
 System.out.println("FacadeBean: negozioaren logika sortzean errorea: "+e.getMessage());
