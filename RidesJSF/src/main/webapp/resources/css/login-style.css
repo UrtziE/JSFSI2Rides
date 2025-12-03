@@ -1,0 +1,115 @@
+/* Estilo general del cuerpo para centrar todo */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor del formulario (estilo tarjeta) */
+
+
+/* Título */
+h3 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Estilos de la tabla para que ocupe todo el ancho */
+table {
+    width: 100%;
+    border-spacing: 0 15px; /* Espacio entre filas */
+}
+
+td {
+    padding: 5px;
+    text-align: left;
+}
+
+form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 550px; /* Aumentado de 400 a 550px */
+    text-align: center;
+}
+
+/* Tabla */
+table {
+    width: 100%;
+    border-spacing: 0 15px;
+}
+
+td {
+    padding: 5px;
+    text-align: left;
+    vertical-align: middle; /* Centrar verticalmente respecto al input */
+}
+
+/* Celda específica del mensaje para darle espacio */
+.msg-cell {
+    width: 30%; /* Reserva espacio para el mensaje */
+    padding-left: 10px;
+}
+
+/* Inputs */
+input[type="text"], 
+input[type="password"] {
+    width: 100%; /* Ahora ocupan el 100% de su celda central */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, 
+input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Mensajes de error específicos (User/Pass) */
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    display: block;
+    margin: 0;
+    /* Quitamos márgenes extraños porque ahora tiene su propia celda */
+}
+
+/* Mensajes globales (al final - CENTRADOS) */
+.global-messages {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+    color: #dc3545;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+/* Botón Login (Azul) */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Botón Atzera (Gris) */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,10 +26,15 @@ public class Alerta {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private Traveller traveller;
+    @Column(name="origin") 
 	private String from;
+    @Column(name="destination") 
+
 	private String to;
+    @Column(name="alert_date") 
+
 	private Date when;
 	private boolean ezabatuta;
 	private static final String ETIQUETAS = "Etiquetas";

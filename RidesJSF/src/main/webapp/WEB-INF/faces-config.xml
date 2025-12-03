@@ -6,32 +6,76 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 	version="3.0">
 
 	<navigation-rule>
-		<display-name>Menu.xhtml</display-name>
-		<from-view-id>/Menu.xhtml</from-view-id>
+		<display-name>MenuDriver.xhtml</display-name>
+		<from-view-id>/MenuDriver.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>query</from-outcome>
 			<to-view-id>/QueryRides.xhtml</to-view-id>
 		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<display-name>Menu.xhtml</display-name>
-		<from-view-id>/Menu.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>create</from-outcome>
 			<to-view-id>/CreateRides.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
+		<display-name>Menu.xhtml</display-name>
+		<from-view-id>/Menu.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>query</from-outcome>
+			<to-view-id>/QueryRides.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/Login.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>register</from-outcome>
+			<to-view-id>/Register.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>MenuTraveller.xhtml</display-name>
+		<from-view-id>/MenuTraveller.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>query</from-outcome>
+			<to-view-id>/QueryRides.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<display-name>QueryRides.xhtml</display-name>
 		<from-view-id>/QueryRides.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>menuTraveller</from-outcome>
+			<to-view-id>/MenuTraveller.xhtml</to-view-id>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>menu</from-outcome>
 			<to-view-id>/Menu.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>menuDriver</from-outcome>
+			<to-view-id>/MenuDriver.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
-		<navigation-rule>
+	<navigation-rule>
 		<display-name>CreateRides.xhtml</display-name>
 		<from-view-id>/CreateRides.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>menuDriver</from-outcome>
+			<to-view-id>/MenuDriver.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		<navigation-rule>
+		<display-name>Login.xhtml</display-name>
+		<from-view-id>/Login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>menuDriver</from-outcome>
+			<to-view-id>/MenuDriver.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menuTraveller</from-outcome>
+			<to-view-id>/MenuTraveller.xhtml</to-view-id>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>menu</from-outcome>
 			<to-view-id>/Menu.xhtml</to-view-id>

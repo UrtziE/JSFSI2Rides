@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,9 +38,12 @@ public class Ride implements Serializable, Comparable<Ride> {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer rideNumber;
+    @Column(name = "origin")
 	private String from;
+    @Column(name = "destination")
+
 	private String to;
-	@ElementCollection/*(fetch = FetchType.EAGER)*/
+	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(
 		    name = "Ride_Geltokiak", 
 		    joinColumns = @JoinColumn(name = "ride_id") 
@@ -49,13 +53,14 @@ public class Ride implements Serializable, Comparable<Ride> {
 	private int nPlaces;
 	private Date date;
 	private float price;
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "kotxe_matrikula") 
 	private Kotxe kotxe;
     @Enumerated(EnumType.STRING)
 	private EgoeraRide egoera;
 
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Driver driver;  
 
 	@OneToMany(targetEntity = RideRequest.class, mappedBy = "ride",fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
@@ -77,7 +82,7 @@ public class Ride implements Serializable, Comparable<Ride> {
 		this.nPlaces = nPlaces;
 		this.date=date;
 		this.driver = driver;
-		this.kotxe=kotxe;
+		//this.kotxe=kotxe;
 		 geltokiList=new LinkedList<Geltoki>();
 		requests=new ArrayList<RideRequest>();
 		sortuGeltokiGuztiak(ibilbideList, prezioLista,nPlaces);
@@ -97,7 +102,7 @@ public class Ride implements Serializable, Comparable<Ride> {
 		this.date=date;
 		//this.price=price;
 		this.driver = driver;
-		this.kotxe=kotxe;
+	//	this.kotxe=kotxe;
 		 geltokiList=new LinkedList<Geltoki>();
 		requests=new ArrayList<RideRequest>();
 		sortuGeltokiGuztiak(ibilbideList, prezioLista,nPlaces);
@@ -131,12 +136,12 @@ public class Ride implements Serializable, Comparable<Ride> {
 		this.geltokiList = geltokiList;
 	}
 
-	public Kotxe getKotxe() {
-		return kotxe;
-	}
+	//public Kotxe getKotxe() {
+	//	return kotxe;
+	//}
 
 	public void setKotxe(Kotxe kotxe) {
-		this.kotxe = kotxe;
+		//this.kotxe = kotxe;
 	}
 
 	

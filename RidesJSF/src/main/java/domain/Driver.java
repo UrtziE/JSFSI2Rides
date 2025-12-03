@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-
-
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import java.util.Set;
 
@@ -67,7 +67,7 @@ public class Driver extends Profile implements Serializable  {
 	}
 	public Kotxe addKotxe(String marka,String modelo, int tokiKopurua, String matrikula) {
 		Kotxe kotxe=new Kotxe(marka,modelo,tokiKopurua,matrikula,this);
-		kotxeList.add(kotxe);
+		//kotxeList.add(kotxe);
 		return kotxe;
 	}
 	public String getIzenaAbizenaUser() {
@@ -121,7 +121,7 @@ public class Driver extends Profile implements Serializable  {
 		return ride;
 	}
 	public List<Kotxe> getKotxeGuztiak(){
-		return kotxeList;
+		return null /*kotxeList*/;
 	}
 	
 	public List<Ride>getEgitenRidesOfDriver(){

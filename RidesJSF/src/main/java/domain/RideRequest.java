@@ -37,10 +37,10 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	private boolean erreklamatuaTraveller;
 	private boolean bidaiaEsandaZer=false;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Traveller traveller;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Ride ride;
 
 	public RideRequest(Date whenRequested, Ride ride, Traveller traveller, int seats,String from, String to) {

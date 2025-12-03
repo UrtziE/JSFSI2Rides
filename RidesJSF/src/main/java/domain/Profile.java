@@ -10,17 +10,22 @@ import java.util.Vector;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
 
 @Entity
-
+@Inheritance(strategy = InheritanceType.JOINED) 
+@Table(name = "PROFILE")
 public abstract class Profile implements Serializable {
 
 	private String email;

@@ -8,15 +8,16 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<!-- Entitate-klaseak -->
-		<class>domain.Driver</class>
-		<class>domain.Traveller</class>
-		<class>domain.Ride</class>
 		<class>domain.Kotxe</class>
 		<class>domain.Alerta</class>
 		<class>domain.Profile</class>
 		<class>domain.Admin</class>
 		<class>domain.RideRequest</class>
 		<class>domain.Erreklamazioa</class>
+		<class>domain.Mezua</class>
+		<class>domain.Ride</class>
+		<class>domain.Traveller</class>
+		<class>domain.Driver</class>
 		
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
@@ -31,7 +32,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
 			<!-- Hibernateko propietateak -->
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.MariaDBDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.connection.autocommit"
 				value="false" />
 			<property name="hibernate.connection.pool_size" value="1" />

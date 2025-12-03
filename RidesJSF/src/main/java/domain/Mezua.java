@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 
 	private float kantitatea;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private RideRequest erreserba;
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -43,6 +44,7 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 	private String datamezua;
 	private String diruMezu;
 	private String typerenMezua;
+    @Column(name="message_date") 
 	private Date when;
 	private boolean irakurrita = false;
 	@OneToOne(fetch = FetchType.EAGER)

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -27,17 +29,24 @@ public class Erreklamazioa implements Serializable{
 	private Integer id;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nork")
 	private Profile nork;
-	//@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nori")
 	private Profile nori;
-//	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin")
 	private Profile admin;
 	private String deskripzioa;
 	@Enumerated(EnumType.STRING)
 	private EgoeraErreklamazioa egoera;
+	@ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private RideRequest erreserba;
+	@ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Ride ride;
+    @Column(name="claim_date")
+
 	private Date when;
 	private Date whenDecided;
 	private float prezioa;

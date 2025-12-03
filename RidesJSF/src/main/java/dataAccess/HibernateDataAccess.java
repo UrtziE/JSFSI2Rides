@@ -175,9 +175,9 @@ public class HibernateDataAccess {
 		EntityManager db = JPAUtil.getEntityManager();
 		List<RideContainer> res = new ArrayList<>();
 		TypedQuery<Ride> query = db
-				.createQuery("SELECT r FROM Ride r WHERE r.egoera=?1 AND r.driver=?2 AND r.nPlaces>?3 ", Ride.class);
+				.createQuery("SELECT r FROM Ride r WHERE r.egoera=?1 AND r.driver_user=?2 AND r.nPlaces>?3 ", Ride.class);
 		query.setParameter(1, EgoeraRide.MARTXAN);
-		query.setParameter(2, driver);
+		query.setParameter(2, driver.getUser());
 		query.setParameter(3, 0);
 
 		List<Ride> rides = query.getResultList();
@@ -314,7 +314,7 @@ public class HibernateDataAccess {
 	}
 
 	
-	
+	//ALDATU
 	public Profile register(Profile p,String type) {
 		EntityManager db = JPAUtil.getEntityManager();
 		Profile u = db.find(Profile.class, p.getUser());
@@ -333,6 +333,7 @@ public class HibernateDataAccess {
 		}
 
 	}
+	//ALDATU
 	private Profile createTravellerOrDriver(Profile p,String type) {
 		String email=p.getEmail();
 		String name=p.getName();
@@ -349,25 +350,26 @@ public class HibernateDataAccess {
 		}
 		
 	}
-
+	
 	public Profile login(String user, String password) {
 		EntityManager db = JPAUtil.getEntityManager();
 		Profile p = db.find(Profile.class, user);
-
+		
 		if (p == null) {
-
+			db.close();
 			return null;
 
 		} else {
 			if (p.getPassword().equals(password)) {
+				db.close();
 				return p;
 			} else {
-
+				db.close();
 				return null;
 			}
 		}
 	}
-
+	//ALDATU2
 	public void sartuDirua(float dirua, Profile user) {
 		EntityManager db = JPAUtil.getEntityManager();
 		db.getTransaction().begin();
@@ -381,7 +383,7 @@ public class HibernateDataAccess {
 		//System.out.println(user + " has been updated");
 
 	}
-
+	//ALDATU2
 	public void kenduDirua(float dirua, Profile user) {
 		EntityManager db = JPAUtil.getEntityManager();
 		db.getTransaction().begin();
@@ -476,7 +478,7 @@ public class HibernateDataAccess {
 	}
 	
 	
-	
+	//ALDATU2
 	public RideRequest erreserbatu(RideRequest request) {
 		EntityManager db = JPAUtil.getEntityManager();
 		Ride ride = request.getRide();
