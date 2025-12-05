@@ -12,7 +12,10 @@ import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
+import domain.Profile;
 import domain.Ride;
+import domain.Traveller;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
@@ -20,11 +23,15 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named("queryRides")
 @ViewScoped
 public class QueryRidesBean implements Serializable {
+	private Profile user;
+	@Inject
+    private LoginBean loginBean;
 	private List<Ride> rides;
 	private static BLFacade blfacade =new BLFacadeImplementation();
 	private Date data;
@@ -39,6 +46,10 @@ public class QueryRidesBean implements Serializable {
 		data=new Date();
 
 	}
+	 @PostConstruct
+	    public void init() {
+	        this.user = loginBean.getOraingoUser();
+	    }
 
 	public List<Ride> getRides() {
 		if (from == null || to == null || data == null) {
@@ -153,6 +164,17 @@ public class QueryRidesBean implements Serializable {
 	    }
 	    
 	    return egunak.toString(); 
+	}
+	public String exit() {
+		if (user==null){
+			return "menu";
+		}else {
+			if (user instanceof Traveller) {
+				return "menuTraveller";
+			}else {
+				return "menuDriver";
+			}
+		}
 	}
 	
 

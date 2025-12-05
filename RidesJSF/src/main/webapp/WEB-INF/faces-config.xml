@@ -65,7 +65,7 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 			<to-view-id>/MenuDriver.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-		<navigation-rule>
+	<navigation-rule>
 		<display-name>Login.xhtml</display-name>
 		<from-view-id>/Login.xhtml</from-view-id>
 		<navigation-case>
@@ -81,5 +81,22 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 			<to-view-id>/Menu.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>Register.xhtml</display-name>
+		<from-view-id>/Register.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>menuDriver</from-outcome>
+			<to-view-id>/MenuDriver.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menuTraveller</from-outcome>
+			<to-view-id>/MenuTraveller.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 
 </faces-config>

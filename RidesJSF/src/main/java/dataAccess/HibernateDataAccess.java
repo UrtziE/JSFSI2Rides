@@ -103,36 +103,40 @@ public class HibernateDataAccess {
 				  db.close();
 				  throw new
 			 RideMustBeLaterThanTodayException(
-			 /* ResourceBundle.getBundle("Etiquetas").getString(
-			  "CreateRideGUI.ErrorRideMustBeLaterThanToday")*/); }
+			 ); }
 			 
 
 			db.getTransaction().begin();
 
 			Driver driver = db.find(Driver.class, driverUser);
 			if (driver.doesRideExists(ibilbide, date)) {
-				db.getTransaction().commit();
+				db.getTransaction().rollback();
 				db.close();
-				throw new RideAlreadyExistException(/*
-						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist")*/);
+				throw new RideAlreadyExistException();
 			}
-			Ride ride = driver.addRide(from, to, date, nPlaces, price, kotxe, ibilbide);
+			
+			Kotxe kotxea=db.find(Kotxe.class, kotxe.getMatrikula());
+			
+			Ride ride = driver.addRide(from, to, date, nPlaces, price, kotxea, ibilbide);
 
 			// next instruction can be obviated
 			//db.persist(driver);
-			konprobatuAlertak(ride);
+			//konprobatuAlertak(ride);
 			db.getTransaction().commit();
 			db.close();
+			System.out.println("Ondo sortu da ride-a");
 			return ride;
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
-			db.getTransaction().commit();
+			db.getTransaction().rollback();
+			System.out.println("NullPointerException");
 			
 
 			return null;
 		}catch(Exception e) {
 			db.getTransaction().rollback();
 			db.close();
+			e.printStackTrace();
 			return null;
 		}
 
@@ -151,11 +155,12 @@ public class HibernateDataAccess {
 		System.out.println(">> DataAccess: getRides=> from= " + from + " to= " + to + " date " + date);
 		EntityManager db = JPAUtil.getEntityManager();
 		List<Ride> res = new ArrayList<>();
+		
 		TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.date=?3 AND r.egoera=?4", Ride.class);
 
 		query.setParameter(3, date);
 		query.setParameter(4, EgoeraRide.MARTXAN);
-
+	
 		List<Ride> rides = query.getResultList();
 		for (Ride ride : rides) {
 
@@ -258,8 +263,18 @@ public class HibernateDataAccess {
 
 	public List<Kotxe> getKotxeGuztiak(Driver driver) {
 		EntityManager db = JPAUtil.getEntityManager();
+		List<Kotxe> kotxeGuztiak=new ArrayList();
+		try {
+		db.getTransaction().begin();
 		Driver d = db.find(Driver.class, driver.getUser());
-		return d.getKotxeGuztiak();
+		kotxeGuztiak= d.getKotxeGuztiak();
+		db.getTransaction().commit();
+		}catch(Exception e) {
+			db.getTransaction().rollback();
+		}finally {
+			db.close();
+		}
+		return kotxeGuztiak;
 	}
 
 	public boolean createCar(String marka, String modelo, String matrikula, int tokiKop, Driver driver) {
@@ -314,7 +329,7 @@ public class HibernateDataAccess {
 	}
 
 	
-	//ALDATU
+	
 	public Profile register(Profile p,String type) {
 		EntityManager db = JPAUtil.getEntityManager();
 		Profile u = db.find(Profile.class, p.getUser());
@@ -324,16 +339,26 @@ public class HibernateDataAccess {
 		} else {
 			
 			user=createTravellerOrDriver(p,type);
-			
+			try {
 			db.getTransaction().begin();
 			db.persist(user);
 			db.getTransaction().commit();
 			System.out.println("Ondo gorde da");
+			}catch(Exception e) {
+				System.out.println("Error al guardar");
+				db.getTransaction().rollback();
+				db.close();
+				user=null;
+			}finally {
+				db.close();
+				
+			}
+		
 			return user;
 		}
 
 	}
-	//ALDATU
+	
 	private Profile createTravellerOrDriver(Profile p,String type) {
 		String email=p.getEmail();
 		String name=p.getName();

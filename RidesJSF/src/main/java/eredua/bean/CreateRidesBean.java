@@ -10,17 +10,26 @@ import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
+import domain.Driver;
+import domain.Kotxe;
+import domain.Profile;
 import domain.Ride;
+import domain.Traveller;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 @Named("createRides")
 @ViewScoped
 public class CreateRidesBean implements Serializable{
+	@Inject
+    private LoginBean loginBean;
+	private Profile user;
 	private BLFacade blfacade;
 	private Date data;
 	private String from;
@@ -30,8 +39,27 @@ public class CreateRidesBean implements Serializable{
 	private String rideGood="";
 	private String rideExists="";
 	public CreateRidesBean() {
-		blfacade =new BLFacadeImplementation();
+		
 	}
+	 @PostConstruct
+	    public void init() {
+	        this.user = loginBean.getOraingoUser();
+	        
+	        if (this.user == null) {
+	            System.out.println("¡Acceso no autorizado!");
+	    	    
+
+	        }
+	        
+	    }
+	    
+	    public Profile getUser() {
+	        return user;
+	    }
+
+	    public void setUser(Profile user) {
+	        this.user = user;
+	    }
 	public Date getData() {
 		return data;
 	}
@@ -74,15 +102,16 @@ public class CreateRidesBean implements Serializable{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Errorea Ride-ak sortzean"));
 		}else {
 			try {
+				blfacade =FacadeBean.getBusinessLogic();
 				List<Float>prezioak= new ArrayList<Float>();
 				List<String> ibilbide= new ArrayList<String>();
 				prezioak.add(price);
 				ibilbide.add(from);
 				ibilbide.add(to);
-				Ride ride=blfacade.createRide(from, to, data, places, prezioak,"driver1@gmail.com",null/*kotxe*/,ibilbide);
+				Ride ride=blfacade.createRide(from, to, data, places, prezioak,user.getUser(),new Kotxe("Seat","Ibiza",4,"9321CRN",(Driver)user),ibilbide);
 				rideExists="";
-				rideGood="Ondo sortu da ondorengo ride-a:  " + ride;
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ondo sortu da ondorengo ride-a" + ride));
+				rideGood="Ondo sortu da ridea";
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ondo sortu da ride-a"));
 			} catch (RideMustBeLaterThanTodayException e) {
 				rideExists="Datak gaur baina berandoago izan behar du";
 				rideGood="";

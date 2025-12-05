@@ -26,6 +26,7 @@ public class LoginBean implements Serializable {
 	private String user;
 	private String pasahitza;
 	private String mota;
+	private Profile oraingoUser;
 
 	private BLFacade blfacade;
 
@@ -48,6 +49,21 @@ public class LoginBean implements Serializable {
 	public void setPasahitza(String pasahitza) {
 		this.pasahitza = pasahitza;
 	}
+	
+	public String autologin(Profile userProfile) {
+	    this.oraingoUser = userProfile;
+	    
+	    if (this.oraingoUser instanceof Traveller) {
+	        return "menuTraveller";
+	    } else if (this.oraingoUser instanceof Driver) {
+	        return "menuDriver";
+	    }
+	    return "error";
+	}
+	public String logout() {
+	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	    return "Menu?faces-redirect=true";
+	}
 
 
 
@@ -57,13 +73,14 @@ public class LoginBean implements Serializable {
 		blfacade=FacadeBean.getBusinessLogic();
 		Profile emaitza=blfacade.login(user, pasahitza);
 		if(emaitza!=null) {
+			oraingoUser=emaitza;
 			if(emaitza instanceof Traveller) {
 				mota="Traveller";
-				return "menuaTraveller";
+				return "menuTraveller";
 			}else {
 				if(emaitza instanceof Driver) {
 					mota="Driver";
-					return "menuaDriver";
+					return "menuDriver";
 				}
 			}
 		}else {
@@ -76,6 +93,26 @@ public class LoginBean implements Serializable {
 				new FacesMessage("Usuarioa edo pasahitza gaizki dago jarrita."));
 		mota=null;
 		return "error";
+	}
+
+
+	public String getMota() {
+		return mota;
+	}
+
+
+	public void setMota(String mota) {
+		this.mota = mota;
+	}
+
+
+	public Profile getOraingoUser() {
+		return oraingoUser;
+	}
+
+
+	public void setOraingoUser(Profile oraingoUser) {
+		this.oraingoUser = oraingoUser;
 	}
 
 

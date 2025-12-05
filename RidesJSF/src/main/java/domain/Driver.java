@@ -61,13 +61,13 @@ public class Driver extends Profile implements Serializable  {
 	 * @return Bet
 	 */
 	public Ride addRide(String from, String to, Date date, int nPlaces, /*float price*/ List<Float>price,Kotxe kotxe,List<String>ibilbide)  {
-        Ride ride=new Ride(nPlaces, from,to,date,nPlaces,price, this,kotxe,ibilbide);
+        Ride ride=new Ride(from,to,date,nPlaces,price, this,kotxe,ibilbide);
         rides.add(ride);
         return ride;
 	}
 	public Kotxe addKotxe(String marka,String modelo, int tokiKopurua, String matrikula) {
 		Kotxe kotxe=new Kotxe(marka,modelo,tokiKopurua,matrikula,this);
-		//kotxeList.add(kotxe);
+		kotxeList.add(kotxe);
 		return kotxe;
 	}
 	public String getIzenaAbizenaUser() {

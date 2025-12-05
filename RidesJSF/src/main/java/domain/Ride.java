@@ -60,7 +60,7 @@ public class Ride implements Serializable, Comparable<Ride> {
 	private EgoeraRide egoera;
 
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Driver driver;  
 
 	@OneToMany(targetEntity = RideRequest.class, mappedBy = "ride",fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
@@ -74,15 +74,14 @@ public class Ride implements Serializable, Comparable<Ride> {
 		 geltokiList=new LinkedList<Geltoki>();
 	}
 	
-	public Ride(Integer rideNumber, String from, String to, Date date, int nPlaces, /*float price*/  List<Float> prezioLista, Driver driver,Kotxe kotxe, List<String>ibilbideList) {
+	public Ride(String from, String to, Date date, int nPlaces, /*float price*/  List<Float> prezioLista, Driver driver,Kotxe kotxe, List<String>ibilbideList) {
 		super();
-		this.rideNumber = rideNumber;
 		this.from = from;
 		this.to = to;
 		this.nPlaces = nPlaces;
 		this.date=date;
 		this.driver = driver;
-		//this.kotxe=kotxe;
+		this.kotxe=kotxe;
 		 geltokiList=new LinkedList<Geltoki>();
 		requests=new ArrayList<RideRequest>();
 		sortuGeltokiGuztiak(ibilbideList, prezioLista,nPlaces);
@@ -391,8 +390,8 @@ public class Ride implements Serializable, Comparable<Ride> {
 		return rideNumber+" ; "+" ; "+getIbilbidea()+" ; "+date;  
 	}
 	public String toString(){
-		return rideNumber+" ; "+" ; "+ResourceBundle.getBundle("Etiquetas").getString("TReservationsGUI.Ibilbide")+getIbilbidea()+" ; "+date;   
-	}
+		return rideNumber+" ; "+" ; "+getIbilbidea()+" ; "+date;  
+		}
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
