@@ -124,7 +124,7 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 
 	public String toString() {
 		return   this.traveller.getUser()+" " 
-		+  this.getId()+" " 
+		+  /*this.getId()*/" " 
 		+ this.getSeats();
 	}
 	
@@ -196,8 +196,7 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	}
 	public String mezua()
 	{
-		return( ResourceBundle.getBundle("Etiquetas").getString("RideRequest")+":ID :"+ requestId+" "+
-				ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.NumberOfSeats")+" "+seats);
+		return(" "+seats);
 				//Aldatu
 	}
 	

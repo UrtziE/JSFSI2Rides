@@ -382,7 +382,11 @@ public class Ride implements Serializable, Comparable<Ride> {
 	public String getIbilbidea() {
 		String ibilbidea = "";
 		for(Geltoki g: geltokiList) {
-			ibilbidea = ibilbidea+"/"+g.getTokiIzen();
+			if(ibilbidea.equals("")) {
+				ibilbidea=ibilbidea+g.getTokiIzen();
+			}else {
+			ibilbidea = ibilbidea+"->"+g.getTokiIzen();
+			}
 		}
 		return ibilbidea;
 	}
@@ -419,11 +423,10 @@ public class Ride implements Serializable, Comparable<Ride> {
 	}
 
 	public String mezua() {
-		return( ResourceBundle.getBundle("Etiquetas").getString("Ride")+":ID :"+ rideNumber+" "+
-				/*ResourceBundle.getBundle("Etiquetas").getString("TReservationsGUI.From")+" "+from +" "+
-				ResourceBundle.getBundle("Etiquetas").getString("TReservationsGUI.To")+ " "+to+" "+*/
-				ResourceBundle.getBundle("Etiquetas").getString("TReservationsGUI.Ibilbide")+ " "+this.getIbilbidea()+" "+
-				ResourceBundle.getBundle("Etiquetas").getString("TReservationsGUI.When")+" "+date);
+		return("RIDE:ID :"+ rideNumber+" "+
+				
+				"Ibilbidea:"+ " "+ this.getIbilbidea()+" "+
+				"Noiz:"+" "+date);
 	}
 	public String getIbilbide() {
 		String u="";
@@ -431,7 +434,7 @@ public class Ride implements Serializable, Comparable<Ride> {
 			   if(u.isEmpty()) {
 					u=u+a.getTokiIzen();
 				}else {
-				u=u+"/"+a.getTokiIzen();
+				u=u+"->"+a.getTokiIzen();
 				}
 		   }
 		return u;
@@ -592,6 +595,10 @@ public class Ride implements Serializable, Comparable<Ride> {
 		   }
 	   }
 	   return travellerList;
+   }
+
+   public Kotxe getKotxe() {
+	return kotxe;
    }
 	
 }

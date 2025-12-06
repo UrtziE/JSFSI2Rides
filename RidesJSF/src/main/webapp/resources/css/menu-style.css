@@ -1,5 +1,3 @@
-
-
 body {
     margin: 0;
     padding: 0;
@@ -12,6 +10,7 @@ body {
 }
 
 .menu-container {
+    /* Quitamos el margin-top, ya no es necesario */
     background: white;
     padding: 30px 40px;
     border-radius: 15px;
@@ -26,8 +25,6 @@ body {
     color: #2c3e50;
     margin-bottom: 25px;
 }
-
-
 
 .menu-buttons {
     display: flex;
@@ -62,4 +59,15 @@ body {
 .query-btn:hover {
     background-color: #16a085;
     transform: translateY(-2px);
+}
+
+/* --- ¡ESTILOS DEL SALUDO CORREGIDOS! --- */
+.user-greeting {
+    /* Quitamos todo lo anterior (position, top, right, etc.) */
+    font-size: 16px;
+    font-weight: bold;
+    color: #34495e; /* Un color de texto oscuro pero suave */
+    margin-bottom: 20px; /* Espacio para separarlo del título "MENUA" */
+    
+    text-align: center; 
 }

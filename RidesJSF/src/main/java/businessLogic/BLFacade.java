@@ -126,7 +126,7 @@ public interface BLFacade {
 	 */
 
 
-	public void gehituDirua(float dirua, Profile p);
+	public boolean gehituDirua(float dirua, Profile p);
 
 	/**
 	 * Metodo honek pasatutako erabiltzaileari pasatutako diru kantitatea kenduko
@@ -138,7 +138,7 @@ public interface BLFacade {
 	 */
 
 
-	public void kenduDirua(float dirua, Profile p);
+	public boolean kenduDirua(float dirua, Profile p);
 
 	/**
 	 * Metodo honek pasatutako bidaiariari pasatutako diru kantitatea gehituko dio

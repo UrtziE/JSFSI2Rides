@@ -1,0 +1,273 @@
+
+
+body, .page-body {
+    background: linear-gradient(135deg, #e0e0e0 0%, #cfcfcf 100%);
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+#nireForm {
+    background: #ffffff;
+    padding: 35px 45px;
+    border-radius: 18px;
+    /* CAMBIO: Aumentado de 520px a 680px para tener más sitio a los lados */
+    width: 680px; 
+    box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+    animation: fadeIn 0.4s ease;
+    border-top: 8px solid #ff6f61;
+}
+
+h3 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 25px;
+    font-weight: bold;
+    color: #333;
+}
+
+#nireForm table {
+    width: 100%;
+    border-spacing: 14px 18px;
+}
+
+#nireForm td {
+    vertical-align: middle;
+}
+
+#nireForm td:first-child {
+    width: 20%; /* CAMBIO: Reducido un poco (de 25% a 20%) para dar más espacio al input */
+    font-weight: bold;
+    color: #444;
+    white-space: nowrap; /* Evita que la etiqueta ocupe dos líneas */
+}
+
+
+
+#nireForm input[type="text"],
+#nireForm .ui-inputfield {
+    width: 100%;
+    height: 42px !important;
+    padding: 10px 14px !important;
+    border: 2px solid #ffb3b3 !important;
+    border-radius: 10px !important;
+    outline: none;
+    font-size: 15px !important;
+    transition: 0.25s ease !important;
+    background: #fff1f1 !important;
+}
+
+#nireForm input[type="text"]:focus,
+#nireForm .ui-inputfield:focus {
+    border-color: #ff6f61 !important;
+    background: #ffe5e5 !important;
+    box-shadow: 0 0 8px rgba(255,80,80,0.4);
+}
+
+
+
+#data {
+    margin-left: 40px !important;   
+}
+
+.ui-calendar {
+    display: flex !important;
+    align-items: center !important;
+    width: 100%; /* Asegura que ocupe todo el espacio disponible */
+}
+
+.ui-calendar .ui-inputfield {
+    flex: 1 1 auto;
+    margin-right: 8px; /* separación entre input y botón */
+    width: auto !important; /* Deja que flex controle el ancho */
+}
+
+.ui-calendar .ui-button {
+    order: 2;
+    background: #3498db !important;
+    color: white !important;
+    border-radius: 8px !important;
+    height: 42px !important;
+    width: 42px !important;
+    border: none !important;
+    cursor: pointer;
+    flex-shrink: 0; /* Evita que el botón se aplaste */
+}
+
+.ui-calendar .ui-button:hover {
+    background: #2179b5 !important;
+}
+
+.ui-calendar input {
+    background: #e8f5ff !important;
+    border: 2px solid #a9d6ff !important;
+}
+
+.ui-calendar input:focus {
+    border-color: #3498db !important;
+    background: #dff1ff !important;
+    box-shadow: 0 0 8px rgba(52,152,219,0.4) !important;
+}
+
+.ui-datepicker {
+    background: white !important;
+    border: 3px solid #3498db !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+    padding: 10px !important;
+}
+
+.ui-datepicker-header {
+    background: #6ec1f5 !important;
+    border-radius: 10px !important;
+    color: white !important;
+}
+
+.ui-state-highlight {
+    background: #ff6f61 !important;
+    color: white !important;
+    border-radius: 50% !important;
+}
+
+.ui-state-hover {
+    background: #ffd5d2 !important;
+    border-radius: 50% !important;
+}
+
+
+#nireForm input[type="submit"],
+#nireForm input[type="button"],
+#nireForm .ui-button {
+    padding: 14px 26px !important;
+    border-radius: 14px !important;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    border: none !important;
+    transition: 0.25s ease;
+    margin: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    letter-spacing: 0.5px;
+}
+
+#nireForm input[value="Create"] {
+    background: linear-gradient(135deg, #ff6f61, #ff8f85) !important;
+    color: white !important;
+}
+
+#nireForm input[value="Create"]:hover {
+    background: linear-gradient(135deg, #ff8f85, #ff6f61) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(255, 110, 100, 0.45);
+}
+
+#nireForm input[value="Create"]:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(255, 110, 100, 0.3);
+}
+
+#nireForm input[value="EXIT"] {
+    background: linear-gradient(135deg, #6c757d, #8a959c) !important;
+    color: white !important;
+}
+
+#nireForm input[value="EXIT"]:hover {
+    background: linear-gradient(135deg, #8a959c, #6c757d) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(120, 120, 120, 0.4);
+}
+
+#nireForm input[value="EXIT"]:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(120, 120, 120, 0.25);
+}
+
+.error-message {
+    color: #d00000 !important;
+    font-size: 13px;
+}
+
+.success-message {
+    color: #00b33c !important;
+    font-size: 15px;
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* register-style.css */
+
+/* --- Estilos para los botones de selección de tipo (Gidaria / Bidaiaria) --- */
+
+/* Contenedor principal que alinea los botones */
+.radio-button-group {
+    display: flex; /* Usamos Flexbox */
+    border: 1px solid #ced4da; /* Un borde exterior para el grupo */
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta los bordes internos que sobresalgan */
+}
+
+/* Ocultamos el círculo del radio button original (accesible para teclado) */
+.radio-button-group input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+/* Estilo para la etiqueta, que actúa como nuestro botón */
+.radio-button-group label {
+    flex-grow: 1; /* Hacemos que ambos botones ocupen el mismo espacio */
+    text-align: center; /* Centramos el texto */
+    
+    background-color: #ffffff; /* Fondo blanco por defecto (no seleccionado) */
+    color: #495057; /* Texto gris oscuro por defecto */
+    
+    padding: 10px 15px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    /* Un borde derecho sutil para separar los botones */
+    border-right: 1px solid #ced4da;
+
+    /* Animación suave para todos los cambios */
+    transition: all 0.2s ease-in-out;
+}
+
+/* Quitamos el borde derecho del último botón para que no sobre */
+.radio-button-group label:last-of-type {
+    border-right: none;
+}
+
+/* Estilo para el botón CUANDO pasas el ratón por encima (y NO está seleccionado) */
+.radio-button-group input[type="radio"]:not(:checked) + label:hover {
+    background-color: #e9ecef; /* Un gris claro para indicar interacción */
+}
+
+/* --- ¡LA PARTE MÁS IMPORTANTE Y VISIBLE! --- */
+/* Estilo para el botón CUANDO su radio button correspondiente está SELECCIONADO */
+.radio-button-group input[type="radio"]:checked + label {
+    background-color: #0d6efd; /* Fondo azul brillante y sólido */
+    color: #ffffff;           /* Texto en blanco para un contraste perfecto */
+    border-color: #0a58ca;     /* Cambiamos el color del borde para que coincida */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); /* Sombra interior para dar profundidad */
+}
+.error-message {
+    color: #d00000 !important;
+    font-size: 13px;
+}
+
+.success-message {
+    color: #00b33c !important;
+    font-size: 15px;
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+}

@@ -23,20 +23,20 @@ import java.util.ResourceBundle;
 public class Mezua implements Serializable, Comparable<Mezua> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String info;
 
 	private float kantitatea;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private RideRequest erreserba;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Ride ride;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Profile p;
 	private int type = 1;
 	private int mezutype;
@@ -125,7 +125,11 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 	}
 
 	public void setInfo(String zerena, Date when, String mezua) {
+		if(erreserba==null) {
 		info = zerena + "__" + datamezua + "_ " + mezua;
+		}else {
+			info = "Erreserba ID:"+erreserba.getId() +zerena + "__" + datamezua + "_ " + mezua;
+		}
 	}
 
 	public void setInfo(String zerena, Date when) {
@@ -183,43 +187,43 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 		switch (i) {
 		// Traveller
 		case 0:
-			//sortuMezua("Mezuak.Requested","Mezuak.DataRequest","-",true);
+			sortuMezua("Mezuak.Requested","Mezuak.DataRequest","-",true);
 			
 
 			break;
 		case 1:
-			//sortuMezua("Mezuak.Rejected","Mezuak.DataRejected","+",true);
+			sortuMezua("Mezuak.Rejected","Mezuak.DataRejected","+",true);
 			break;
 		case 2:
-			//sortuMezua("Mezuak.Canceled","Mezuak.DataCanceled","+",EZDAERRESERBA);
+			sortuMezua("Mezuak.Canceled","Mezuak.DataCanceled","+",EZDAERRESERBA);
 			break;
 		case 3:
-			//sortuMezua("Mezuak.Deposite","Mezuak.DataDeposite","+",EZDAERRESERBA);
+			sortuMezua("Mezuak.Deposite","Mezuak.DataDeposite","+",EZDAERRESERBA);
 			break;
 		// Driver
 		case 4:
-			//sortuMezua("Mezuak.NotDone","Mezuak.DataNotDone","+",EZDAERRESERBA);
+			sortuMezua("Mezuak.NotDone","Mezuak.DataNotDone","+",EZDAERRESERBA);
 			break;
 		case 5:
-			//sortuMezua("Mezuak.Canceled","Mezuak.DataCanceled","+",EZDAERRESERBA);
+			sortuMezua("Mezuak.Canceled","Mezuak.DataCanceled","+",EZDAERRESERBA);
 			break;
 		case 6:
-			//sortuMezua("Mezuak.Withdraw","Mezuak.DataWithdraw","-",EZDAERRESERBA);
+			sortuMezua("Mezuak.Withdraw","Mezuak.DataWithdraw","-",EZDAERRESERBA);
 			break;
 		case 7:
-			//sortuMezua("Mezuak.Done",DATADONE,"+",EZDAERRESERBA);
+			sortuMezua("Mezuak.Done",DATADONE,"+",EZDAERRESERBA);
 			break;
 		case 8:
-			//sortuMezua("Mezuak.NewErreklamazioa",DATADONE,"+",EZDAERRESERBA);
+			sortuMezua("Mezuak.NewErreklamazioa",DATADONE,"+",EZDAERRESERBA);
 			break;
 		case 9:
-			//sortuMezua("Mezuak.ErreklamazioaAccepted",DATADONE,"+",EZDAERRESERBA);
+			sortuMezua("Mezuak.ErreklamazioaAccepted",DATADONE,"+",EZDAERRESERBA);
 			break;
 		case 10:
-			//sortuMezua("Mezuak.ErreklamazioaRejected",DATADONE,"",EZDAERRESERBA);
+			sortuMezua("Mezuak.ErreklamazioaRejected",DATADONE,"",EZDAERRESERBA);
 			break;
 		case 11:
-			//sortuMezua("Mezuak.Erreklamatuta",DATADONE,"-",EZDAERRESERBA);
+			sortuMezua("Mezuak.Erreklamatuta",DATADONE,"-",EZDAERRESERBA);
 			break;
 		}
 
@@ -228,40 +232,46 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 	public void zeinErreklamazio(int i) {
 		switch (i) {
 		case 0:
-			//sortuMezua("Mezuak.ErreklamazioaAccepted",DATADONE,"+",EZDAERRESERBA);
+			sortuMezua("Mezuak.ErreklamazioaAccepted",DATADONE,"+",EZDAERRESERBA);
 			break;
 		case 1:
-			//sortuMezua("Mezuak.ErreklamazioaRejected",DATADONE,"",EZDAERRESERBA);
+			sortuMezua("Mezuak.ErreklamazioaRejected",DATADONE,"",EZDAERRESERBA);
 			break;
 		case 2:
-			//sortuMezua("Mezuak.ErreklamazioBukatuta",DATADONE,"",EZDAERRESERBA);
-			//typerenMezua = typerenMezua+"  Accepted";
+			sortuMezua("Mezuak.ErreklamazioBukatuta",DATADONE,"",EZDAERRESERBA);
+			typerenMezua = typerenMezua+"  Accepted";
 			break;
 		case 3:
-			//sortuMezua("Mezuak.ErreklamazioBukatuta",DATADONE,"",EZDAERRESERBA);
-			//typerenMezua =typerenMezua +"  Rejected";
+			sortuMezua("Mezuak.ErreklamazioBukatuta",DATADONE,"",EZDAERRESERBA);
+			typerenMezua =typerenMezua +"  Rejected";
 		
 			break;
 		}
 	}
 
 	public void zeinAlerta() {
-		//sortuMezua("Mezuak.EskatutakoAlerta",DATADONE,"",EZDAERRESERBA);
-		//typerenMezua = typerenMezua + alerta.toString();
+		sortuMezua("Mezuak.EskatutakoAlerta",DATADONE,"",EZDAERRESERBA);
+		typerenMezua = typerenMezua + alerta.toString();
 	}
 
 	private void sortuMezua(String mezua, String data, String gehituEdoKendu, boolean erreserbaDa) {
+	
+		
 		if (erreserbaDa) {
-			typerenMezua = ResourceBundle.getBundle("Etiquetas").getString(mezua) + ":  "+ erreserba.mezua() + "__" + ride.mezua();
+			ride.toString();
+			erreserba.toString();
+			typerenMezua = erreserba.mezua() + "__" + ride.mezua();
 		} else {
 			if (ride != null) {
-				typerenMezua = ResourceBundle.getBundle("Etiquetas").getString(mezua) + ":   " + ride.mezua();
+				ride.toString();
+				typerenMezua = ":   " + ride.mezua();
 			} else {
-				typerenMezua = ResourceBundle.getBundle("Etiquetas").getString(mezua) + ": ";
+				typerenMezua ="Dirua sartu/atera"+": ";
 			}
-			datamezua = ResourceBundle.getBundle("Etiquetas").getString(data) + " " + when;
-			diruMezu = gehituEdoKendu + kantitatea + "€";
 		}
+			datamezua = " " + when;
+			diruMezu = gehituEdoKendu + kantitatea + "€";
+		
 	}
 	
 

@@ -11,12 +11,21 @@
     </h:head>
 
     <h:body>
+        <!-- ¡CAMBIO PRINCIPAL! El saludo ahora está DENTRO del formulario -->
         <h:form styleClass="menu-container">
+            
+            <div class="user-greeting">
+                Kaixo <h:outputText value="#{login.user}"/>
+            </div>
+     
             <h3 class="menu-title">MENUA</h3>
 
             <p class="menu-buttons">
-                <h:commandButton value="Bidaiak bilatu" action="query" styleClass="menu-btn query-btn" />
+                <h:commandButton value="Bidaiak erreserbatu" action="erreserbatu" styleClass="menu-btn query-btn" />
+                <h:commandButton value="Nire Wallet-a" action="diruaKudeatu" styleClass="menu-btn query-btn" />
+                
             </p>
+            
         </h:form>
     </h:body>
 </f:view>

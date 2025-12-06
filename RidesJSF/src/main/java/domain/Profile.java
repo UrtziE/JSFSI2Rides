@@ -49,7 +49,7 @@ public abstract class Profile implements Serializable {
 	private String telf;
 	
 
-	@OneToMany(targetEntity = Mezua.class, mappedBy = "p",fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@OneToMany(targetEntity = Mezua.class, mappedBy = "p",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	  @OrderColumn(name = "mezu_ordena")
 	private List<Mezua> mezuList=new LinkedList<Mezua>();
 
@@ -185,7 +185,7 @@ public abstract class Profile implements Serializable {
 	public void gehituMezuaTransaction(int i, float kantitatea) {
 		Mezua m = new Mezua(i, kantitatea, this);
 			this.addMezua(m);
-			System.out.println(this.getMezuList());
+			
 			
 		}
 	public int getBalorazioKop() {

@@ -11,12 +11,18 @@
     </h:head>
 
     <h:body>
+   
         <h:form styleClass="menu-container">
+        <div class="user-greeting">
+                Kaixo <h:outputText value="#{login.user}"/>
+            </div>
             <h3 class="menu-title">MENUA</h3>
 
             <p class="menu-buttons">
                 <h:commandButton value="Bidaiak sortu" action="create" styleClass="menu-btn create-btn" />
                 <h:commandButton value="Bidaiak bilatu" action="query" styleClass="menu-btn query-btn" />
+                  <h:commandButton value="Nire Kotxeak" action="createCar" styleClass="menu-btn query-btn" />
+             <h:commandButton value="Nire Wallet-a" action="diruaKudeatu" styleClass="menu-btn query-btn" />
             </p>
         </h:form>
     </h:body>

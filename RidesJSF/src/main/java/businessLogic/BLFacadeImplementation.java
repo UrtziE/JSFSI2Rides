@@ -118,13 +118,13 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 
-	public void gehituDirua(float dirua, Profile p) {
-		dbManager.sartuDirua(dirua, p);
+	public boolean gehituDirua(float dirua, Profile p) {
+		return dbManager.sartuDirua(dirua, p);
 	}
 
 
-	public void kenduDirua(float dirua, Profile p) {
-		dbManager.kenduDirua(dirua, p);
+	public boolean kenduDirua(float dirua, Profile p) {
+		return dbManager.kenduDirua(dirua, p);
 	}
 	/*
 	 * @WebMethod public RideRequest erreserbatu(Date time, Ride ride, Traveller
@@ -139,7 +139,7 @@ public class BLFacadeImplementation implements BLFacade {
 
 
 	public RideRequest erreserbatu(RideRequest r) {
-
+		System.out.println("Erreserbatu");
 		RideRequest request = dbManager.erreserbatu(r);
 		return request;
 
