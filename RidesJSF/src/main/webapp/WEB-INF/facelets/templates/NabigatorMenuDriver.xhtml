@@ -1,0 +1,24 @@
+<!-- NabigatorMenu.xhtml (MEJORADO) -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition>
+    <ul class="main-nav">
+        <li><h:link value="Home" outcome="menu" /></li>
+        <li><h:link value="Sortu Bidaia" outcome="create" /></li>
+        <li><h:link value="Sortu Kotxea" outcome="createCar" /></li>
+        <li><h:link value="Nire Diruzorroa" outcome="diruaKudeatu" /></li>
+        <li><h:link value="Ikusi bidaiak" outcome="query" /></li>
+        <li><h:link value="Ikusi nire bidaien erreserbak" outcome="erreserbakOnartuDeuseztatu" /></li>
+         <li>
+            <h:form>
+                <h:commandLink value="Logout" action="#{login.logout}" />
+            </h:form>
+        </li>
+        
+    </ul>
+</ui:composition>
+</html>

@@ -1,131 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core">
 
-<f:view>
-    <h:head>
-        <title>QUERY RIDES</title>
-
-        
-		<h:outputStylesheet library="css" name="query-style.css" />
-   		
-    </h:head>
-
-    <h:body>
-        <h:form id="queryRides" styleClass="form-container">
-
-            <h3>Mesedez, aukeratu bidaia nondik nora eta noiz den</h3>
-
-            <table class="form-table">
-                <tr>
-                    <td><h3>From:</h3></td>
-                    <td>
-                        <h:selectOneMenu id="from" value="#{queryRides.from}" styleClass="select-menu">
-                            <f:selectItems value="#{queryRides.fromCities}" />
-                            <f:ajax event="change" listener="#{queryRides.fromListener}"
-                                    render="to bidaiaTaula kalendarioScripta" />
-                        </h:selectOneMenu>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><h3>To:</h3></td>
-                    <td>
-                        <h:selectOneMenu id="to" value="#{queryRides.to}" styleClass="select-menu">
-                            <f:selectItems value="#{queryRides.toCities}" />
-                            <f:ajax event="change" listener="#{queryRides.toListener}"
-                                    render="bidaiaTaula kalendarioScripta" />
-                        </h:selectOneMenu>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><h3>Data:</h3></td>
-                    <td>
-                        <p:calendar id="data" value="#{queryRides.data}"
-                                    navigator="true" mode="popup"
-                                    beforeShowDay="highlightRides"
-                                    styleClass="calendar-input">
-
-                            <p:ajax event="dateSelect" listener="#{queryRides.onDateSelect}"
-                                    update="bidaiaTaula" />
-
-                            <p:ajax event="viewChange" listener="#{queryRides.onViewChange}"
-                                    update="kalendarioScripta data" />
-                        </p:calendar>
-                    </td>
-                </tr>
-            </table>
-
-            <h:panelGroup id="kalendarioScripta" layout="block">
-                <script type="text/javascript">
-                    var bidaiaDituztenEgunak = #{queryRides.bidaiakDituztenEgunakStringModuan};
-                </script>
-            </h:panelGroup>
-
-            <p:dataTable id="bidaiaTaula"
-                         var="ride"
-                         value="#{queryRides.rides}"
-                         emptyMessage="Ez dago bidairik."
-                         styleClass="rides-table">
-
-                <p:column headerText="Nondik">
-                    <h:outputText value="#{ride.from}" />
-                </p:column>
-
-                <p:column headerText="Nora">
-                    <h:outputText value="#{ride.to}" />
-                </p:column>
-
-                <p:column headerText="Noiz">
-                    <h:outputText value="#{ride.date}" />
-                </p:column>
-
-                <p:column headerText="Prezioa">
-                    <h:outputText value="#{ride.price}" />
-                </p:column>
-
-                <p:column headerText="Tokiak">
-                    <h:outputText value="#{ride.nPlaces}" />
-                </p:column>
-
-                <p:column headerText="Gidaria">
-                    <h:outputText value="#{ride.driver.name}" />
-                </p:column>
-                <p:column headerText="kotxea">
-                    <h:outputText value="#{ride.kotxe}" />
-                </p:column>
-
-            </p:dataTable>
-
-            <p>
-                <h:commandButton value="Atzera" action="#{queryRides.exit}"
-                                 immediate="true"
-                                 styleClass="back-btn" />
-            </p>
-
-        </h:form>
-
-         <script type="text/javascript">
-            //<![CDATA[
-            function highlightRides(date) {
-                var eguna = date.getDate();
-
-                if (typeof bidaiaDituztenEgunak !== 'undefined'
-                    && bidaiaDituztenEgunak.includes(eguna)) {
-
-                    return [true, 'bidaia-badago', 'Egun honetan bidaiak badira'];
-                }
-
-                return [false, '', ''];
-            }
-            //]]>
-        </script> 
-
-    </h:body>
-</f:view>
+<ui:composition template="/WEB-INF/facelets/templates/Txantiloia.xhtml">
+<ui:define name="gorputza">
+<ui:include src="QueryRidesKonponente.xhtml"/>
+</ui:define>
+</ui:composition>
 </html>
+

@@ -83,10 +83,10 @@ public class Driver extends Profile implements Serializable  {
 	 * @return true if the ride exists and false in other case
 	 */
 	public boolean doesRideExists(List<String>ibil, Date date)  {	
-		for (Ride r:rides)
-			if ( r.badaBiderenBat(ibil) && (java.util.Objects.equals(r.getDate(),date)) )
+		for (Ride r:rides) {
+			if ( r.badaBiderenBat(ibil) && (r.getDate().compareTo(date)==0)) 
 			 return true;
-		
+		}
 		return false;
 	}
 		

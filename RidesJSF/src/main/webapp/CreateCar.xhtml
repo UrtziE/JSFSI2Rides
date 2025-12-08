@@ -1,89 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<f:view>
-	<h:head>
-		<title>Kotxeak</title>
-		<h:outputStylesheet library="css" name="createCar-style.css" />
-	</h:head>
-	<h:body styleClass="page-body">
-    <h:form id="nireForm" styleClass="form-container">
-        <h3 class="title"> <h:outputText value="#{login.user}"/> Gehitu kotxe berri bat</h3>
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core">
 
-        <table class="form-table">
-            <tr>
-                <td class="label">Marka:</td>
-                <td><h:inputText id="marka" value="#{createCar.marka}"
-                    required="true" requiredMessage="Marka Beharrezkoa da"
-                    styleClass="input-field"/></td>
-                <td><h:message for="marka" styleClass="error-message"/></td>
-            </tr>
-
-            <tr>
-                <td class="label">Modeloa:</td>
-                <td><h:inputText id="modelo" value="#{createCar.modelo}"
-                    required="true" requiredMessage="Modeloa beharrezkoa da"
-                    styleClass="input-field"/></td>
-                <td><h:message for="modelo" styleClass="error-message"/></td>
-            </tr>
-
-        
-            <tr>
-                <td class="label">Eserleku kopurua:</td>
-                <td><h:inputText id="places" value="#{createCar.tokiKopurua}"
-                    converterMessage="Toki kopuruak zenbaki bat izan behar du"
-                    validatorMessage="Toki kopurua 1 eta 8 artean egon behar da"
-                    styleClass="input-field">
-                        <f:validateLongRange minimum="1" maximum="8"/>
-                        <f:ajax execute="places" render="placeMezuak"/>
-                    </h:inputText></td>
-                <td><h:message id="placeMezuak" for="places" styleClass="error-message"/></td>
-            </tr>
-              <tr>
-                <td class="label">Matrikula:</td>
-                <td><h:inputText id="matrikula" value="#{createCar.matrikula}"
-                    required="true" requiredMessage="Matrikula beharrezkoa da"
-                    styleClass="input-field"/></td>
-                <td><h:message for="matrikula" styleClass="error-message"/></td>
-            </tr>
-        </table>
-                    <p:dataTable id="kotxeTaula"
-                         var="kotxe"
-                         value="#{createCar.kotxeak}"
-                         emptyMessage="Ez duzu kotxerik."
-                         styleClass="rides-table">
-
-                <p:column headerText="Matrikula">
-                    <h:outputText value="#{kotxe.matrikula}" />
-                </p:column>
-
-                <p:column headerText="Marka">
-                    <h:outputText value="#{kotxe.marka}" />
-                </p:column>
-
-                <p:column headerText="Modeloa">
-                    <h:outputText value="#{kotxe.modelo}" />
-                </p:column>
-
-                <p:column headerText="Eserleku kopua">
-                    <h:outputText value="#{kotxe.tokiKopurua}" />
-                </p:column>
-            </p:dataTable>
-
-        <p class="button-row">
-            <h:commandButton value="Create" action="#{createCar.createCar}"
-                styleClass="btn btn-primary" update="kotxeTaula"/>
-            <h:commandButton value="EXIT" action="menuDriver" immediate="true"
-                styleClass="btn btn-secondary"/>
-        </p>
-
-        <h:outputText id="kotxeaSortu" value="#{createCar.carGood}" styleClass="success-message"/>
-        <h:outputText id="rideExists" value="#{createCar.carExists}" styleClass="error-message"/>
-    </h:form>
-</h:body>
-</f:view>
+<ui:composition template="/WEB-INF/facelets/templates/Txantiloia.xhtml">
+<ui:define name="gorputza">
+<ui:include src="CreateCarKonponente.xhtml"/>
+</ui:define>
+</ui:composition>
 </html>

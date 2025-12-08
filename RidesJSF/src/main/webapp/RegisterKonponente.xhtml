@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+
+<f:view>
+		<f:event type="preRenderView" listener="#{login.redirect}" />
+	
+	<h:head>
+		<title>Register</title>
+		<h:outputStylesheet library="css" name="register-style.css" />
+	</h:head>
+	<h:body styleClass="page-body">
+		<h:form id="nireForm" styleClass="form-container">
+			<h3 class="title">Erregistratu</h3>
+
+			<table class="form-table">
+				<tr>
+					<td class="label">Izena:</td>
+					<td><h:inputText id="name" value="#{register.name}"
+							required="true" requiredMessage="Izena Beharrezkoa da"
+							styleClass="input-field" /></td>
+					<td><h:message for="name" styleClass="error-message" /></td>
+				</tr>
+				<tr>
+					<td class="label">Abizenak:</td>
+					<td><h:inputText id="surname" value="#{register.surname}"
+							required="true" requiredMessage="Abizena Beharrezkoa da"
+							styleClass="input-field" /></td>
+					<td><h:message for="surname" styleClass="error-message" /></td>
+				</tr>
+				<tr>
+					<td class="label">Usuario Izena:</td>
+					<td><h:inputText id="username" value="#{register.user}"
+							required="true" requiredMessage="Usuario izena Beharrezkoa da"
+							styleClass="input-field" /></td>
+					<td><h:message for="user" styleClass="error-message" /></td>
+				</tr>
+				<tr>
+					<td class="label">Pasahitza:</td>
+					<td><h:inputSecret id="pass" redisplay="true"
+							value="#{register.password}" required="true"
+							requiredMessage="* Pasahitza beharrezkoa da" styleClass="input-field">
+						</h:inputSecret></td>
+
+					<td><h:message for="pass" styleClass="error-message" /></td>
+				</tr>
+				<tr>
+					<td class="label">Errepikatu Pasahitza:</td>
+					<td><h:inputSecret id="pass2" redisplay="true"
+							value="#{register.password2}" required="true"
+							requiredMessage="* 2.Pasahitza beharrezkoa da" styleClass="input-field">
+						</h:inputSecret></td>
+
+					<td><h:message for="pass2" styleClass="error-message" /></td>
+				</tr>
+				<tr>
+					<td class="label">Email-a:</td>
+					<td><h:inputText id="email" value="#{register.email}"
+							required="true" requiredMessage="Email-a Beharrezkoa da"
+							styleClass="input-field" /></td>
+					<td><h:message for="email" styleClass="error-message" /></td>
+				</tr>
+				<tr>
+					<td class="label">Telefonoa:</td>
+					<td><h:inputText id="telf" value="#{register.telf}"
+							styleClass="input-field" /></td>
+					<td><h:message for="telf" styleClass="error-message" /></td>
+				</tr>
+				<tr>
+					<td class="label">Mota (aukeratu bat, urdinez dago aukeratutakoa):</td>
+					<td colspan="2">
+						<h:selectOneRadio id="userMota" value="#{register.mota}"
+							required="true" requiredMessage="* Mota bat aukeratu behar duzu"
+							styleClass="radio-button-group">
+
+							<f:selectItem itemValue="Traveller" itemLabel="Bidaiaria" />
+							<f:selectItem itemValue="Driver" itemLabel="Gidaria" />
+
+						</h:selectOneRadio> <h:message for="userMota" styleClass="error-message" />
+					</td>
+				</tr>
+			</table>
+
+			<p class="button-row">
+				<h:commandButton value="Register" action="menu"
+					styleClass="btn btn-primary" />
+				<h:commandButton value="EXIT" action="menu" immediate="true"
+					styleClass="btn btn-secondary" />
+			</p>
+
+			<h:outputText id="mezua" globalOnly="true" styleClass="error-message" />
+
+		</h:form>
+	</h:body>
+</f:view>
+</ui:composition>
+
+</html>

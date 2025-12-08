@@ -1,25 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-<f:view>
-    <h:head>
-        <title>MENUA</title>
-        <h:outputStylesheet library="css" name="menu-style.css" />
-    </h:head>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 
-    <h:body>
-        <h:form styleClass="menu-container">
-            <h3 class="menu-title">MENUA</h3>
+<ui:composition template="/WEB-INF/facelets/templates/Txantiloia.xhtml">
+	<ui:define name="gorputza">
+		<ui:fragment rendered="#{login.mota == 'Driver'}">
+			<ui:include src="MenuDriverKonponente.xhtml" />
+		</ui:fragment>
 
-            <p class="menu-buttons">
-           		 <h:commandButton value="Register" action="register" styleClass="menu-btn create-btn" />
-                <h:commandButton value="Login" action="login" styleClass="menu-btn create-btn" />
-                <h:commandButton value="Bidaiak bilatu" action="query" styleClass="menu-btn query-btn" />
-            </p>
-        </h:form>
-    </h:body>
-</f:view>
+
+		<ui:fragment rendered="#{login.mota == 'Traveller'}">
+			<ui:include src="MenuTravellerKonponente.xhtml" />
+		</ui:fragment>
+
+
+		<ui:fragment rendered="#{empty login.mota}">
+			<ui:include src="MenuKonponente.xhtml" />
+		</ui:fragment>
+	</ui:define>
+</ui:composition>
 </html>
+

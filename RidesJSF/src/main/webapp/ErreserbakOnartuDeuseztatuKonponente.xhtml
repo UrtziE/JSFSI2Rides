@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <f:view>
+        <f:event type="preRenderView" listener="#{login.redirectDriver}" />
+
+        <h:head>
+            <title>QUERY RIDES</title>
+            <h:outputStylesheet library="css" name="erreserbakOnartuDeuseztatu-style.css" />
+
+        </h:head>
+
+        <h:body>
+            <h:form id="nireForm" styleClass="form-container">
+
+                <h3>Mesedez, aukeratu bidaia zein bidaia ikusi nahi duzun</h3>
+
+ 
+                <p:dataTable id="bidaiaTaula" var="ride" value="#{erreserbakOnartuDeuseztatu.rides}"
+                    emptyMessage="Ez duzu bidairik martxan." styleClass="rides-table"
+                    scrollable="true" scrollHeight="250">
+                    
+                    <p:column headerText="Bidaiaren ID-a" style="width:50px;">
+                        <h:outputText value="#{ride.rideNumber}" />
+                    </p:column>
+
+                    <p:column headerText="Ibilbidea">
+                        <h:outputText value="#{ride.unekoIbilbide}" />
+                    </p:column>
+
+                    <p:column headerText="Noiz" style="width:100px;">
+                        <h:outputText value="#{ride.date}" />
+                    </p:column>
+
+                    <p:column headerText="Tokiak" style="width:60px;">
+                        <h:outputText value="#{ride.nPlaces}" />
+                    </p:column>
+                    
+                    <p:column headerText="Tratatu gabeko erreserbak" style="width:60px;">
+                        <h:outputText value="#{ride.zenbatErreserba}" />
+                    </p:column>
+                    
+                    <p:column headerText="Akzioa" style="width: 80px; text-align: center;">
+                        <p:commandButton value="Ikusi"
+                            action="#{erreserbakOnartuDeuseztatu.aukeratuBidaia(ride)}"
+                            styleClass="ui-button-info" 
+                            update="nireForm:rideGood nireForm:rideExists :nireForm:erreserbak-container"
+                            scrollTo=":nireForm:erreserbak-container"
+                            icon="pi pi-search" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p>
+                    <h:commandButton value="Atzera" action="menu"
+                        immediate="true" styleClass="back-btn" />
+                </p>
+         
+                <h:panelGroup id="erreserbak-container" layout="block">
+                    
+                  
+                    <p:dataTable id="erreserbaTaula" var="rideRequest" value="#{erreserbakOnartuDeuseztatu.rideRequests}"
+                        emptyMessage="Ez duzu erreserbarik bidaia horretan." styleClass="rides-table"
+                        rendered="#{not empty erreserbakOnartuDeuseztatu.aukeratutakoBidaia}"
+                        scrollable="true" scrollHeight="250">
+                        
+                         <p:column headerText="ID Bidaia" style="width:50px;">
+                            <h:outputText value="#{erreserbakOnartuDeuseztatu.aukeratutakoBidaia.rideNumber}" />
+                        </p:column>
+
+                        <p:column headerText="Ibilbidea">
+                            <h:outputText value="#{rideRequest.ibilbidea}" />
+                        </p:column>
+
+                        <p:column headerText="Noiz">
+                            <h:outputText value="#{rideRequest.whenRequested}" />
+                        </p:column>
+
+                        <p:column headerText="€">
+                            <h:outputText value="#{rideRequest.prezio}" />
+                        </p:column>
+
+                        <p:column headerText="Tokiak">
+                            <h:outputText value="#{rideRequest.seats}" />
+                        </p:column>
+
+                        <p:column headerText="Nork">
+                            <h:outputText value="#{rideRequest.traveller.name}" />
+                        </p:column>
+
+                        <p:column headerText="Akzioa" style="width: 220px; text-align: center;">
+                            
+                            <p:commandButton value="Onartu"
+                                action="#{erreserbakOnartuDeuseztatu.onartuDeuseztatu(rideRequest,true)}"
+                                styleClass="ui-button-success" 
+                                update="nireForm:rideGood nireForm:rideExists nireForm:erreserbak-container nireForm:bidaiaTaula"
+                                scrollTo=":nireForm:erreserbak-container"
+                                icon="pi pi-check" 
+                                style="margin-right: 5px;" />
+                            
+                            <p:commandButton value="Deuseztatu"
+                                action="#{erreserbakOnartuDeuseztatu.onartuDeuseztatu(rideRequest,false)}"
+                                styleClass="ui-button-danger" 
+                                update="nireForm:rideGood nireForm:rideExists nireForm:erreserbak-container nireForm:bidaiaTaula"
+                                scrollTo=":nireForm:erreserbak-container"
+                                icon="pi pi-times" />
+                        </p:column>
+
+                    </p:dataTable>
+                </h:panelGroup>
+
+                <h:outputText id="rideGood" value="#{erreserbakOnartuDeuseztatu.rideRequestGood}" styleClass="success-message" />
+                <h:outputText id="rideExists" value="#{erreserbakOnartuDeuseztatu.rideRequestBad}" styleClass="error-message" />
+            </h:form>
+        </h:body>
+    </f:view>
+</ui:composition>
+</html>

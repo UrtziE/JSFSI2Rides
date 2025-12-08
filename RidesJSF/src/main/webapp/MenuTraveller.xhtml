@@ -1,32 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-<f:view>
-    <h:head>
-        <title>MENUA</title>
-        <h:outputStylesheet library="css" name="menu-style.css" />
-    </h:head>
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core">
 
-    <h:body>
-        <!-- ¡CAMBIO PRINCIPAL! El saludo ahora está DENTRO del formulario -->
-        <h:form styleClass="menu-container">
-            
-            <div class="user-greeting">
-                Kaixo <h:outputText value="#{login.user}"/>
-            </div>
-     
-            <h3 class="menu-title">MENUA</h3>
-
-            <p class="menu-buttons">
-                <h:commandButton value="Bidaiak erreserbatu" action="erreserbatu" styleClass="menu-btn query-btn" />
-                <h:commandButton value="Nire Wallet-a" action="diruaKudeatu" styleClass="menu-btn query-btn" />
-                
-            </p>
-            
-        </h:form>
-    </h:body>
-</f:view>
+<ui:composition template="/WEB-INF/facelets/templates/Txantiloia.xhtml">
+<ui:define name="gorputza">
+<ui:include src="MenuTravellerKonponente.xhtml"/>
+</ui:define>
+</ui:composition>
 </html>
+

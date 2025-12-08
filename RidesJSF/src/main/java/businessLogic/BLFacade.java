@@ -178,7 +178,7 @@ public interface BLFacade {
 	 * 
 	 */
 
-	public void onartuEdoDeuseztatu(RideRequest request, boolean onartuta);
+	public boolean onartuEdoDeuseztatu(RideRequest request, boolean onartuta);
 
 	/**
 	 * Metodo honek gidari baten bidaiak, martxan daudenak eta leku libreak
@@ -189,7 +189,7 @@ public interface BLFacade {
 	 * @return gidariaren bidaien lista
 	 */
 
-	public List<RideContainer> getRidesOfDriver(Driver d);
+	public List<Ride> getRidesOfDriver(Driver d);
 
 	/**
 	 * Metodo honek bidai baten erreserba eskakizun guztiak lista batean bueltatzen

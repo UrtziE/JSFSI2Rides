@@ -4,8 +4,7 @@ body, .page-body {
     background: linear-gradient(135deg, #e0e0e0 0%, #cfcfcf 100%);
     font-family: "Segoe UI", sans-serif;
     display: flex;
-    justify-content: center;
-    padding-top: 40px;
+
 }
 
 #nireForm {

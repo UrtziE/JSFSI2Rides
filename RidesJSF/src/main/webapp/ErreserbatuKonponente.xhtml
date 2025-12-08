@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <f:view>
+        <f:event type="preRenderView" listener="#{login.redirectTraveller}" />
+
+        <h:head>
+            <title>QUERY RIDES</title>
+            <h:outputStylesheet library="css" name="erreserbatu-style.css" />
+        </h:head>
+
+        <h:body>
+            <h:form id="nireForm" styleClass="form-container">
+
+                <h3>Mesedez, aukeratu bidaia nondik nora eta noiz den</h3>
+
+                <table class="form-table">
+                    <tr>
+                        <td><h3>From:</h3></td>
+                        <td>
+                            <h:selectOneMenu id="from" value="#{erreserbatu.from}" styleClass="select-menu">
+                                <f:selectItems value="#{erreserbatu.fromCities}" />
+                                <f:ajax event="change" listener="#{erreserbatu.fromListener}"
+                                    render="to bidaiaTaula kalendarioScripta nireForm:erreserba-infoa-container" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><h3>To:</h3></td>
+                        <td>
+                            <h:selectOneMenu id="to" value="#{erreserbatu.to}" styleClass="select-menu">
+                                <f:selectItems value="#{erreserbatu.toCities}" />
+                                <f:ajax event="change" listener="#{erreserbatu.toListener}"
+                                    render="bidaiaTaula kalendarioScripta nireForm:erreserba-infoa-container" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><h3>Data:</h3></td>
+                        <td>
+                            <p:calendar id="data" value="#{erreserbatu.data}"
+                                navigator="true" mode="popup" beforeShowDay="highlightRides"
+                                styleClass="calendar-input">
+
+                                <p:ajax event="dateSelect" listener="#{erreserbatu.onDateSelect}"
+                                    update="bidaiaTaula nireForm:erreserba-infoa-container" />
+
+                                <p:ajax event="viewChange" listener="#{erreserbatu.onViewChange}"
+                                    update="kalendarioScripta data " />
+                            </p:calendar>
+                        </td>
+                    </tr>
+                </table>
+
+                <h:panelGroup id="kalendarioScripta" layout="block">
+                    <script type="text/javascript">
+                        var bidaiaDituztenEgunak = #{erreserbatu.bidaiakDituztenEgunakStringModuan};
+                    </script>
+                </h:panelGroup>
+
+                <p:dataTable id="bidaiaTaula" var="ride" value="#{erreserbatu.rides}"
+                    emptyMessage="Ez dago bidairik." styleClass="rides-table"
+                    scrollable="true" scrollHeight="500">
+
+                    <p:column headerText="Ibilbidea">
+                        <h:outputText value="#{ride.unekoIbilbide}" />
+                    </p:column>
+
+                    <p:column headerText="Noiz" style="width:100px;">
+                        <h:outputText value="#{ride.date}" />
+                    </p:column>
+
+                    <p:column headerText="Prezioa" style="width:80px; text-align:right;">
+                        <h:outputText value="#{ride.price}€" />
+                    </p:column>
+
+                    <p:column headerText="Tokiak" style="width:60px; text-align:center;">
+                        <h:outputText value="#{ride.nPlaces}" />
+                    </p:column>
+
+                    <p:column headerText="Gidaria" style="width:120px;">
+                        <h:outputText value="#{ride.driver.name}" />
+                    </p:column>
+                    
+                    <p:column headerText="Kotxea" style="width:100px;">
+                        <h:outputText value="#{ride.kotxe}" />
+                    </p:column>
+                    
+                    <p:column headerText="Akzioa" style="width: 140px; text-align: center;">
+                        <p:commandButton value="Aukeratu"
+                            action="#{erreserbatu.aukeratuBidaia(ride)}"
+                            styleClass="ui-button-success" 
+                            update=":nireForm:erreserba-infoa-container"
+                            scrollTo=":nireForm:erreserba-infoa-container"
+                            icon="pi pi-check" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p>
+                    <h:commandButton value="Atzera" action="menu"
+                        immediate="true" styleClass="back-btn" />
+                </p>
+
+                <h:panelGroup id="erreserba-infoa-container" layout="block">
+                    <h:panelGroup id="erreserba-info" rendered="#{not empty erreserbatu.aukeratutakoBidaia}">
+
+                        <p:panelGrid columns="2" style="width:100%; margin-bottom:20px">
+                            <h:outputText value="Zure saldoa:" style="font-weight:bold" />
+                            <h:outputText value="#{erreserbatu.user.wallet}€" />
+                            
+                            <h:outputText value="Gidaria:" style="font-weight:bold" />
+                            <h:outputText value="#{erreserbatu.aukeratutakoBidaia.driver.name}" />
+
+                            <h:outputText value="Ibilbidea:" style="font-weight:bold" />
+                            <h:outputText value="#{erreserbatu.ibilbidea} " />
+
+                            <h:outputText value="Data:" style="font-weight:bold" />
+                            <h:outputText value="#{erreserbatu.aukeratutakoBidaia.date}" />
+
+                            <h:outputText value="Prezioa (pertsona):" style="font-weight:bold" />
+                            <h:outputText value="#{erreserbatu.aukeratutakoBidaia.price}€" />
+
+                            <h:outputText value="Tokiak libre:" style="font-weight:bold" />
+                            <h:outputText value="#{erreserbatu.aukeratutakoBidaia.nPlaces}" />
+                        </p:panelGrid>
+
+                        <table class="form-table">
+                            <tbody>
+                                <tr>
+                                    <td><h3>Aukeratu zenbat eserleku nahi dituzun:</h3></td>
+                                    <td>
+                                        <h:selectOneMenu id="aukeratutakoSeats" value="#{erreserbatu.aukeratutakoSeats}" styleClass="select-menu">
+                                            <f:selectItems value="#{erreserbatu.asientoak}" />
+                                            <f:ajax event="change" render="prezioTotalaText" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h3>PrezioTotala: <h:outputText id="prezioTotalaText" value="#{erreserbatu.prezioTotala}" /></h3></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:commandButton id="erreserbatuBotoia" 
+                                            update=":nireForm:erreserba-infoa-container :nireForm:rideGood :nireForm:rideExists" 
+                                            value="Erreserbatu nahi dut bidaia" 
+                                            action="#{erreserbatu.erreserbatu}" 
+                                            styleClass="menu-btn create-btn" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </h:panelGroup>
+                </h:panelGroup>
+
+                <h:outputText id="rideGood" value="#{erreserbatu.rideRequestGood}" styleClass="success-message" />
+                <h:outputText id="rideExists" value="#{erreserbatu.rideRequestBad}" styleClass="error-message" />
+            </h:form>
+
+            <script type="text/javascript">
+                //<![CDATA[
+                function highlightRides(date) {
+                    var eguna = date.getDate();
+
+                    if (typeof bidaiaDituztenEgunak !== 'undefined'
+                        && bidaiaDituztenEgunak.includes(eguna)) {
+
+                        return [true, 'bidaia-badago', 'Egun honetan bidaiak badira'];
+                    }
+
+                    return [false, '', ''];
+                }
+                //]]>
+            </script>
+
+        </h:body>
+    </f:view>
+</ui:composition>
+</html>

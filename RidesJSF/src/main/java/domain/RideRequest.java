@@ -36,11 +36,13 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	private boolean baloratuaTraveller;
 	private boolean erreklamatuaTraveller;
 	private boolean bidaiaEsandaZer=false;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	private float prezio;
+	
+	private String ibilbidea;
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Traveller traveller;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Ride ride;
 
 	public RideRequest(Date whenRequested, Ride ride, Traveller traveller, int seats,String from, String to) {
@@ -129,7 +131,13 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	}
 	
 	
-	
+	public String getIbilbidea() {
+		
+		return ibilbidea;
+	}
+	public void setIbilbidea(String ibilbidea) {
+		this.ibilbidea=ibilbidea;
+	}
 
 	public Traveller getTraveller() {
 		return traveller;
@@ -191,8 +199,8 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 		return " request:" + this.getId() + this.ride.toString() + " seats: " + this.getSeats();
 	}
 	public float getPrezioa() {
-		float prezio=ride.lortuBidaiarenPrezioa(fromRequested, toRequested);
-		return seats*prezio;
+		float prezioa=ride.lortuBidaiarenPrezioa(fromRequested, toRequested);
+		return seats*prezioa;
 	}
 	public String mezua()
 	{
@@ -203,4 +211,11 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	public void setId(Integer id) {
 		this.requestId = id;
 	}
+	public float getPrezio() {
+		return prezio;
+	}
+	public void setPrezio(float prezio) {
+		this.prezio = prezio;
+	}
+	
 }

@@ -104,9 +104,9 @@ public class RegisterBean implements Serializable{
 			if(emaitza!=null) {
 				loginBean.setOraingoUser(emaitza);
 				if(mota.equals("Traveller")) {
-					return "menuTraveller";
+					return "menu";
 				}else {
-					return "menuDriver";
+					return "menu";
 				}
 
 			}else {

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+<f:view>
+	<f:event type="preRenderView" listener="#{login.redirectUser}" />
+
+	<h:head>
+		<title>Dirua Kudeatu</title>
+		<h:outputStylesheet library="css" name="diruaKudeatu-style.css" />
+	</h:head>
+	<h:body styleClass="page-body">
+		<h:form id="nireForm" styleClass="form-container">
+			<h3 class="title">Saldoa kontrolatu</h3>
+
+			<table class="form-table">
+				<tr>
+					<td class="label"><h:outputText  value="#{login.user}"/>-ren saldoa:<h:outputText id="saldoEtiketa" value="  #{diruaKudeatu.userDiruKop}€"/></td>
+					
+				</tr>
+				<tr>
+					<td class="label"><h:outputText id="text" value="#{diruaKudeatu.mota}"/>(0-2000€ arteko zifra bat)</td>
+					  <td><h:inputText id="dirua" value="#{diruaKudeatu.diruKop}"
+                    converterMessage="Diru kantitateak zenbaki bat izan behar du"
+                    validatorMessage="Diru kantitatea 0 baina handiagoa izan behar du"
+                    styleClass="input-field">
+                        <f:validateDoubleRange minimum="0.01" maximum="2000"/>
+                        <f:ajax execute="dirua" render="diruaMezua"/>
+                    </h:inputText>
+                </td>
+                <td><h:message id="diruaMezua" for="dirua" styleClass="error-message"/></td>
+				</tr>
+				
+					
+				<tr>
+					<td class="label">Dirua sartu edo atera nahi duzu?:</td>
+					<td colspan="2">
+						<h:selectOneRadio id="mota" value="#{diruaKudeatu.mota}"
+							required="true" requiredMessage="* Mota bat aukeratu behar duzu"
+							styleClass="radio-button-group">
+
+							<f:selectItem itemValue="atera" itemLabel="Dirua atera" />
+							<f:selectItem itemValue="sartu" itemLabel="Dirua sartu" />
+							<f:ajax event="change"
+                                    render="button text" />
+
+						</h:selectOneRadio> <h:message for="mota" styleClass="error-message" />
+					</td>
+				</tr>
+			</table>
+
+			<p class="button-row">
+				<h:commandButton id="button" value="#{diruaKudeatu.mota}" action="#{diruaKudeatu.diruaKudeatu}"
+					styleClass="btn btn-primary" >
+					<f:ajax execute="@form" render="rideGood rideExists diruaMezua saldoEtiketa"/>
+					</h:commandButton>
+				<h:commandButton value="EXIT" action="menu" immediate="true"
+					styleClass="btn btn-secondary" />
+			</p>
+
+<h:outputText id="rideGood" value="#{diruaKudeatu.diruaGood}" styleClass="success-message"/>
+        <h:outputText id="rideExists" value="#{diruaKudeatu.diruaFail}" styleClass="error-message"/>
+		</h:form>
+	</h:body>
+</f:view>
+</ui:composition>
+</html>

@@ -65,6 +65,11 @@ public class ErreserbatuBean implements Serializable {
 			return null;
 		} else {
 			rides = blfacade.getRides(from, to, data);
+			for(Ride ride: rides) {
+				ride.setPrice(ride.lortuBidaiarenPrezioa(from, to));
+				ride.setUnekoIbilbide(ride.getIbilbidea(from,to));
+			}
+			
 			return rides;
 		}
 	}
@@ -198,7 +203,7 @@ public class ErreserbatuBean implements Serializable {
 	    }
 	    aukeratutakoSeats=1;
 	   
-	    ibilbidea=ride.getIbilbidea();
+	    ibilbidea=ride.getIbilbidea(from,to);
 
 	}
 	public Ride getAukeratutakoBidaia() {

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+<f:view>
+	<f:event type="preRenderView" listener="#{login.redirectDriver}" />
+
+	<h:head>
+		<title>JavaServer Faces aplikazioa</title>
+		<h:outputStylesheet library="css" name="createRideStyle.css" />
+	</h:head>
+	<h:body styleClass="page-body">
+    <h:form id="nireForm" styleClass="form-container">
+        <h3 class="title">Sortu bidaia</h3>
+
+        <table class="form-table">
+            <tr>
+                <td class="label">From:</td>
+                <td><h:inputText id="from" value="#{createRides.from}"
+                    required="true" requiredMessage="Irteera Hiria Beharrezkoa da"
+                    styleClass="input-field"/></td>
+                <td><h:message for="from" styleClass="error-message"/></td>
+            </tr>
+
+            <tr>
+                <td class="label">To:</td>
+                <td><h:inputText id="to" value="#{createRides.to}"
+                    required="true" requiredMessage="Helmuga hiria beharrezkoa da"
+                    styleClass="input-field"/></td>
+                <td><h:message for="to" styleClass="error-message"/></td>
+            </tr>
+
+            <tr>
+                <td class="label">Data :</td>
+                <td>
+                    <p:calendar id="data" value="#{createRides.data}" navigator="true"
+                        mode="popUp" mindate="1d" readonlyInput="false" showOn="button"
+                        required="true" requiredMessage="Data beharrezkoa da"
+                        validatorMessage="Datak gaurko eguna baina geroagokoa izan behar du"
+                        styleClass="calendar-field">
+                        <p:ajax event="dateSelect" listener="#{createRides.onDateSelect}"
+                            update="dataMezua"/>
+                    </p:calendar>
+                </td>
+                <td><h:message id="dataMezua" for="data" styleClass="error-message"/></td>
+            </tr>
+
+            <tr>
+                <td class="label">Prezioa:</td>
+                <td><h:inputText id="price" value="#{createRides.price}"
+                    converterMessage="Prezioak zenbaki bat izan behar du"
+                    validatorMessage="Prezioak 0 baina handiagoa izan behar du"
+                    styleClass="input-field">
+                        <f:validateDoubleRange minimum="0.01"/>
+                        <f:ajax execute="price" render="priceMezua"/>
+                    </h:inputText>
+                </td>
+                <td><h:message id="priceMezua" for="price" styleClass="error-message"/></td>
+            </tr>
+
+            <tr>
+                <td class="label">Tokiak:</td>
+                <td><h:inputText id="places" value="#{createRides.places}"
+                    converterMessage="Toki kopuruak zenbaki bat izan behar du"
+                    validatorMessage="Toki kopurua 1 eta 8 artean egon behar da"
+                    styleClass="input-field"  pattern="yyyy/MM/dd">
+                        <f:validateLongRange minimum="1" maximum="8"/>
+                        <f:ajax execute="places" render="placeMezuak rideGood"/>
+                    </h:inputText></td>
+                <td><h:message id="placeMezuak" for="places" styleClass="error-message"/></td>
+            </tr>
+        </table>
+
+        <p class="button-row">
+            <h:commandButton value="Create" action="#{createRides.createRides}"
+                styleClass="btn btn-primary">
+                <f:ajax execute="@form" render="rideGood rideExists"/> </h:commandButton>
+            <h:commandButton value="EXIT" action="menu" immediate="true"
+                styleClass="btn btn-secondary"/>
+        </p>
+
+        <h:outputText id="rideGood" value="#{createRides.rideGood}" styleClass="success-message"/>
+        <h:outputText id="rideExists" value="#{createRides.rideExists}" styleClass="error-message"/>
+    </h:form>
+</h:body>
+</f:view>
+</ui:composition>
+</html>

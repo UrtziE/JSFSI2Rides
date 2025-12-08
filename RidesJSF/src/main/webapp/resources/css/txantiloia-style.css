@@ -1,0 +1,72 @@
+/* txantiloia-style.css (ACTUALIZADO) */
+
+body {
+    background-color: #3399ff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.page-container {
+	height:100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width:100%;
+}
+
+/* --- ¡CAMBIO PRINCIPAL EN EL HEADER! --- */
+.header {
+    background-color: white;
+    padding: 10px 10px; /* Menos padding vertical, más horizontal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    /* Convertimos el header en un contenedor Flexbox */
+    display: flex;
+    justify-content: space-between; /* Empuja el logo a la izquierda y la nav a la derecha */
+    align-items: center;            /* Centra verticalmente el logo y los enlaces */
+}
+
+/* --- NUEVOS ESTILOS PARA LA BARRA DE NAVEGACIÓN --- */
+.main-nav {
+	justify-content: center;
+    list-style: none; /* Quita los puntos de la lista */
+    margin: 0;
+    padding: 0;
+    display: flex; /* Pone los elementos de la lista en una fila horizontal */
+    gap: 20px;     /* Espacio entre cada opción del menú */
+}
+
+.main-nav a { /* Estilo para los enlaces de la navegación */
+    text-decoration: none;
+    color: #555; /* Un gris oscuro para el texto */
+    font-weight: bold;
+    font-size: 16px;
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados para el efecto hover */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.main-nav a:hover {
+    background-color: #f0f0f0; /* Fondo gris claro al pasar el ratón */
+    color: #007bff; /* Color azul para el texto */
+}
+
+
+/* --- CAMBIOS EN EL CONTENIDO PRINCIPAL --- */
+/* Ya no necesitamos dos columnas, así que simplificamos */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* El footer no cambia */
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: white;
+}

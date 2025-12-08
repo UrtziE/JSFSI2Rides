@@ -47,9 +47,9 @@ public class Mezua implements Serializable, Comparable<Mezua> {
     @Column(name="message_date") 
 	private Date when;
 	private boolean irakurrita = false;
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Alerta alerta;
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Erreklamazioa erreklamazioa;
 	
 	private static final String DATADONE = "Mezuak.DataDone";  
@@ -82,6 +82,7 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 	// Diru transakzioak ridetan
 	public Mezua(int i, float kantitatea, RideRequest erreserba, Profile p) {
 		when = new Date();
+		this.p=p;		
 		this.kantitatea = kantitatea;
 		this.erreserba = erreserba;
 		this.ride = erreserba.getRide();

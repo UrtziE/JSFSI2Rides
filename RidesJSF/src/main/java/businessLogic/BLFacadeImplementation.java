@@ -153,8 +153,9 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 
-	public void onartuEdoDeuseztatu(RideRequest request, boolean onartuta) {
-		dbManager.onartuEdoDeuseztatuErreserba(request, onartuta);
+	public boolean onartuEdoDeuseztatu(RideRequest request, boolean onartuta) {
+		boolean emaitza=dbManager.onartuEdoDeuseztatuErreserba(request, onartuta);
+		return emaitza;
 	}
 
 	/**
@@ -167,8 +168,8 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 
-	public List<RideContainer> getRidesOfDriver(Driver driver) {
-		List<RideContainer> rides = dbManager.getRidesOfDriver(driver);
+	public List<Ride> getRidesOfDriver(Driver driver) {
+		List<Ride> rides = dbManager.getRidesOfDriver(driver);
 		return rides;
 	}
 

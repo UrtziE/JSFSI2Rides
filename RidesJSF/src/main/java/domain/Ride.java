@@ -21,6 +21,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -63,10 +67,11 @@ public class Ride implements Serializable, Comparable<Ride> {
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Driver driver;  
 
-	@OneToMany(targetEntity = RideRequest.class, mappedBy = "ride",fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@OneToMany(targetEntity = RideRequest.class, mappedBy = "ride",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<RideRequest> requests;
 	
-	
+	private String unekoIbilbide;
+	private int zenbatErreserba;
 
 	public Ride(){
 		super();
@@ -284,6 +289,7 @@ public class Ride implements Serializable, Comparable<Ride> {
 		}else {
 			return 0;
 		}
+	
 	}
 
 	/**
@@ -374,7 +380,7 @@ public class Ride implements Serializable, Comparable<Ride> {
 				request.setWhenDecided(new Date());
 				Traveller t = request.getTraveller();	
 				t.gehituDirua(request.getPrezioa());
-				t.gehituMezuaTransaction(1, request.getPrezioa() , request); // Dirua itzuli
+				t.gehituMezuaTransaction(1, request.getPrezioa() , request); 
 
 			}
 		}
@@ -389,6 +395,29 @@ public class Ride implements Serializable, Comparable<Ride> {
 			}
 		}
 		return ibilbidea;
+	}
+	//BETI HAU DEITZEAN, EXISTITUKO DA IBILBIDEA 
+	public String getIbilbidea(String from,String to) {
+		int i=0;
+		boolean hasi=false;
+		boolean amaitu=false;
+		String emaitza="";
+		while(i<geltokiList.size()&&!amaitu) {
+			if(hasi) {
+				emaitza=emaitza+"->"+geltokiList.get(i).getTokiIzen();
+				if(geltokiList.get(i).getTokiIzen().equals(to)) {
+					amaitu=true;
+				}
+			}else {
+				if(geltokiList.get(i).getTokiIzen().equals(from)) {
+					hasi=true;
+					emaitza=geltokiList.get(i).getTokiIzen();
+				}
+			}
+			i=i+1;
+		}
+		return emaitza;
+		
 	}
 	public String getInfo() {
 		return rideNumber+" ; "+" ; "+getIbilbidea()+" ; "+date;  
@@ -549,7 +578,7 @@ public class Ride implements Serializable, Comparable<Ride> {
    
    
    
-   public boolean eserlekuakAmaituta() {
+   public boolean ezEserlekuakAmaituta() {
 	   for(int i=0; i<geltokiList.size()-1;i++) {
 		   if(geltokiList.get(i).getEserleku()>0) {
 			   return true;
@@ -599,6 +628,22 @@ public class Ride implements Serializable, Comparable<Ride> {
 
    public Kotxe getKotxe() {
 	return kotxe;
+   }
+
+   public String getUnekoIbilbide() {
+	return unekoIbilbide;
+   }
+
+   public void setUnekoIbilbide(String unekoIbilbide) {
+	this.unekoIbilbide = unekoIbilbide;
+   }
+
+   public int getZenbatErreserba() {
+	return zenbatErreserba;
+   }
+
+   public void setZenbatErreserba(int zenbatErreserba) {
+	this.zenbatErreserba = zenbatErreserba;
    }
 	
 }

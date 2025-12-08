@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
 import org.primefaces.event.DateViewChangeEvent;
 import org.primefaces.event.SelectEvent;
 
@@ -31,9 +30,9 @@ import jakarta.inject.Named;
 public class QueryRidesBean implements Serializable {
 	private Profile user;
 	@Inject
-    private LoginBean loginBean;
+	private LoginBean loginBean;
 	private List<Ride> rides;
-	private static BLFacade blfacade =new BLFacadeImplementation();
+	private static BLFacade blfacade = new BLFacadeImplementation();
 	private Date data;
 	private String from;
 	private String to;
@@ -42,14 +41,15 @@ public class QueryRidesBean implements Serializable {
 	private List<Date> egunakBidaiekin = new ArrayList<>();
 
 	public QueryRidesBean() {
-		
-		data=new Date();
+
+		data = new Date();
 
 	}
-	 @PostConstruct
-	    public void init() {
-	        this.user = loginBean.getOraingoUser();
-	    }
+
+	@PostConstruct
+	public void init() {
+		this.user = loginBean.getOraingoUser();
+	}
 
 	public List<Ride> getRides() {
 		if (from == null || to == null || data == null) {
@@ -57,7 +57,10 @@ public class QueryRidesBean implements Serializable {
 			return null;
 		} else {
 			rides = blfacade.getRides(from, to, data);
-			System.out.println(rides);
+			for (Ride ride : rides) {
+				ride.setPrice(ride.lortuBidaiarenPrezioa(from, to));
+				ride.setUnekoIbilbide(ride.getIbilbidea(from, to));
+			}
 			return rides;
 		}
 	}
@@ -130,15 +133,16 @@ public class QueryRidesBean implements Serializable {
 		aurkituDatakBidaiekin();
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("From Listener aktibatuta"));
 	}
+
 	public void onViewChange(DateViewChangeEvent event) {
-		  int year = event.getYear();
-		    int month = event.getMonth()-1;
-		    Calendar cal = Calendar.getInstance();
-		    cal.setTime(this.data); 
-		    cal.set(Calendar.YEAR, year);
-		    cal.set(Calendar.MONTH, month);
-		    this.data = cal.getTime();		    
-		    aurkituDatakBidaiekin();
+		int year = event.getYear();
+		int month = event.getMonth() - 1;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.data);
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month);
+		this.data = cal.getTime();
+		aurkituDatakBidaiekin();
 	}
 
 	private void aurkituDatakBidaiekin() {
@@ -148,34 +152,23 @@ public class QueryRidesBean implements Serializable {
 			this.egunakBidaiekin.clear();
 		}
 	}
-	
 
 	public String getBidaiakDituztenEgunakStringModuan() {
-	    if (egunakBidaiekin == null || egunakBidaiekin.isEmpty()) {
-	        return "[]";
-	    }
-
-	    List<Integer> egunak = new ArrayList<>();
-	    Calendar cal = Calendar.getInstance(); 
-
-	    for (Date d : egunakBidaiekin) {
-	        cal.setTime(d); 
-	        egunak.add(cal.get(Calendar.DAY_OF_MONTH)); 
-	    }
-	    
-	    return egunak.toString(); 
-	}
-	public String exit() {
-		if (user==null){
-			return "menu";
-		}else {
-			if (user instanceof Traveller) {
-				return "menuTraveller";
-			}else {
-				return "menuDriver";
-			}
+		if (egunakBidaiekin == null || egunakBidaiekin.isEmpty()) {
+			return "[]";
 		}
+
+		List<Integer> egunak = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+
+		for (Date d : egunakBidaiekin) {
+			cal.setTime(d);
+			egunak.add(cal.get(Calendar.DAY_OF_MONTH));
+		}
+
+		return egunak.toString();
 	}
-	
+
+
 
 }
