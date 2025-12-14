@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<f:view>
+		<f:event type="preRenderView" listener="#{login.redirectDriver}" />
+
+		<h:head>
+			<title>QUERY RIDES</title>
+			<h:outputStylesheet library="css" name="ikusiBidaiak-style.css" />
+		</h:head>
+
+		<h:body>
+			<h:form id="nireForm" styleClass="form-container">
+
+				<h3>Hona hemen zure bidaiak</h3>
+
+				<p:dataTable id="bidaiaTaulak" var="ride"
+					value="#{ikusiErreserbak.rides}"
+					emptyMessage="Ez duzu mota honetako bidairik."
+					styleClass="rides-table" scrollable="true" scrollHeight="500">
+
+					<p:column headerText="Bidaiaren ID-a" style="width:50px;">
+						<h:outputText value="#{ride.rideNumber}" />
+					</p:column>
+					<p:column headerText="Date" style="width:150px;">
+						<h:outputText value="#{ride.date}" />
+					</p:column>
+					<p:column headerText="Ibilbidea" style="width:150px;">
+						<h:outputText value="#{ride.unekoIbilbide}" />
+					</p:column>
+					<p:column headerText="Prezioa" style="width:80px;">
+						<h:outputText value="#{ride.unekoPrezioa}€" />
+					</p:column>
+
+					<p:column headerText="Erreserbak" style="width:80px;">
+						<h:outputText value="#{ride.requests.size()}" />
+					</p:column>
+
+					<p:column headerText="Akzioa" style="width: 120px; text-align: center;">
+						
+						<p:commandButton value="Ikusi Bidaiariak"
+							action="#{ikusiErreserbak.aukeratuBidaia(ride)}"
+							styleClass="ui-button-info"
+							update=":nireForm:ride-info-container :nireForm:error"
+							icon="pi pi-search" 
+							rendered="#{ikusiErreserbak.mota eq 'DONE' or ikusiErreserbak.mota eq 'NOT_DONE'}"/>
+							
+						<p:commandButton value="Kantzelatu"
+							action="#{ikusiErreserbak.kantzelatu(ride)}"
+							styleClass="ui-button-danger"
+							update=":nireForm:bidaiaTaulak :nireForm:error"
+							icon="pi pi-times"
+							rendered="#{ikusiErreserbak.mota eq 'MARTXAN' or ikusiErreserbak.mota eq 'TOKIRIK_GABE'}" >
+                             <p:confirm header="Konfirmazioa" message="Ziur zaude bidaia hau kantzelatu nahi duzula?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Bai" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="Ez" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                </p:confirmDialog>
+
+				<div style="margin-top: 15px;">
+					<h:outputText value="Zein bidaia ikusi nahi dituzu?:" styleClass="label" style="margin-right:10px;"/>
+                    
+					<h:selectOneRadio id="mota"
+							value="#{ikusiErreserbak.mota}" required="true"
+							requiredMessage="* Mota bat aukeratu behar duzu"
+							styleClass="radio-button-group" style="display:inline-table;">
+
+							<f:selectItem itemValue="MARTXAN" itemLabel="Martxan" />
+							<f:selectItem itemValue="TOKIRIK_GABE" itemLabel="Tokirik gabe" />
+							<f:selectItem itemValue="PASATUA" itemLabel="Pasatuak" />
+							<f:selectItem itemValue="KANTZELATUA" itemLabel="Kantzelatuak" />
+							<f:selectItem itemValue="DONE" itemLabel="Eginak" />
+							<f:selectItem itemValue="NOT_DONE" itemLabel="Ez eginak" />
+
+							<f:ajax event="change" listener="#{ikusiErreserbak.onChange}"
+								render=":nireForm:bidaiaTaulak :nireForm:ride-info-container" />
+
+					</h:selectOneRadio> 
+                    <h:message for="mota" styleClass="error-message" />
+                </div>
+
+				<p>
+					<h:commandButton value="Atzera" action="menu" immediate="true"
+						styleClass="back-btn" />
+				</p>
+
+				<h:panelGroup id="ride-info-container" layout="block">
+					<h:panelGroup id="ride-info"
+						rendered="#{not empty ikusiErreserbak.aukeratutakoBidaia}">
+
+                        <p:panelGrid columns="3" style="width:100%; margin-bottom:20px; text-align:center;">
+                            <h:outputText value="ID:" style="font-weight:bold"/>
+                            <h:outputText value="Data:" style="font-weight:bold"/>
+                            <h:outputText value="Ibilbidea:" style="font-weight:bold"/>
+                            <h:outputText value="#{ikusiErreserbak.aukeratutakoBidaia.rideNumber}" />
+                            
+                            
+                            <h:outputText value="#{ikusiErreserbak.aukeratutakoBidaia.date}" />
+                            
+                            
+                            <h:outputText value="#{ikusiErreserbak.aukeratutakoBidaia.unekoIbilbide}" />
+                        </p:panelGrid>
+
+						<div class="action-buttons-container" style="margin-top: 20px; text-align: center;">
+							
+                            <h:panelGroup rendered="#{ikusiErreserbak.mota eq 'DONE'}">
+
+								<div style="background: #f9f9f9; padding: 20px; border-radius: 10px; border: 2px dashed #7928CA; display: inline-block;">
+
+									<h:outputLabel value="Aukeratu baloratu nahi duzun bidaiaria:"
+										style="display:block; font-weight:bold; margin-bottom:10px; color:#333;" />
+									
+                                    <h:selectOneMenu id="bidaiariaCombo"
+										value="#{ikusiErreserbak.bidaiariUser}"
+										styleClass="select-menu"
+										style="width: 100%; margin-bottom: 15px;">
+
+										<f:selectItem itemLabel="-- Aukeratu Bidaiaria --"
+											itemValue="#{null}" noSelectionOption="true" />
+
+										<f:selectItems value="#{ikusiErreserbak.travellerList}"
+											var="t" itemLabel="#{t.name} (#{t.user})"
+											itemValue="#{t.user}" />
+									</h:selectOneMenu>
+
+									<br />
+
+									<h:commandButton value="Baloratu Bidaiaria"
+										action="#{ikusiErreserbak.joanBaloratzeraDriver}"
+										styleClass="btn btn-primary">
+									</h:commandButton>
+
+								</div>
+							</h:panelGroup>
+						</div>
+
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:outputText id="error" value="#{ikusiErreserbak.errorLabel}"
+					styleClass="error-message" />
+			</h:form>
+		</h:body>
+	</f:view>
+</ui:composition>
+</html>

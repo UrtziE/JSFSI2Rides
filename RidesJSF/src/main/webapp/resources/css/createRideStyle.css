@@ -5,7 +5,7 @@ body, .page-body {
     font-family: "Segoe UI", sans-serif;
     display: flex;
     justify-content: center;
- 
+
 }
 
 #nireForm {
@@ -195,9 +195,109 @@ h3 {
     display: block;
     margin-top: 12px;
 }
+/* ==========================================
+   CORRECCIÓN SECCIÓN TARTEKO HERRIAK
+   ========================================== */
+
+/* Contenedor principal: Pone los elementos en fila horizontal */
+.tarteko-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end; /* Alinea los inputs y el botón abajo */
+    gap: 15px; /* Espacio entre Herria, Prezioa y el botón */
+    width: 100%;
+}
+
+/* Grupos individuales (Label + Input) */
+.tarteko-group {
+    display: flex;
+    flex-direction: column; /* Pone el label ARRIBA del input */
+    justify-content: flex-end;
+}
+
+/* Ajuste del Label para que no descuadre */
+.tarteko-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+/* IMPORTANTE: Sobrescribir el width: 100% global */
+#nireForm .input-herria {
+    width: 220px !important; /* Ancho fijo para la ciudad */
+    margin: 0 !important;    /* Quitar márgenes extraños */
+}
+
+#nireForm .input-prezioa {
+    width: 100px !important; /* Ancho fijo pequeño para el precio */
+    margin: 0 !important;
+}
+
+/* Ajuste específico para el botón "Gehitu" en esa fila */
+.tarteko-row .btn {
+    margin: 0 !important;
+    height: 42px; /* Para que tenga la misma altura que los inputs */
+    margin-bottom: 2px !important; /* Pequeño ajuste óptico si es necesario */
+}
 
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
+}
+/* ==========================================
+   AUKERATU KOTXEA (SELECT MENU) ESTILOA
+   ========================================== */
+
+/* 1. Select-a Input-en itxura berdinarekin */
+.select-menu {
+    width: 100%;
+    height: 42px !important;
+    padding: 10px 14px !important;
+    padding-right: 40px !important; /* Espazioa geziarako */
+    
+    /* Zure Inputen kolore berdinak */
+    border: 2px solid #ffb3b3 !important; 
+    border-radius: 10px !important;
+    background-color: #fff1f1 !important;
+    color: #444;
+    
+    font-size: 15px !important;
+    font-family: "Segoe UI", sans-serif;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease !important;
+    
+    /* Hau beharrezkoa da nabigatzailearen gezi zaharra kentzeko */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+    /* Gezi pertsonalizatua (Zure gorri kolorearekin #ff6f61) */
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff6f61%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px;
+}
+
+/* 2. Focus egoera (Klik egitean) */
+.select-menu:focus {
+    border-color: #ff6f61 !important;
+    background-color: #ffe5e5 !important;
+    box-shadow: 0 0 8px rgba(255,80,80,0.4);
+}
+
+/* 3. ZUZENKETA GARRANTZITSUA: H3 Taula barruan */
+/* Zure HTMLan <td><h3>Aukeratu...</h3></td> daukazu. 
+   Lehen definitu duzun h3 orokorra (30px) handiegia da taularako. 
+   Honek tamaina egokitzen du beste label-en antzera gelditzeko. */
+#nireForm td h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 15px; /* Beste inputen testu tamaina bera */
+    font-weight: bold;
+    color: #444;
+    text-align: left; /* Label moduan lerrokatuta */
+    white-space: nowrap;
 }

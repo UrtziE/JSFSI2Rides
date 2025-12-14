@@ -96,28 +96,28 @@ public class RegisterBean implements Serializable{
 	}
 
 	public String register() {
+		System.out.println("Sartu register");
 		if(this.comparePassword()) {
 
 			Profile profila= new Traveller(email,name,surname,user,password,telf);
 			blfacade=FacadeBean.getBusinessLogic();
+			System.out.println("erregistratzen.."+profila);
 			Profile emaitza= blfacade.register(profila, mota);
+			System.out.println("erregistratzen.."+emaitza);
+
 			if(emaitza!=null) {
 				loginBean.setOraingoUser(emaitza);
-				if(mota.equals("Traveller")) {
-					return "menu";
-				}else {
-					return "menu";
-				}
+			return "menu";
 
 			}else {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage("Usuarioa Existitzen da jadanik"));
-				return "error";
+				return null;
 			}
 		}else {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Bi Pasahitzak berdinak izan behar dute."));
-			return "error";
+			return null;
 		}
 	}
 	public String getMota() {

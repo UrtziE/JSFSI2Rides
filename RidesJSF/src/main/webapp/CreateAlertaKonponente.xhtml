@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+	<f:view>
+		<f:event type="preRenderView" listener="#{login.redirectTraveller}" />
+
+		<h:head>
+			<title>JavaServer Faces aplikazioa</title>
+			<h:outputStylesheet library="css" name="createAlerta-style.css" />
+		</h:head>
+		<h:body styleClass="page-body">
+			
+
+			<h:form id="formSortu" styleClass="form-container">
+				<h3 class="title">Sortu Alerta</h3>
+
+				<table class="form-table">
+				
+                    <tr>
+						<td class="label">From:</td>
+						<td><h:inputText id="from" value="#{createAlerta.from}"
+								required="true" requiredMessage="Irteera Hiria Beharrezkoa da"
+								styleClass="input-field" /></td>
+						<td><h:message for="from" styleClass="error-message" /></td>
+					</tr>
+					<tr>
+						<td class="label">To:</td>
+						<td><h:inputText id="to" value="#{createAlerta.to}"
+								required="true" requiredMessage="Helmuga hiria beharrezkoa da"
+								styleClass="input-field" /></td>
+						<td><h:message for="to" styleClass="error-message" /></td>
+					</tr>
+					<tr>
+						<td class="label">Data :</td>
+						<td><p:calendar id="data" value="#{createAlerta.data}"
+								navigator="true" mode="popUp" mindate="1d" readonlyInput="false"
+								showOn="button" required="true"
+								requiredMessage="Data beharrezkoa da"
+								validatorMessage="Datak gaurko eguna baina geroagokoa izan behar du"
+								styleClass="calendar-field">
+								<p:ajax event="dateSelect"
+									listener="#{createAlerta.onDateSelect}" update="dataMezua" />
+							</p:calendar></td>
+						<td><h:message id="dataMezua" for="data"
+								styleClass="error-message" /></td>
+					</tr>
+				</table>
+
+				<p class="button-row">
+			
+					<p:commandButton value="Create"
+						action="#{createAlerta.createAlerta}" styleClass="btn btn-primary"
+						update=":formSortu :formKudeatu" />
+					<h:commandButton value="EXIT" action="menu" immediate="true"
+						styleClass="btn btn-secondary" />
+				</p>
+                
+              
+                <h:outputText id="alertaGood" value="#{createAlerta.alertaGood}"
+					styleClass="success-message" />
+				<h:outputText id="alertaExists" value="#{createAlerta.alertaExists}"
+					styleClass="error-message" />
+			</h:form>
+
+			
+		
+			<h:form id="formKudeatu" styleClass="form-container">
+				<h3>Hona hemen zure alertak</h3>
+
+				<p:dataTable id="alertaTaula" var="alerta"
+					value="#{createAlerta.alertak}"
+					emptyMessage="Ez duzu alertarik." styleClass="rides-table"
+					scrollable="true" scrollHeight="500">
+
+                    <p:column headerText="Alertaren ID-a" style="width:50px;"><h:outputText value="#{alerta.id}" /></p:column>
+					<p:column headerText="Nondik" style="width:60px;"><h:outputText value="#{alerta.from}" /></p:column>
+					<p:column headerText="Nora" style="width:100px;"><h:outputText value="#{alerta.to}" /></p:column>
+					<p:column headerText="Noiz " style="width:100px;"><h:outputText value="#{alerta.when}" /></p:column>
+					<p:column headerText="Mezu kopurua " style="width:100px;"><h:outputText value="#{alerta.mezuKopuruaLaguntzaile}" /></p:column>
+
+					<p:column headerText="Akzioa"
+						style="width: 80px; text-align: center;">
+						
+						<p:commandButton value="Ikusi mezuak"
+							action="#{createAlerta.aukeratuAlerta(alerta)}"
+							styleClass="ui-button-info ui-button-sm"
+							update=":formKudeatu:alerta-info-container :formSortu:alertaGood :formSortu:alertaExists"
+							process="@this"
+							icon="pi pi-search" />
+							
+						<p:commandButton value="Ezabatu Alerta"
+							action="#{createAlerta.ezabatuAlerta(alerta)}"
+							styleClass="ui-button-danger ui-button-sm"
+							update=":formKudeatu"
+							process="@this"
+							icon="pi pi-times" />
+					</p:column>
+				</p:dataTable>
+				
+				<h:panelGroup id="alerta-info-container" layout="block">
+					<h:panelGroup id="ride-info"
+						rendered="#{not empty createAlerta.aukeratutakoAlerta}">
+						
+						<h:outputText value="Aukeratutako Alerta: #{createAlerta.aukeratutakoAlerta}" />
+						
+						<p:dataTable id="mezuTaula" var="mezua"
+							value="#{createAlerta.mezuak}"
+							emptyMessage="Ez duzu mota honetako erreserbarik."
+							styleClass="rides-table" scrollable="true" scrollHeight="500">
+
+                            <p:column headerText="Mezuaren-ID-a" style="width:50px;"><h:outputText value="#{mezua.id}" /></p:column>
+							<p:column headerText="Mezua" style="width:60px;"><h:outputText value="#{mezua.typerenMezua}" /></p:column>
+							<p:column headerText="Noiz" style="width:100px;"><h:outputText value="#{mezua.datamezua}" /></p:column>
+						</p:dataTable>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:form>
+
+		</h:body>
+	</f:view>
+</ui:composition>
+</html>

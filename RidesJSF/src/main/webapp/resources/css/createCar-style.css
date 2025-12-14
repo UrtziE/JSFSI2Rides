@@ -195,6 +195,51 @@ h3 {
     display: block;
     margin-top: 12px;
 }
+/* ==========================================
+   CORRECCIÓN SECCIÓN TARTEKO HERRIAK
+   ========================================== */
+
+/* Contenedor principal: Pone los elementos en fila horizontal */
+.tarteko-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end; /* Alinea los inputs y el botón abajo */
+    gap: 15px; /* Espacio entre Herria, Prezioa y el botón */
+    width: 100%;
+}
+
+/* Grupos individuales (Label + Input) */
+.tarteko-group {
+    display: flex;
+    flex-direction: column; /* Pone el label ARRIBA del input */
+    justify-content: flex-end;
+}
+
+/* Ajuste del Label para que no descuadre */
+.tarteko-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+/* IMPORTANTE: Sobrescribir el width: 100% global */
+#nireForm .input-herria {
+    width: 220px !important; /* Ancho fijo para la ciudad */
+    margin: 0 !important;    /* Quitar márgenes extraños */
+}
+
+#nireForm .input-prezioa {
+    width: 100px !important; /* Ancho fijo pequeño para el precio */
+    margin: 0 !important;
+}
+
+/* Ajuste específico para el botón "Gehitu" en esa fila */
+.tarteko-row .btn {
+    margin: 0 !important;
+    height: 42px; /* Para que tenga la misma altura que los inputs */
+    margin-bottom: 2px !important; /* Pequeño ajuste óptico si es necesario */
+}
 
 
 @keyframes fadeIn {

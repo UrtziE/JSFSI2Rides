@@ -1,0 +1,333 @@
+/* Opción 3: Estilo con Gradiente Turquesa */
+.bidaia-badago .ui-state-default {
+    background-image: linear-gradient(45deg, #14B8A6, #2DD4BF) !important;
+    background-color: transparent !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 50%;
+    box-shadow: 0 4px 14px 0 rgba(20, 184, 166, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover */
+.bidaia-badago .ui-state-hover {
+    box-shadow: 0 6px 20px 0 rgba(13, 148, 136, 0.5);
+    transform: scale(1.05);
+}
+
+
+body {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    
+    /* Un gradiente suave de un azul claro a un verde menta */
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    box-sizing: border-box;
+}
+
+/* El formulario sigue siendo blanco para máxima legibilidad sobre el gradiente */
+#erreserbatu, #nireForm {
+   
+    max-width: 100%;
+    padding: 5px;
+
+    /* Blanco sólido y opaco. Simple, limpio, efectivo. */
+    background-color: #ffffff;
+    
+    border-radius: 16px;
+    
+    /* Una sombra más pronunciada pero suave para que "flote" con claridad */
+    box-shadow: 0 20px 50px rgba(41, 52, 73, 0.15);
+    
+    border: none; /* No necesita borde */
+}
+
+h3 {
+    color: #33475b;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+
+input[type="text"], select, .ui-inputfield, .ui-calendar input {
+    width: 100%;
+    height: 38px;            /* CAMBIO: Reducido de 50px a 38px */
+    padding: 6px 12px;       /* CAMBIO: Menos relleno interno */
+    font-size: 14px;         /* CAMBIO: Letra más pequeña (de 16px a 14px) */
+    border-radius: 8px;      /* CAMBIO: Radio un poco más pequeño */
+    border: 1px solid #b0c4de; /* Borde más fino */
+    background-color: #f7f9fc;
+    transition: 0.25s ease;
+}
+
+input[type="text"]:focus, .ui-inputfield:focus, .ui-calendar input:focus {
+    border-color: #3498db;
+    background-color: #e6f0fa;
+    box-shadow: 0 0 8px rgba(52,152,219,0.25);
+}
+
+
+.ui-calendar {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.ui-calendar .ui-inputfield {
+    flex: 1 1 auto;
+    margin-right: 8px;       /* CAMBIO: Menos espacio entre input y botón */
+}
+
+.ui-calendar .ui-button {
+    order: 2;
+    height: 38px;            /* CAMBIO: Ajustado a la altura del input */
+    width: 38px;             /* CAMBIO: Botón cuadrado más pequeño */
+    border-radius: 8px;
+    background-color: #3498db !important;
+    color: white !important;
+    font-size: 13px;         /* Icono más pequeño */
+}
+
+.ui-calendar .ui-button:hover {
+    background-color: #2179b5 !important;
+}
+
+
+table {
+    width: 100%;
+    border-spacing: 10px 10px; /* CAMBIO: Reducido drásticamente para perder altura */
+}
+
+td.label {
+    font-weight: bold;
+    color: #444;
+    font-size: 14px;         /* CAMBIO: Letra de etiquetas más pequeña */
+    width: 30%;              /* Opcional: asegurar que las etiquetas no ocupen demasiado */
+}
+
+/* BOTONES MÁS PEQUEÑOS */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;        /* CAMBIO: Menos margen superior */
+}
+
+.btn {
+    padding: 10px 24px;      /* CAMBIO: Menos relleno (antes 16px 32px) */
+    font-size: 15px;         /* CAMBIO: Letra más pequeña */
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3498db, #5dade2);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5dade2, #3498db);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
+
+.error-message {
+    color: #d00000;
+    font-size: 13px;
+}
+
+.success-message {
+    color: #00b33c;
+    font-weight: bold;
+    font-size: 14px;
+}
+/* ================================================= */
+/*          OPCIÓN 1: GRADIENTE VIBRANTE             */
+/* ================================================= */
+
+.create-btn {
+  /* --- Estructura y Texto --- */
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  
+  /* --- Aspecto Visual --- */
+  border: none;
+  border-radius: 12px; /* Bordes redondeados modernos */
+  cursor: pointer;
+  
+  /* ¡La magia del gradiente! Un verde fresco que inspira "adelante" */
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  
+  /* Sombra sutil para dar efecto de profundidad */
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+
+  /* Transición suave para todos los efectos */
+  transition: all 0.2s ease-in-out;
+}
+
+/* --- Efecto al pasar el ratón por encima (Hover) --- */
+.create-btn:hover {
+  /* El botón se "levanta" ligeramente */
+  transform: translateY(-3px);
+  
+  /* La sombra se hace más pronunciada para realzar el efecto de elevación */
+  box-shadow: 0 7px 25px rgba(40, 167, 69, 0.4);
+}
+
+/* --- Efecto al hacer clic (Active) --- */
+.create-btn:active {
+  /* El botón vuelve a su sitio para simular que lo presionas */
+  transform: translateY(0);
+  
+  /* La sombra se reduce para dar la sensación de que se "hunde" */
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+/* =========================================
+   3. Selector de Radio (Filtros)
+   ========================================= */
+/* Etiqueta de la pregunta */
+.label {
+    font-weight: bold;
+    color: #555;
+    font-size: 1.1rem;
+    padding-right: 15px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+/* Contenedor de los radio buttons */
+.radio-button-group {
+    background-color: #f8f9fa;
+    padding: 15px 25px;
+    border-radius: 50px; /* Bordes muy redondeados */
+    border: 1px solid #e9ecef;
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.radio-button-group label {
+    margin-left: 5px;
+    margin-right: 15px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #444;
+}
+
+.radio-button-group input[type="radio"] {
+    cursor: pointer;
+    accent-color: #3498db; /* Color del puntito seleccionado */
+    transform: scale(1.2);
+}
+
+/* =========================================
+   4. Panel de Detalles (Ride Info)
+   ========================================= */
+#ride-info-container {
+    margin-top: 30px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Estilo para el PanelGrid de PrimeFaces */
+.ui-panelgrid .ui-panelgrid-cell {
+    border: 1px solid #dee2e6;
+    padding: 12px 15px;
+    background-color: #fff;
+}
+
+/* Columna izquierda (Etiquetas) */
+.ui-panelgrid .ui-panelgrid-cell:nth-child(odd) {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 700;
+    width: 30%;
+    border-right: 3px solid #3498db; /* Línea de acento azul */
+}
+
+/* Columna derecha (Valores) */
+.ui-panelgrid .ui-panelgrid-cell:nth-child(even) {
+    color: #555;
+}
+
+/* =========================================
+   5. Botones y Mensajes
+   ========================================= */
+/* Botón Atrás */
+.back-btn {
+    background-color: #95a5a6 !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 25px !important;
+    border-radius: 6px !important;
+    font-size: 1rem !important;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #7f8c8d !important;
+}
+/* Botoi orokorrak */
+.btn {
+    padding: 10px 20px;
+    border-radius: 25px; /* Biribilduak */
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* Bai / Eginda botoia (Berdea) */
+.btn-success {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+}
+.btn-success:hover {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    box-shadow: 0 6px 15px rgba(46, 204, 113, 0.5);
+}
+
+/* Ez / Ez Eginda botoia (Gorria) */
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+}
+.btn-danger:hover {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    box-shadow: 0 6px 15px rgba(231, 76, 60, 0.5);
+}
+
+/* Baloratu botoia (Urdina/Morea - Zure gaiaren arabera) */
+.btn-primary {
+    background: linear-gradient(135deg, #3498db, #8e44ad);
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #8e44ad, #3498db);
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.5);
+}

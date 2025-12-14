@@ -72,6 +72,8 @@ public class Ride implements Serializable, Comparable<Ride> {
 	
 	private String unekoIbilbide;
 	private int zenbatErreserba;
+	private float unekoPrezioa;
+	
 
 	public Ride(){
 		super();
@@ -454,7 +456,8 @@ public class Ride implements Serializable, Comparable<Ride> {
 	public String mezua() {
 		return("RIDE:ID :"+ rideNumber+" "+
 				
-				"Ibilbidea:"+ " "+ this.getIbilbidea()+" "+
+				"Ibilbide osoa:"+ " "+ this.getIbilbidea()+" "+
+				"Gidaria"+this.driver.getName()+
 				"Noiz:"+" "+date);
 	}
 	public String getIbilbide() {
@@ -644,6 +647,18 @@ public class Ride implements Serializable, Comparable<Ride> {
 
    public void setZenbatErreserba(int zenbatErreserba) {
 	this.zenbatErreserba = zenbatErreserba;
+   }
+
+   public float getUnekoPrezioa() {
+	return unekoPrezioa;
+   }
+
+   public void setUnekoPrezioa(float unekoPrezioa) {
+	this.unekoPrezioa = unekoPrezioa;
+   }
+
+   public List<RideRequest> getRequests() {
+	return requests;
    }
 	
 }

@@ -49,7 +49,7 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 	private boolean irakurrita = false;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Alerta alerta;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
 	private Erreklamazioa erreklamazioa;
 	
 	private static final String DATADONE = "Mezuak.DataDone";  
@@ -108,6 +108,7 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 		this.alerta = alerta;
 		this.type = 2;
 		this.p = p;
+		zeinAlerta();
 
 	}
 	public Mezua(int i,Profile p, Ride ride, Erreklamazioa erreklamazioa) {
@@ -188,31 +189,31 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 		switch (i) {
 		// Traveller
 		case 0:
-			sortuMezua("Mezuak.Requested","Mezuak.DataRequest","-",true);
+			sortuMezua("Erreserba eskatuta","Mezuak.DataRequest","-",true);
 			
 
 			break;
 		case 1:
-			sortuMezua("Mezuak.Rejected","Mezuak.DataRejected","+",true);
+			sortuMezua("Erreserba deuseztatuta","Mezuak.DataRejected","+",true);
 			break;
 		case 2:
-			sortuMezua("Mezuak.Canceled","Mezuak.DataCanceled","+",EZDAERRESERBA);
+			sortuMezua("Bidaia kantzelatu egin da","Mezuak.DataCanceled","+",EZDAERRESERBA);
 			break;
 		case 3:
-			sortuMezua("Mezuak.Deposite","Mezuak.DataDeposite","+",EZDAERRESERBA);
+			sortuMezua("Dirua sartu: ","Mezuak.DataDeposite","+",EZDAERRESERBA);
 			break;
 		// Driver
 		case 4:
-			sortuMezua("Mezuak.NotDone","Mezuak.DataNotDone","+",EZDAERRESERBA);
+			sortuMezua("Bidaia ez da egin","Mezuak.DataNotDone","+",EZDAERRESERBA);
 			break;
 		case 5:
-			sortuMezua("Mezuak.Canceled","Mezuak.DataCanceled","+",EZDAERRESERBA);
+			sortuMezua("Bidaia kantzelatu egin da","Mezuak.DataCanceled","+",EZDAERRESERBA);
 			break;
 		case 6:
-			sortuMezua("Mezuak.Withdraw","Mezuak.DataWithdraw","-",EZDAERRESERBA);
+			sortuMezua("Dirua atera: ","Mezuak.DataWithdraw","-",EZDAERRESERBA);
 			break;
 		case 7:
-			sortuMezua("Mezuak.Done",DATADONE,"+",EZDAERRESERBA);
+			sortuMezua("Bidaia egin da",DATADONE,"+",EZDAERRESERBA);
 			break;
 		case 8:
 			sortuMezua("Mezuak.NewErreklamazioa",DATADONE,"+",EZDAERRESERBA);
@@ -253,6 +254,7 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 	public void zeinAlerta() {
 		sortuMezua("Mezuak.EskatutakoAlerta",DATADONE,"",EZDAERRESERBA);
 		typerenMezua = typerenMezua + alerta.toString();
+		datamezua = " " + when;
 	}
 
 	private void sortuMezua(String mezua, String data, String gehituEdoKendu, boolean erreserbaDa) {
@@ -261,18 +263,55 @@ public class Mezua implements Serializable, Comparable<Mezua> {
 		if (erreserbaDa) {
 			ride.toString();
 			erreserba.toString();
-			typerenMezua = erreserba.mezua() + "__" + ride.mezua();
+			typerenMezua = mezua+ erreserba.mezua() + "__" + ride.mezua();
 		} else {
 			if (ride != null) {
+				
 				ride.toString();
-				typerenMezua = ":   " + ride.mezua();
+				typerenMezua = mezua+":   " + ride.mezua();
 			} else {
-				typerenMezua ="Dirua sartu/atera"+": ";
+				typerenMezua =mezua;
 			}
 		}
 			datamezua = " " + when;
 			diruMezu = gehituEdoKendu + kantitatea + "€";
 		
+	}
+
+	public String getDatamezua() {
+		return datamezua;
+	}
+
+	public void setDatamezua(String datamezua) {
+		this.datamezua = datamezua;
+	}
+
+	public String getDiruMezu() {
+		return diruMezu;
+	}
+
+	public void setDiruMezu(String diruMezu) {
+		this.diruMezu = diruMezu;
+	}
+
+	public String getTyperenMezua() {
+		return typerenMezua;
+	}
+
+	public void setTyperenMezua(String typerenMezua) {
+		this.typerenMezua = typerenMezua;
+	}
+
+	public void setRide(Ride ride) {
+		this.ride = ride;
+	}
+
+	public int getMezutype() {
+		return mezutype;
+	}
+
+	public void setMezutype(int mezutype) {
+		this.mezutype = mezutype;
 	}
 	
 

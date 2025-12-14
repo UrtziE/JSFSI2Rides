@@ -58,6 +58,10 @@ public abstract class Profile implements Serializable {
 	private List<Erreklamazioa> erreklamazioak=new LinkedList<Erreklamazioa>();
 	
 	
+	@OneToMany(targetEntity = Balorazioa.class, mappedBy = "nori",fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
+	private List<Balorazioa> balorazioak=new LinkedList<Balorazioa>();
+	
+	
 	public Profile(String email, String name, String surname, String user, String password, String telefono) {
 		mezuList = new ArrayList<>();
 		this.email = email;
@@ -103,13 +107,7 @@ public abstract class Profile implements Serializable {
 	}
 
 	public float getRating() {
-		rating=0;
-		if(balorazioLista!=null&&balorazioLista.size()>0) {
-			for( int i:balorazioLista ) {
-				rating=rating+i;
-			}
-			rating= rating/balorazioKop;
-		}
+	
 		return rating;
 	}
 	public int getRatingLuzera() {
@@ -194,27 +192,36 @@ public abstract class Profile implements Serializable {
 	public List<Integer>getBalorazioLista(){
 		return balorazioLista;
 	}
-	public void addBalorazioa(int balorazioa) {
+	/*public void addBalorazioa(int balorazioa) {
 		balorazioLista.add(balorazioa);
 		balorazioKop++;
 		
+	}*/
+	public void addBalorazioa(Profile nork, String mezua,int balorazioa,Ride bidaia) {
+		balorazioak.add(new Balorazioa(nork,this,mezua,balorazioa,bidaia));
 	}
 	
 	public float kalkulatuBalorazioMedia() {
 		float batura=0;
-		if(balorazioLista!=null) {
-		for(int a: balorazioLista) {
-			batura=batura+a;
-		}
-		
-		if(balorazioKop==0) {
-			return 0;
-		}else {
-		return (batura/balorazioKop);
-		}
-		}else {
+		if(balorazioak.size()==0) {
 			return 0;
 		}
+		for(Balorazioa bal: balorazioak) {
+			batura= batura+bal.getBalorazioa();
+		}
+		return batura/balorazioak.size();
+	}
+
+	public List<Balorazioa> getBalorazioak() {
+		return balorazioak;
+	}
+
+	public void setBalorazioak(List<Balorazioa> balorazioak) {
+		this.balorazioak = balorazioak;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 	}
 

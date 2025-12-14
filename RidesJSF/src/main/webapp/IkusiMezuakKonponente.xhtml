@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<f:view>
+		<f:event type="preRenderView" listener="#{login.redirectUser}" />
+
+		<h:head>
+			<title>MEZUAK</title>
+			<h:outputStylesheet library="css" name="ikusiMezuak-style.css" />
+
+		</h:head>
+
+		<h:body>
+			<h:form id="nireForm" styleClass="form-container">
+
+				<h3>
+					Hona hemen zure mezuak
+					<h:outputText value="#{login.oraingoUser.name}" />
+				</h3>
+				<h:outputText value="#{ikusiMezuak.aukeratutakoMezua}" />
+
+
+				<p:dataTable id="mezuTaula" var="mezua"
+					value="#{ikusiMezuak.mezuak}"
+					emptyMessage="Ez duzu mota honetako mezurik."
+					styleClass="rides-table" scrollable="true" scrollHeight="400">
+
+					<p:column headerText="Mezuaren-ID-a" style="width:50px;">
+						<h:outputText value="#{mezua.id}" />
+					</p:column>
+					<p:column headerText="Mezua" style="width:60px;">
+						<h:outputText value="#{mezua.typerenMezua}" />
+					</p:column>
+					<p:column headerText="Noiz" style="width:100px;">
+						<h:outputText value="#{mezua.datamezua}" />
+					</p:column>
+
+					<p:column headerText="Diru kantitatea €" style="width:100px;">
+						<h:outputText value="#{mezua.diruMezu}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<div class="radio-section">
+					<h:outputLabel value="Zein erreserba ikusi nahi dituzu?:"
+						styleClass="label" />
+
+					<div class="radio-container">
+						<h:selectOneRadio id="mota" value="#{ikusiMezuak.mota}"
+							required="true" requiredMessage="* Mota bat aukeratu behar duzu"
+							styleClass="radio-button-group">
+
+							<f:selectItem itemValue="kajero" itemLabel="Dirua/atera sartu" />
+							<f:selectItem itemValue="erreserbak" itemLabel="Erreserba Mezuak" />
+							<f:selectItem itemValue="besteak" itemLabel="Besteak" />
+							<f:ajax event="change" render="nireForm:mezuTaula" />
+						</h:selectOneRadio>
+
+						<h:message for="mota" styleClass="error-message" />
+					</div>
+				</div>
+
+				<p>
+					<h:commandButton value="Atzera" action="menu" immediate="true"
+						styleClass="back-btn" />
+				</p>
+
+
+
+			</h:form>
+		</h:body>
+	</f:view>
+</ui:composition>
+</html>

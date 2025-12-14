@@ -1,92 +1,228 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:ui="http://java.sun.com/jsf/facelets"
-xmlns:h="http://java.sun.com/jsf/html"
-xmlns:f="http://java.sun.com/jsf/core"
-xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <ui:composition>
-<f:view>
-	<f:event type="preRenderView" listener="#{login.redirectDriver}" />
+	<f:view>
+		<f:event type="preRenderView" listener="#{login.redirectDriver}" />
 
-	<h:head>
-		<title>JavaServer Faces aplikazioa</title>
-		<h:outputStylesheet library="css" name="createRideStyle.css" />
-	</h:head>
-	<h:body styleClass="page-body">
-    <h:form id="nireForm" styleClass="form-container">
-        <h3 class="title">Sortu bidaia</h3>
+		<h:head>
+			<title>Create Ride</title>
+			<h:outputStylesheet library="css" name="createRideStyle.css" />
+		</h:head>
 
-        <table class="form-table">
-            <tr>
-                <td class="label">From:</td>
-                <td><h:inputText id="from" value="#{createRides.from}"
-                    required="true" requiredMessage="Irteera Hiria Beharrezkoa da"
-                    styleClass="input-field"/></td>
-                <td><h:message for="from" styleClass="error-message"/></td>
-            </tr>
+		<h:body styleClass="page-body">
+			<h:form id="nireForm" styleClass="form-container">
+				<h3 class="title">Sortu bidaia</h3>
 
-            <tr>
-                <td class="label">To:</td>
-                <td><h:inputText id="to" value="#{createRides.to}"
-                    required="true" requiredMessage="Helmuga hiria beharrezkoa da"
-                    styleClass="input-field"/></td>
-                <td><h:message for="to" styleClass="error-message"/></td>
-            </tr>
+				<table class="form-table">
 
-            <tr>
-                <td class="label">Data :</td>
-                <td>
-                    <p:calendar id="data" value="#{createRides.data}" navigator="true"
-                        mode="popUp" mindate="1d" readonlyInput="false" showOn="button"
-                        required="true" requiredMessage="Data beharrezkoa da"
-                        validatorMessage="Datak gaurko eguna baina geroagokoa izan behar du"
-                        styleClass="calendar-field">
-                        <p:ajax event="dateSelect" listener="#{createRides.onDateSelect}"
-                            update="dataMezua"/>
-                    </p:calendar>
-                </td>
-                <td><h:message id="dataMezua" for="data" styleClass="error-message"/></td>
-            </tr>
+					<tr>
+						<td class="label">From:</td>
+						<td><h:inputText id="from" value="#{createRides.from}"
+								required="true" requiredMessage="Irteera Hiria Beharrezkoa da"
+								styleClass="input-field">
+								<f:validateRegex pattern="^[a-zA-Z\s]+$" />
+								<f:ajax listener="#{createRides.fromListener}"
+									render=":nireForm:listaGeltokiak :nireForm:totala" />
+								<f:ajax execute="from" render="fromMezu" />
+							</h:inputText> <h:message id="fromMezu" for="from" styleClass="error-message" /></td>
+					</tr>
 
-            <tr>
-                <td class="label">Prezioa:</td>
-                <td><h:inputText id="price" value="#{createRides.price}"
-                    converterMessage="Prezioak zenbaki bat izan behar du"
-                    validatorMessage="Prezioak 0 baina handiagoa izan behar du"
-                    styleClass="input-field">
-                        <f:validateDoubleRange minimum="0.01"/>
-                        <f:ajax execute="price" render="priceMezua"/>
-                    </h:inputText>
-                </td>
-                <td><h:message id="priceMezua" for="price" styleClass="error-message"/></td>
-            </tr>
+					<tr>
+						<td class="label">Mota:</td>
+						<td><h:selectOneRadio id="mota" value="#{createRides.mota}"
+								required="true" styleClass="radio-button-group">
+								<f:selectItem itemValue="direkto" itemLabel="Direkto" />
+								<f:selectItem itemValue="geltokiekin" itemLabel="Geltokiekin" />
 
-            <tr>
-                <td class="label">Tokiak:</td>
-                <td><h:inputText id="places" value="#{createRides.places}"
-                    converterMessage="Toki kopuruak zenbaki bat izan behar du"
-                    validatorMessage="Toki kopurua 1 eta 8 artean egon behar da"
-                    styleClass="input-field"  pattern="yyyy/MM/dd">
-                        <f:validateLongRange minimum="1" maximum="8"/>
-                        <f:ajax execute="places" render="placeMezuak rideGood"/>
-                    </h:inputText></td>
-                <td><h:message id="placeMezuak" for="places" styleClass="error-message"/></td>
-            </tr>
-        </table>
+								<f:ajax event="change" listener="#{createRides.onMotaChange}"
+									render="@form" />
+							</h:selectOneRadio></td>
+					</tr>
 
-        <p class="button-row">
-            <h:commandButton value="Create" action="#{createRides.createRides}"
-                styleClass="btn btn-primary">
-                <f:ajax execute="@form" render="rideGood rideExists"/> </h:commandButton>
-            <h:commandButton value="EXIT" action="menu" immediate="true"
-                styleClass="btn btn-secondary"/>
-        </p>
 
-        <h:outputText id="rideGood" value="#{createRides.rideGood}" styleClass="success-message"/>
-        <h:outputText id="rideExists" value="#{createRides.rideExists}" styleClass="error-message"/>
-    </h:form>
-</h:body>
-</f:view>
+					<ui:fragment id="geltokiak"
+						rendered="#{createRides.mota eq 'geltokiekin'}">
+
+						<tr>
+							<td colspan="2"><span class="section-header">Tarteko
+									herriak</span></td>
+						</tr>
+
+						<tr>
+							<td colspan="2">
+								<div class="tarteko-row">
+									<div class="tarteko-group">
+										<h:outputLabel value="Herria:" for="tHerria"
+											styleClass="tarteko-label" />
+										<h:inputText id="tHerria" value="#{createRides.tartekoHerria}"
+											styleClass="input-field input-herria"
+											validatorMessage="gelokiak letrak izan behar ditu">
+											<f:validateRegex pattern="^$|^[a-zA-Z\s]+$" />
+										</h:inputText>
+									</div>
+
+									<div class="tarteko-group">
+										<h:outputLabel value="Prezioa (€):" for="tPrezioa"
+											styleClass="tarteko-label" />
+										<h:inputText id="tPrezioa"
+											value="#{createRides.tartekoPrezioa}"
+											styleClass="input-field input-prezioa"
+											converterMessage="Prezioak zenbaki bat izan behar du"
+											validatorMessage="Prezioak 0 baina handiagoa izan behar du">
+											<f:validateDoubleRange minimum="0.00" />
+										</h:inputText>
+									</div>
+
+									<div class="tarteko-group">
+										<h:commandButton value="Gehitu"
+											action="#{createRides.gehituTartekoa}"
+											styleClass="btn btn-secondary" style="margin: 0;">
+											<f:ajax
+												execute="tHerria tPrezioa :nireForm:from :nireForm:to :nireForm:price"
+												render="tHerria tPrezioa listaGeltokiak  msgTarteko msgPrezioa :nireForm:totala :nireForm:fromMezu :nireForm:toError :nireForm:priceMezua" />
+										</h:commandButton>
+										<h:commandButton value="Ezabatu"
+											action="#{createRides.ezabatuAzkena}"
+											styleClass="btn btn-secondary"
+											style="margin-left: 5px; background-color: #d9534f; border-color: #d43f3a; color: white;">
+											<f:ajax execute=":nireForm:from :nireForm:to :nireForm:price"
+												render="listaGeltokiak :nireForm:totala :nireForm:fromMezu :nireForm:toError :nireForm:priceMezua" />
+										</h:commandButton>
+									</div>
+								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="2"><h:message id="msgTarteko" for="tHerria"
+									styleClass="error-message" /> <h:message id="msgPrezioa"
+									for="tPrezioa" styleClass="error-message" /></td>
+						</tr>
+
+						<tr>
+							<td colspan="2"><p:dataTable id="listaGeltokiak"
+									value="#{createRides.tartekoGeltokiak}" var="h"
+									rowIndexVar="index" style="width:100%; margin-top:5px;"
+									emptyMessage="Ez daude geltokirik oraindik.">
+									<p:column headerText="Geltokia">
+										<h:outputText value="#{h}" />
+									</p:column>
+									<p:column headerText="Prezioa">
+										<h:outputText value="#{createRides.prezioBerri[index]} €" />
+									</p:column>
+								</p:dataTable></td>
+						</tr>
+					</ui:fragment>
+
+					<tr>
+						<td colspan="2"><p:panelGrid id="totala"
+								style="width:100%; margin-top:10px; margin-bottom: 10px; text-align:center;">
+								<p:row>
+									<p:column styleClass="ui-widget-header" style="width: 70%;">
+										<h:outputText value="Ibilbide Totala" />
+									</p:column>
+									<p:column styleClass="ui-widget-header" style="width: 30%;">
+										<h:outputText value="Prezioa Totala" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column style="font-weight: bold;">
+										<h:outputText value="#{createRides.ibilbideFinala}" />
+									</p:column>
+									<p:column style="font-weight: bold;">
+										<h:outputText value="#{createRides.prezioFinala} €" />
+									</p:column>
+								</p:row>
+							</p:panelGrid></td>
+					</tr>
+
+					<tr>
+						<td class="label">To:</td>
+						<td><h:inputText id="to" value="#{createRides.to}"
+								required="true" requiredMessage="Helmuga hiria beharrezkoa da"
+								styleClass="input-field">
+								<f:validateRegex pattern="^[a-zA-Z\s]+$" />
+								<f:ajax listener="#{createRides.fromListener}"
+									render=":nireForm:listaGeltokiak :nireForm:totala" />
+								<f:ajax execute="to" render="toError" />
+							</h:inputText> <h:message id="toError" for="to" styleClass="error-message" /></td>
+					</tr>
+
+
+					<tr>
+						<td class="label">Data:</td>
+						<td><p:calendar id="data" value="#{createRides.data}"
+								navigator="true" mode="popUp" mindate="1d" readonlyInput="false"
+								showOn="button" required="true"
+								requiredMessage="Data beharrezkoa da"
+								validatorMessage="Datak gaurko eguna baina geroagokoa izan behar du"
+								styleClass="calendar-field">
+								<p:ajax event="dateSelect"
+									listener="#{createRides.onDateSelect}" update="dataMezua" />
+							</p:calendar> <h:message id="dataMezua" for="data" styleClass="error-message" />
+						</td>
+					</tr>
+
+					<tr>
+						<td class="label">Prezioa: <br /> <h:outputText
+								value="(To eta azken aurreko geltokien arteko prezioa)"
+								rendered="#{createRides.mota eq 'geltokiekin'}"
+								style="font-size: 0.8em; font-weight: normal; color: gray;" />
+						</td>
+						<td><h:inputText id="price" value="#{createRides.price}"
+								styleClass="input-field"
+								converterMessage="Prezioak zenbaki bat izan behar du"
+								validatorMessage="Prezioak 0 baina handiagoa izan behar du">
+								<f:validateDoubleRange minimum="0.01" />
+								<f:ajax execute="price" render="priceMezua" />
+								<f:ajax listener="#{createRides.priceListener}"
+									render=":nireForm:listaGeltokiak :nireForm:totala" />
+							</h:inputText> <h:message id="priceMezua" for="price"
+								styleClass="error-message" /></td>
+					</tr>
+
+					<tr>
+						<td class="label">Tokiak:</td>
+						<td><h:inputText id="places" value="#{createRides.places}"
+								styleClass="input-field"
+								converterMessage="Toki kopuruak zenbaki bat izan behar du"
+								validatorMessage="Toki kopurua 1 eta 8 artean egon behar da">
+								<f:validateLongRange minimum="1" maximum="8" />
+								<f:ajax execute="places" render="placeMezuak rideGood" />
+							</h:inputText> <h:message id="placeMezuak" for="places"
+								styleClass="error-message" /></td>
+					</tr>
+					<tr>
+						<td><h3>Aukeratu kotxea:</h3></td>
+						<td><h:selectOneMenu id="kotxe"
+								value="#{createRides.kotxeMatrikula}" styleClass="select-menu">
+
+								<f:selectItems value="#{createRides.kotxeList}" var="k"
+									itemLabel="#{k.marka} (#{k.matrikula})"
+									itemValue="#{k.matrikula}" />
+							</h:selectOneMenu> <h:message for="kotxe" styleClass="error-message" /></td>
+					</tr>
+
+				</table>
+
+				<div class="button-row">
+					<h:commandButton value="Create" action="#{createRides.createRides}"
+						styleClass="btn btn-primary" />
+					<h:commandButton value="EXIT" action="menu" immediate="true"
+						styleClass="btn btn-secondary" />
+				</div>
+
+				<h:outputText id="rideGood" value="#{createRides.rideGood}"
+					styleClass="success-message" />
+				<h:outputText id="rideExists" value="#{createRides.rideExists}"
+					styleClass="error-message" />
+			</h:form>
+		</h:body>
+	</f:view>
 </ui:composition>
 </html>

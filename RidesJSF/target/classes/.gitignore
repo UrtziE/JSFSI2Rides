@@ -1,6 +1,2 @@
-/businessLogic/
-/configuration/
-/dataAccess/
-/domain/
 /eredua/
-/exceptions/
+/dataAccess/

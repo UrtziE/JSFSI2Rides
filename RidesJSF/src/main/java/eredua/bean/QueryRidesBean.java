@@ -58,6 +58,7 @@ public class QueryRidesBean implements Serializable {
 		} else {
 			rides = blfacade.getRides(from, to, data);
 			for (Ride ride : rides) {
+				ride.getDriver().setRating(blfacade.getBalorazioMedia(ride.getDriver()));
 				ride.setPrice(ride.lortuBidaiarenPrezioa(from, to));
 				ride.setUnekoIbilbide(ride.getIbilbidea(from, to));
 			}

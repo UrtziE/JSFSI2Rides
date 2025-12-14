@@ -1,9 +1,4 @@
 package businessLogic;
-import domain.Erreklamazioa;
-import domain.Kotxe;
-import domain.Mezua;
-import domain.Profile;
-import domain.Ride;
 import domain.*;
 import exceptions.RideMustBeLaterThanTodayException;
 
@@ -29,6 +24,8 @@ public interface BLFacade {
 	 */
 
 	public List<String> getDepartCities();
+	
+	public List<String> getDepartCitiesProba();
 
 	/**
 	 * This method returns all the arrival destinations, from all rides that depart
@@ -319,7 +316,7 @@ public interface BLFacade {
 	 * 
 	 */
 
-	public void baloratu(int balorazioa, Profile nori, RideRequest r);
+	public void baloratu(int balorazioa, Profile nori, RideRequest r,String mezua,Profile nork);
 
 	/**
 	 * Metodo honek gidari baten balorazioen media bueltatzen du
@@ -328,7 +325,7 @@ public interface BLFacade {
 	 * @return float balorazioa
 	 */
 
-	public float getBalorazioMedia(Driver driver);
+	public float getBalorazioMedia(Profile driver);
 
 	/**
 	 * Metodo honek alerta bat sortzen du bidai batez abisatzeko
@@ -340,7 +337,7 @@ public interface BLFacade {
 	 * 
 	 */
 
-	public void sortuAlerta(Traveller t, String from, String to, Date when);
+	public boolean sortuAlerta(Traveller t, String from, String to, Date when);
 
 	/**
 	 * Metodo honek pasatutako parametroak dituen alerta itzultzen du
@@ -530,9 +527,13 @@ public interface BLFacade {
 
 	public Driver getDriver(String izena);
 	
+	public List<Mezua> getAlertaMezuak(Alerta alerta);
+
 	
+	public List<Ride> getRides(String from);
 	
-	
+	public Profile getProfileByUser(String user) ;
+	public Kotxe getKotxeByMatrikula(String matrikula) ;
 	
 	
 }

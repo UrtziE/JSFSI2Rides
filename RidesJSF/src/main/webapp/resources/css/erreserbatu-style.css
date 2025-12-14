@@ -1,231 +1,251 @@
-/* Opción 3: Estilo con Gradiente Turquesa */
-.bidaia-badago .ui-state-default {
-    background-image: linear-gradient(45deg, #14B8A6, #2DD4BF) !important;
-    background-color: transparent !important;
-    color: #FFFFFF !important;
-    border: none !important;
-    border-radius: 50%;
-    box-shadow: 0 4px 14px 0 rgba(20, 184, 166, 0.4);
-    transition: all 0.3s ease;
-}
-
-/* Efecto hover */
-.bidaia-badago .ui-state-hover {
-    box-shadow: 0 6px 20px 0 rgba(13, 148, 136, 0.5);
-    transform: scale(1.05);
-}
-
-
+/* --- OROKORRA --- */
 body {
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    
-    /* Un gradiente suave de un azul claro a un verde menta */
-    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-    
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f4f9;
     margin: 0;
-    font-family: "Segoe UI", sans-serif;
-    box-sizing: border-box;
+    padding: 20px;
+    color: #333;
 }
 
-/* El formulario sigue siendo blanco para máxima legibilidad sobre el gradiente */
-#erreserbatu, #nireForm {
-    width: 1000px;
-    max-width: 95%;
-    padding: 35px;
-
-    /* Blanco sólido y opaco. Simple, limpio, efectivo. */
+/* Edukiontzi nagusia txartel (card) itxurarekin */
+.form-container {
     background-color: #ffffff;
-    
-    border-radius: 16px;
-    
-    /* Una sombra más pronunciada pero suave para que "flote" con claridad */
-    box-shadow: 0 20px 50px rgba(41, 52, 73, 0.15);
-    
-    border: none; /* No necesita borde */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 h3 {
-    color: #33475b;
-    text-align: center;
-    margin-bottom: 25px;
+    color: #4a4a4a;
+    border-bottom: 2px solid #7928CA;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
     font-weight: 600;
 }
 
-
-input[type="text"], select, .ui-inputfield, .ui-calendar input {
+/* --- FORMULARIO TAULAK (Inputak) --- */
+/* Zure XHTMLak <table> erabiltzen du inputetarako (.form-table) */
+.form-table {
     width: 100%;
-    height: 38px;            /* CAMBIO: Reducido de 50px a 38px */
-    padding: 6px 12px;       /* CAMBIO: Menos relleno interno */
-    font-size: 14px;         /* CAMBIO: Letra más pequeña (de 16px a 14px) */
-    border-radius: 8px;      /* CAMBIO: Radio un poco más pequeño */
-    border: 1px solid #b0c4de; /* Borde más fino */
-    background-color: #f7f9fc;
-    transition: 0.25s ease;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
-input[type="text"]:focus, .ui-inputfield:focus, .ui-calendar input:focus {
-    border-color: #3498db;
-    background-color: #e6f0fa;
-    box-shadow: 0 0 8px rgba(52,152,219,0.25);
+.form-table td {
+    padding: 10px;
+    vertical-align: middle;
 }
 
-
-.ui-calendar {
-    display: flex !important;
-    align-items: center !important;
-}
-
-.ui-calendar .ui-inputfield {
-    flex: 1 1 auto;
-    margin-right: 8px;       /* CAMBIO: Menos espacio entre input y botón */
-}
-
-.ui-calendar .ui-button {
-    order: 2;
-    height: 38px;            /* CAMBIO: Ajustado a la altura del input */
-    width: 38px;             /* CAMBIO: Botón cuadrado más pequeño */
-    border-radius: 8px;
-    background-color: #3498db !important;
-    color: white !important;
-    font-size: 13px;         /* Icono más pequeño */
-}
-
-.ui-calendar .ui-button:hover {
-    background-color: #2179b5 !important;
-}
-
-
-table {
-    width: 100%;
-    border-spacing: 10px 10px; /* CAMBIO: Reducido drásticamente para perder altura */
-}
-
-td.label {
-    font-weight: bold;
-    color: #444;
-    font-size: 14px;         /* CAMBIO: Letra de etiquetas más pequeña */
-    width: 30%;              /* Opcional: asegurar que las etiquetas no ocupen demasiado */
-}
-
-/* BOTONES MÁS PEQUEÑOS */
-.button-row {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;        /* CAMBIO: Menos margen superior */
-}
-
-.btn {
-    padding: 10px 24px;      /* CAMBIO: Menos relleno (antes 16px 32px) */
-    font-size: 15px;         /* CAMBIO: Letra más pequeña */
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
+.form-table h3 {
+    margin: 0;
     border: none;
+    font-size: 1.1em;
+    color: #555;
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #3498db, #5dade2);
+/* Select menuak eta Inputak */
+.select-menu, 
+.calendar-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Garrantzitsua zabalerarako */
+    transition: border-color 0.3s;
+}
+
+.select-menu:focus, 
+.calendar-input input:focus {
+    border-color: #7928CA;
+    outline: none;
+    box-shadow: 0 0 5px rgba(121, 40, 202, 0.2);
+}
+
+/* --- PRIMEFACES DATA TABLE (.rides-table) --- */
+/* PrimeFaces estiloak gainidazten taula modernoagoa egiteko */
+
+.rides-table .ui-datatable {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* Ertz biribilduak mantentzeko */
+}
+
+/* Goiburua (Header) */
+.rides-table .ui-datatable-header,
+.rides-table .ui-datatable th {
+    background-color: #7928CA !important; /* Kolore nagusia */
+    color: #ffffff !important;
+    padding: 12px 10px !important;
+    text-align: center;
+    font-weight: bold;
+    border: none !important;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+/* Lerroak (Rows) */
+.rides-table .ui-datatable tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.rides-table .ui-datatable tbody tr td {
+    padding: 12px 10px !important;
+    color: #444;
+    border: none !important; /* Barneko ertzak kendu garbiagoa izateko */
+}
+
+/* Zebra efektua (Lerro bakoitiak eta bikoitiak) */
+.rides-table .ui-datatable tbody tr.ui-datatable-even {
+    background-color: #fdfdfd;
+}
+
+.rides-table .ui-datatable tbody tr.ui-datatable-odd {
+    background-color: #ffffff;
+}
+
+/* Hover efektua sagua pasatzean */
+.rides-table .ui-datatable tbody tr:hover {
+    background-color: #f1e4ff !important; /* More argia */
+    cursor: pointer;
+}
+
+/* Zentratutako zutabeak (XHTML-an style="text-align:center" dutenak laguntzeko) */
+.rides-table td {
+    vertical-align: middle;
+}
+
+/* --- BOTOIAK --- */
+/* PrimeFaces botoiak eta botoi orokorrak */
+
+button.ui-button, 
+.back-btn, 
+.create-btn,
+.menu-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+}
+
+/* Aukeratu botoia (Table barruan) */
+.ui-button-success {
+    background-color: #28ca79 !important; /* Berdea */
+    border: 1px solid #28ca79 !important;
+}
+
+.ui-button-success:hover {
+    background-color: #1e9c5e !important;
+}
+
+/* Erreserbatu botoia (Handia) */
+.create-btn {
+    background-color: #7928CA;
     color: white;
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 1.1rem;
 }
 
-.btn-primary:hover {
-    background: linear-gradient(135deg, #5dade2, #3498db);
+.create-btn:hover {
+    background-color: #5b1d99;
 }
 
-.btn-secondary {
-    background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+/* Atzera botoia */
+.back-btn {
+    background-color: #6c757d;
     color: white;
+    margin-top: 20px;
 }
 
-.btn-secondary:hover {
-    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+.back-btn:hover {
+    background-color: #5a6268;
 }
 
+/* --- INFORMAZIO PANELA (#erreserba-info) --- */
+#erreserba-info-container {
+    margin-top: 30px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* PrimeFaces PanelGrid garbitzea */
+#erreserba-info .ui-panelgrid .ui-panelgrid-cell {
+    border: none !important;
+    background: none !important;
+    padding: 8px 12px;
+}
+
+#erreserba-info .ui-panelgrid .ui-widget-content {
+    border: none !important;
+}
+
+/* Nabarmendu datuak */
+#erreserba-info h3 {
+    border-bottom: 1px dashed #ccc;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* --- MEZUAK --- */
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+}
 
 .error-message {
-    color: #d00000;
-    font-size: 13px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    margin-top: 15px;
+    text-align: center;
 }
 
-.success-message {
-    color: #00b33c;
-    font-weight: bold;
-    font-size: 14px;
-}
-/* ================================================= */
-/*          OPCIÓN 1: GRADIENTE VIBRANTE             */
-/* ================================================= */
-
-.create-btn {
-  /* --- Estructura y Texto --- */
-  padding: 12px 28px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  
-  /* --- Aspecto Visual --- */
-  border: none;
-  border-radius: 12px; /* Bordes redondeados modernos */
-  cursor: pointer;
-  
-  /* ¡La magia del gradiente! Un verde fresco que inspira "adelante" */
-  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
-  
-  /* Sombra sutil para dar efecto de profundidad */
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-
-  /* Transición suave para todos los efectos */
-  transition: all 0.2s ease-in-out;
+/* --- KALENDARIOA NABARMENDU (Script-a) --- */
+/* Zure JS script-ak 'bidaia-badago' klasea jartzen du */
+.bidaia-badago a {
+    background-color: #d1fae5 !important; /* Berde oso argia */
+    color: #065f46 !important; /* Berde iluna testua */
+    font-weight: bold !important;
+    border-radius: 50%;
 }
 
-/* --- Efecto al pasar el ratón por encima (Hover) --- */
-.create-btn:hover {
-  /* El botón se "levanta" ligeramente */
-  transform: translateY(-3px);
-  
-  /* La sombra se hace más pronunciada para realzar el efecto de elevación */
-  box-shadow: 0 7px 25px rgba(40, 167, 69, 0.4);
+/* Animazio txikia panelak agertzean */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Efecto al hacer clic (Active) --- */
-.create-btn:active {
-  /* El botón vuelve a su sitio para simular que lo presionas */
-  transform: translateY(0);
-  
-  /* La sombra se reduce para dar la sensación de que se "hunde" */
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-}
-.back-btn {
-  padding: 12px 28px;
-  font-size: 16px;
-  font-weight: bold;
-  
-  /* El color del texto es un gris oscuro, no negro puro */
-  color: #495057; 
-  
-  /* Borde del mismo color que el texto */
-  border: 2px solid #ced4da;
-  
-  border-radius: 12px;
-  cursor: pointer;
-  
-  /* Fondo transparente */
-  background-color: transparent;
-  
-  transition: all 0.2s ease-in-out;
-}
-
-/* Al pasar el ratón, le damos un fondo sutil y un borde más oscuro */
-.back-btn:hover {
-  background-color: #f8f9fa; /* Un gris muy claro, casi blanco */
-  border-color: #adb5bd;
-  transform: translateY(-2px);
-}
-
-.back-btn:active {
-  transform: translateY(0);
-  background-color: #e9ecef; /* Un gris un poco más oscuro al hacer clic */
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px;
+    }
+    
+    .rides-table .ui-datatable-header,
+    .rides-table .ui-datatable th,
+    .rides-table .ui-datatable td {
+        font-size: 0.85rem;
+        padding: 8px 4px !important;
+    }
+    
+    .ui-button-text {
+        font-size: 0.8rem;
+    }
 }

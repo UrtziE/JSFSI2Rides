@@ -1,73 +1,130 @@
+/* --- ITURRIAK ETA OROKORRA --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 body {
+    font-family: 'Poppins', sans-serif;
+    /* Atzealdea pixka bat argitu dugu morearekin kontrastea egiteko */
+    background: linear-gradient(135deg, #f0f2f5 0%, #dbe4ef 100%);
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #4a90e2; /* azul suave y uniforme */
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* --- MENUKO KAXA NAGUSIA --- */
 .menu-container {
-    /* Quitamos el margin-top, ya no es necesario */
-    background: white;
-    padding: 30px 40px;
-    border-radius: 15px;
-    width: 350px;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 800px;
+    padding: 45px;
+    border-radius: 20px;
+    /* Itzala leundu dugu */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     text-align: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    position: relative;
+    box-sizing: border-box;
+    max-height: 95vh;
+    overflow-y: auto;
 }
 
-.menu-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #2c3e50;
+/* --- AGURRA --- */
+.user-greeting {
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #f8f9fa;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 500;
     margin-bottom: 25px;
+    border: 1px solid #eaeaea;
 }
 
+.user-greeting span {
+    color: #7928CA;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* --- IZENBURUA --- */
+.menu-title {
+    color: #333;
+    font-size: 2rem;
+    margin: 0 0 35px 0;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.menu-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: #7928CA;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* --- BOTOIEN EDUKIONTZIA --- */
 .menu-buttons {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 15px; /* Tartea botoien artean */
+    margin: 0;
+    padding: 0;
 }
 
+/* --- BOTOIAK (DENAK MOREAK) --- */
+/* Bai .create-btn eta bai .query-btn estilo bera izango dute orain */
 .menu-btn {
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.2s ease;
-    color: white;
-}
-
-.create-btn {
-    background-color: #3498db;
-}
-
-.create-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-}
-
-.query-btn {
-    background-color: #1abc9c;
-}
-
-.query-btn:hover {
-    background-color: #16a085;
-    transform: translateY(-2px);
-}
-
-/* --- ¡ESTILOS DEL SALUDO CORREGIDOS! --- */
-.user-greeting {
-    /* Quitamos todo lo anterior (position, top, right, etc.) */
-    font-size: 16px;
-    font-weight: bold;
-    color: #34495e; /* Un color de texto oscuro pero suave */
-    margin-bottom: 20px; /* Espacio para separarlo del título "MENUA" */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
     
-    text-align: center; 
+    /* KOLORE MOREA DENENTZAT */
+    color: white;
+    background: linear-gradient(135deg, #7928CA 0%, #9e47ff 100%);
+    box-shadow: 0 4px 15px rgba(121, 40, 202, 0.25); /* Itzal morea */
+}
+
+/* Hover efektua (Sagua gainean jartzean) */
+.menu-btn:hover {
+    transform: translateY(-3px); /* Pixka bat igo */
+    box-shadow: 0 8px 25px rgba(121, 40, 202, 0.4); /* Itzala indartu */
+    filter: brightness(1.05); /* Pixka bat argitu */
+}
+
+/* Klik egiteko efektua */
+.menu-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(121, 40, 202, 0.3);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 480px) {
+    .menu-container {
+        width: 90%;
+        padding: 25px;
+    }
+    
+    .menu-title {
+        font-size: 1.6rem;
+    }
+    
+    .menu-btn {
+        padding: 14px;
+        font-size: 0.9rem;
+    }
 }

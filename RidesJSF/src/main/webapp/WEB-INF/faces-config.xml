@@ -47,6 +47,26 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
 			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
 		</navigation-case>
+				<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+					<navigation-case>
+			<from-outcome>createAlerta</from-outcome>
+			<to-view-id>/CreateAlerta.xhtml</to-view-id>
+		</navigation-case>
+			<navigation-case>
+			<from-outcome>proba</from-outcome>
+			<to-view-id>/Proba.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
+		</navigation-case>
 		
 	</navigation-rule>
 
@@ -91,6 +111,22 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
 			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
 		</navigation-case>
+				<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+					<navigation-case>
+			<from-outcome>createAlerta</from-outcome>
+			<to-view-id>/CreateAlerta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 	<!-- CREATE RIDES IBILBIDEAK -->
@@ -121,6 +157,14 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 		<navigation-case>
 			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
 			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
 		</navigation-case>
 
 	</navigation-rule>
@@ -153,6 +197,14 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 		<navigation-case>
 			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
 			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
 		</navigation-case>
 
 	</navigation-rule>
@@ -239,6 +291,22 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
 			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
 		</navigation-case>
+				<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+					<navigation-case>
+			<from-outcome>createAlerta</from-outcome>
+			<to-view-id>/CreateAlerta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	<!-- Erreserbatu ibilbidea -->
 	<navigation-rule>
@@ -259,6 +327,18 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 		<navigation-case>
 			<from-outcome>menu</from-outcome>
 			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+				<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+					<navigation-case>
+			<from-outcome>createAlerta</from-outcome>
+			<to-view-id>/CreateAlerta.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<!-- Erreserbak onartu eta deuseztatu ibilbidea -->
@@ -288,6 +368,219 @@ https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_3_0.xsd"
 		<navigation-case>
 			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
 			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
+		</navigation-case>
+		</navigation-rule>
+		
+		<!-- IKUSI ERRESERBAK IBILBIDEA -->
+		<navigation-rule>
+		<display-name>IkusiErreserbak.xhtml</display-name>
+		<from-view-id>/IkusiErreserbak.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>query</from-outcome>
+			<to-view-id>/QueryRides.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>diruaKudeatu</from-outcome>
+			<to-view-id>/DiruaKudeatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>erreserbatu</from-outcome>
+			<to-view-id>/Erreserbatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+					<navigation-case>
+			<from-outcome>createAlerta</from-outcome>
+			<to-view-id>/CreateAlerta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>baloratu</from-outcome>
+			<to-view-id>/Baloratu.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<!-- MEZUAK IKUSI IBILBIDEA -->
+	<navigation-rule>
+		<display-name>IkusiMezuak.xhtml</display-name>
+		<from-view-id>/IkusiMezuak.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>query</from-outcome>
+			<to-view-id>/QueryRides.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/CreateRides.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>createCar</from-outcome>
+			<to-view-id>/CreateCar.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>diruaKudeatu</from-outcome>
+			<to-view-id>/DiruaKudeatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>erreserbatu</from-outcome>
+			<to-view-id>/Erreserbatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
+			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
+		</navigation-case>
+				<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+					<navigation-case>
+			<from-outcome>createAlerta</from-outcome>
+			<to-view-id>/CreateAlerta.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>CreateAlerta.xhtml</display-name>
+		<from-view-id>/CreateAlerta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>query</from-outcome>
+			<to-view-id>/QueryRides.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>diruaKudeatu</from-outcome>
+			<to-view-id>/DiruaKudeatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>erreserbatu</from-outcome>
+			<to-view-id>/Erreserbatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+				<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+			<navigation-case>
+			<from-outcome>createAlerta</from-outcome>
+			<to-view-id>/CreateAlerta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>Proba.xhtml</display-name>
+		<from-view-id>/Proba.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>proba2</from-outcome>
+			<to-view-id>/Proba2.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		<navigation-rule>
+		<display-name>Proba2.xhtml</display-name>
+		<from-view-id>/Proba2.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>proba</from-outcome>
+			<to-view-id>/Proba.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>Baloratu.xhtml</display-name>
+		<from-view-id>/Baloratu.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>ikusiErreserbak</from-outcome>
+			<to-view-id>/IkusiErreserbak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>IkusiBidaiak.xhtml</display-name>
+		<from-view-id>/IkusiBidaiak.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>query</from-outcome>
+			<to-view-id>/QueryRides.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/CreateRides.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>createCar</from-outcome>
+			<to-view-id>/CreateCar.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>diruaKudeatu</from-outcome>
+			<to-view-id>/DiruaKudeatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menu</from-outcome>
+			<to-view-id>/Menu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>erreserbakOnartuDeuseztatu</from-outcome>
+			<to-view-id>/ErreserbakOnartuDeuseztatu.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiMezuak</from-outcome>
+			<to-view-id>/IkusiMezuak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>ikusiBidaiak</from-outcome>
+			<to-view-id>/IkusiBidaiak.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>baloratu</from-outcome>
+			<to-view-id>/Baloratu.xhtml</to-view-id>
 		</navigation-case>
 		</navigation-rule>
 

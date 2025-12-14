@@ -67,6 +67,7 @@ public class LoginBean implements Serializable {
 	}
 	public String logout() {
 	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	     
 	     mota=null;
 		 oraingoUser=null;
 		 
@@ -85,7 +86,7 @@ public class LoginBean implements Serializable {
 	}
 	public void redirectUser() {
 		 try {		    		     
-			 if (this.oraingoUser!=null) {	            
+			 if (this.oraingoUser==null) {	            
 		            FacesContext.getCurrentInstance()
 		                .getExternalContext()
 		                .redirect("Menu.xhtml"); 
@@ -165,6 +166,12 @@ public class LoginBean implements Serializable {
 
 
 	public void setOraingoUser(Profile oraingoUser) {
+		if(oraingoUser instanceof Traveller) {
+			mota="Traveller";
+		}else {
+			mota="Driver";
+		}
+		user= oraingoUser.getUser();
 		this.oraingoUser = oraingoUser;
 	}
 

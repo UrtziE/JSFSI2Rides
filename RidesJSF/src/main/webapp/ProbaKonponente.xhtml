@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <f:view>
+        <h:head>
+            <title>PROBA</title>
+            <h:outputStylesheet library="css" name="proba-style.css" />
+        </h:head>
+
+        <h:body>
+            <h:form id="queryRides" styleClass="form-container">
+
+                <h3>Mesedez, aukeratu bidaia nondik irteten den</h3>
+
+                <table class="form-table">
+                    <tr>
+                        <td><h3>IRTEERA HIRIAK:</h3></td>
+                        <td>
+                            <h:selectOneMenu id="from" value="#{proba.from}" styleClass="select-menu">
+                                <f:selectItems value="#{proba.fromCities}" />
+                               
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+
+                
+                </table>
+                 <h:commandButton value="BIDAIA GUZTIAK ERAKUTSI" action="#{proba.konprobatu}" styleClass="ikusi-btn" />
+
+ 
+                    <h:commandButton value="Atzera" action="menu"
+                                     immediate="true"
+                                     styleClass="back-btn" />
+                     <h:messages id="mezuak" style="color:red"/>
+               
+            </h:form>
+
+   
+        </h:body>
+    </f:view>
+</ui:composition>
+</html>

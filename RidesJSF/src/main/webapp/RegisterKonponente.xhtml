@@ -87,13 +87,13 @@ xmlns:p="http://primefaces.org/ui">
 			</table>
 
 			<p class="button-row">
-				<h:commandButton value="Register" action="menu"
-					styleClass="btn btn-primary" />
+				<h:commandButton value="Register" action="#{register.register}"
+					render= ":nireForm:mezua" styleClass="btn btn-primary" />
 				<h:commandButton value="EXIT" action="menu" immediate="true"
 					styleClass="btn btn-secondary" />
 			</p>
 
-			<h:outputText id="mezua" globalOnly="true" styleClass="error-message" />
+			<h:messages id="mezua" globalOnly="true" styleClass="error-message" />
 
 		</h:form>
 	</h:body>

@@ -677,7 +677,7 @@ public class DataAccess {
 		return mList;
 	}
 
-	public void baloratu(int balorazioa, Profile nori, RideRequest r) {
+	public void baloratu(int balorazioa, Profile nori, RideRequest r,String mezua,Profile nork) {
 		db.getTransaction().begin();
 		Profile p = db.find(Profile.class, nori.getUser());
 		RideRequest request = db.find(RideRequest.class, r.getId());
@@ -689,7 +689,7 @@ public class DataAccess {
 			request.setBaloratuaTraveller(true);
 		}
 
-		p.addBalorazioa(balorazioa);
+	//	p.addBalorazioa(nork, mezua, balorazioa);
 		
 		db.getTransaction().commit();
 		

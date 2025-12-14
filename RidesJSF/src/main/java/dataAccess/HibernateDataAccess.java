@@ -28,6 +28,7 @@ import domain.Ride;
 import domain.RideContainer;
 import domain.RideRequest;
 import domain.Traveller;
+import domain.Balorazioa;
 import eredua.JPAUtil;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
@@ -40,6 +41,8 @@ public class HibernateDataAccess {
 	}
 
 	public List<String> getDepartCities() {
+		this.konprobatuBidaienEgunak();
+
 		EntityManager db = JPAUtil.getEntityManager();
 		List<String> cities = new ArrayList<String>();
 		try {
@@ -51,6 +54,27 @@ public class HibernateDataAccess {
 			for (Ride ride : rides) {
 				cities = ride.addDepartingCities(cities);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+
+		return cities;
+
+	}
+
+	public List<String> getDepartCitiesProba() {
+		this.konprobatuBidaienEgunak();
+
+		EntityManager db = JPAUtil.getEntityManager();
+		List<String> cities = new ArrayList<String>();
+		try {
+			TypedQuery<String> query = db.createQuery("SELECT DISTINCT r.from FROM Ride r ORDER BY r.from",
+					String.class);
+
+			cities = query.getResultList();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -114,10 +138,10 @@ public class HibernateDataAccess {
 				">> DataAccess: createRide=> from= " + from + " to= " + to + " driver=" + driverUser + " date " + date);
 		EntityManager db = JPAUtil.getEntityManager();
 		try {
-			if (new Date().compareTo(date) > 0) {
-				db.close();
-				throw new RideMustBeLaterThanTodayException();
-			}
+			
+			  if (new Date().compareTo(date) > 0) { db.close(); throw new
+			 RideMustBeLaterThanTodayException(); }
+			 
 
 			db.getTransaction().begin();
 
@@ -136,10 +160,10 @@ public class HibernateDataAccess {
 			// next instruction can be obviated
 			// db.persist(driver);
 
+			konprobatuAlertak(ride, db);
+			System.out.println("Ondo sortu da ride-a");
 			db.getTransaction().commit();
 			db.close();
-			konprobatuAlertak(ride);
-			System.out.println("Ondo sortu da ride-a");
 			return ride;
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
@@ -170,6 +194,7 @@ public class HibernateDataAccess {
 	public List<Ride> getRides(String from, String to, Date date) {
 		// System.out.println(">> DataAccess: getRides=> from= " + from + " to= " + to +
 		// " date " + date);
+
 		EntityManager db = JPAUtil.getEntityManager();
 
 		List<Ride> res = new ArrayList<>();
@@ -183,6 +208,7 @@ public class HibernateDataAccess {
 			List<Ride> rides = query.getResultList();
 			for (Ride ride : rides) {
 				ride.getKotxe().toString();
+				ride.getEskakizunak().toString();
 				// System.out.println(ride.getKotxe());
 				if (ride.badaBideSeatekin(from, to)) {
 					res.add(ride);
@@ -207,16 +233,15 @@ public class HibernateDataAccess {
 		try {
 			db.getTransaction().begin();
 			TypedQuery<Ride> query = db.createQuery(
-					"SELECT r FROM Ride r WHERE r.egoera=?1 AND r.driver=?2 AND r.nPlaces>?3 ", Ride.class);
-			query.setParameter(1, EgoeraRide.MARTXAN);
+					"SELECT r FROM Ride r WHERE r.driver=?2 AND r.nPlaces>?3 ", Ride.class);
 			query.setParameter(2, driver);
 			query.setParameter(3, 0);
 
 			List<Ride> rides = query.getResultList();
 			for (Ride ride : rides) {
-				
+
 				ride.getGeltokiList().toString();
-				
+
 				ride.getEskakizunak().size();
 				res.add(ride);
 			}
@@ -270,6 +295,9 @@ public class HibernateDataAccess {
 			Ride r = db.find(Ride.class, ride.getRideNumber());
 			r.getEskakizunak().size();
 			emaitza = r.getEskakizunak();
+			for(RideRequest request: emaitza) {
+				request.getTraveller().getBalorazioak().toString();
+			}
 			db.getTransaction().commit();
 		} catch (Exception e) {
 			db.getTransaction().rollback();
@@ -283,39 +311,68 @@ public class HibernateDataAccess {
 	}
 
 	public List<Traveller> getTravellersOfRideDone(Ride ride) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager();
-		 * 
-		 * Ride r = db.find(Ride.class, ride.getRideNumber());
-		 * 
-		 * return r.travellersDone();
-		 */
-		return null;
+
+		EntityManager db = JPAUtil.getEntityManager();
+		List<Traveller> travellerList = new ArrayList<>();
+		try {
+			db.getTransaction().begin();
+
+			Ride r = db.find(Ride.class, ride.getRideNumber());
+			travellerList = r.travellersDone();
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return travellerList;
 
 	}
 
 	public List<Traveller> getTravellersOfRideNotDone(Ride ride) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager();
-		 * 
-		 * Ride r = db.find(Ride.class, ride.getRideNumber());
-		 * 
-		 * 
-		 * return r.travellersNotDone();
-		 */
-		return null;
+
+		EntityManager db = JPAUtil.getEntityManager();
+		List<Traveller> travellerList = new ArrayList<>();
+		try {
+			db.getTransaction().begin();
+
+			Ride r = db.find(Ride.class, ride.getRideNumber());
+			travellerList = r.travellersNotDone();
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return travellerList;
 
 	}
 
 	public List<RideRequest> getRidesRequestsOfTraveller(Traveller traveller) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager();
-		 * 
-		 * Traveller t = db.find(Traveller.class, traveller.getUser()); db.close();
-		 * 
-		 * return t.getRequests();
-		 */
-		return null;
+		this.konprobatuBidaienEgunak();
+
+		EntityManager db = JPAUtil.getEntityManager();
+		List<RideRequest> emaitza = new ArrayList<RideRequest>();
+		try {
+			db.getTransaction().begin();
+
+			Traveller t = db.find(Traveller.class, traveller.getUser());
+			t.getRequests().toString();
+
+			emaitza = t.getRequests();
+
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+
+		} finally {
+			db.close();
+		}
+
+		return emaitza;
 
 	}
 
@@ -539,43 +596,64 @@ public class HibernateDataAccess {
 
 	// kz2
 	public void kantzelatu(Ride r) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); db.getTransaction().begin();
-		 * 
-		 * Ride ride = db.find(Ride.class, r.getRideNumber());
-		 * ride.setEgoera(EgoeraRide.KANTZELATUA);
-		 * 
-		 * for (RideRequest request : ride.getEskakizunak()) { if
-		 * (!request.getState().equals(EgoeraRideRequest.REJECTED)) { Traveller t =
-		 * request.getTraveller(); float prezioa = request.getPrezioa();
-		 * t.gehituDirua(prezioa); request.setState(EgoeraRideRequest.REJECTED);
-		 * t.gehituMezuaTransaction(5, prezioa, request);
-		 * 
-		 * } }
-		 * 
-		 * db.getTransaction().commit();
-		 */
+
+		EntityManager db = JPAUtil.getEntityManager();
+		try {
+		db.getTransaction().begin();
+
+		Ride ride = db.find(Ride.class, r.getRideNumber());
+		ride.setEgoera(EgoeraRide.KANTZELATUA);
+
+		for (RideRequest request : ride.getEskakizunak()) {
+			if (!request.getState().equals(EgoeraRideRequest.REJECTED)) {
+				Traveller t = request.getTraveller();
+				float prezioa = request.getPrezioa();
+				t.gehituDirua(prezioa);
+				request.setState(EgoeraRideRequest.REJECTED);
+				request.setWhenDecided(new Date());
+				t.gehituMezuaTransaction(5, prezioa, request);
+
+			}
+		}
+
+		db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+
+		} finally {
+			db.close();
+		}
+
 	}
 
 	// kz 3
 	public void egindaEdoEzEgina(RideRequest request, boolean onartuta) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager();
-		 * 
-		 * db.getTransaction().begin();
-		 * 
-		 * RideRequest r = db.find(RideRequest.class, request.getId()); Ride ride =
-		 * r.getRide(); Driver d = ride.getDriver(); Traveller t = r.getTraveller();
-		 * 
-		 * t.doneNotDoneErreserbaBerdinak(onartuta, ride,d);
-		 * 
-		 * 
-		 * db.getTransaction().commit();
-		 */
+
+		EntityManager db = JPAUtil.getEntityManager();
+		try {
+			db.getTransaction().begin();
+
+			RideRequest r = db.find(RideRequest.class, request.getId());
+			Ride ride = r.getRide();
+			Driver d = ride.getDriver();
+			Traveller t = r.getTraveller();
+
+			t.doneNotDoneErreserbaBerdinak(onartuta, ride, d);
+
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+
+		} finally {
+			db.close();
+		}
+
 	}
 
 	public boolean onartuEdoDeuseztatuErreserba(RideRequest request, boolean onartuta) {
-		boolean emaitza=false;
+		boolean emaitza = false;
 		EntityManager db = JPAUtil.getEntityManager();
 		try {
 
@@ -591,7 +669,7 @@ public class HibernateDataAccess {
 			}
 			r.setWhenDecided(new Date());
 			db.getTransaction().commit();
-			emaitza=true;
+			emaitza = true;
 		} catch (Exception e) {
 			db.getTransaction().rollback();
 			e.printStackTrace();
@@ -634,7 +712,7 @@ public class HibernateDataAccess {
 				rq = null;
 			} else {
 
-				rq = createRideRequest(rd, request, t);
+				rq = createRideRequest(rd, request, t, db);
 				rd.addRequest(rq);
 				db.getTransaction().commit();
 				System.out.println("Ondo gordeta");
@@ -657,7 +735,7 @@ public class HibernateDataAccess {
 		return (rd.lortuEserlekuKopMin(requestFrom, requestTo) >= seats);
 	}
 
-	private RideRequest createRideRequest(Ride ride, RideRequest request, Traveller t) {
+	private RideRequest createRideRequest(Ride ride, RideRequest request, Traveller t, EntityManager db) {
 
 		String requestFrom = request.getFromRequested();
 		String requestTo = request.getToRequested();
@@ -666,6 +744,8 @@ public class HibernateDataAccess {
 
 		t.kenduDirua(ride.lortuBidaiarenPrezioa(requestFrom, requestTo) * seats);
 		request = t.addRequest(time, ride, seats, requestFrom, requestTo);
+		db.persist(request);
+		db.flush();
 
 		t.gehituMezuaTransaction(0, ride.lortuBidaiarenPrezioa(requestFrom, requestTo) * seats, request);
 
@@ -673,11 +753,24 @@ public class HibernateDataAccess {
 	}
 
 	public Ride getRideFromRequest(RideRequest erreserba) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); RideRequest request =
-		 * db.find(RideRequest.class, erreserba.getId());
-		 */
-		return null/* request.getRide() */;
+
+		EntityManager db = JPAUtil.getEntityManager();
+		Ride ride = null;
+		try {
+			db.getTransaction().begin();
+			RideRequest request = db.find(RideRequest.class, erreserba.getId());
+			request.getRide().getGeltokiList().toString();
+
+			ride = request.getRide();
+			ride.getKotxe().toString();
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return ride;
 
 	}
 
@@ -751,61 +844,138 @@ public class HibernateDataAccess {
 	}
 
 	private List<Mezua> lortuMezuak(Profile p, int type) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); db.getTransaction().begin();
-		 * Profile profile = db.find(Profile.class, p.getUser()); List<Mezua> mList1 =
-		 * profile.getMezuList(); db.getTransaction().commit(); List<Mezua> mList = new
-		 * LinkedList<Mezua>(); for (Mezua mezu : mList1) { if (mezu.getType() == type)
-		 * { mList.add(mezu); } } return mList;
-		 */
-		return null;
-	}
 
-	public void baloratu(int balorazioa, Profile nori, RideRequest r) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); db.getTransaction().begin();
-		 * Profile p = db.find(Profile.class, nori.getUser()); RideRequest request =
-		 * db.find(RideRequest.class, r.getId());
-		 * 
-		 * if (p instanceof Driver) { request.setBaloratuaDriver(true);
-		 * 
-		 * } else { request.setBaloratuaTraveller(true); }
-		 * 
-		 * p.addBalorazioa(balorazioa);
-		 * 
-		 * db.getTransaction().commit();
-		 */
+		EntityManager db = JPAUtil.getEntityManager();
+		List<Mezua> mList = new LinkedList<Mezua>();
+
+		try {
+			db.getTransaction().begin();
+			Profile profile = db.find(Profile.class, p.getUser());
+			List<Mezua> mList1 = profile.getMezuList();
+
+			for (Mezua mezu : mList1) {
+				if (mezu.getType() == type) {
+					mList.add(mezu);
+				}
+			}
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return mList;
 
 	}
 
-	public float getBalorazioMedia(Driver d) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); Driver driver =
-		 * db.find(Driver.class, d.getUser()); return driver.kalkulatuBalorazioMedia();
-		 */
-		return 0;
+	public void baloratu(int balorazioa, Profile nori, RideRequest r, String mezua, Profile nork) {
+
+		EntityManager db = JPAUtil.getEntityManager();
+		try {
+			db.getTransaction().begin();
+			Profile p = db.find(Profile.class, nori.getUser());
+			RideRequest request = db.find(RideRequest.class, r.getId());
+
+			if (p instanceof Driver) {
+				request.setBaloratuaDriver(true);
+
+			} else {
+				request.setBaloratuaTraveller(true);
+			}
+
+			p.addBalorazioa(nork, mezua, balorazioa, request.getRide());
+
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			db.getTransaction().rollback();
+		} finally {
+			db.close();
+		}
+
 	}
 
-	public void sortuAlerta(Traveller t, String from, String to, Date when) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); db.getTransaction().begin();
-		 * Traveller traveller = db.find(Traveller.class, t.getUser());
-		 * traveller.addAlerta(from, to, when); db.getTransaction().commit();
-		 */
+	public float getBalorazioMedia(Profile d) {
+
+		EntityManager db = JPAUtil.getEntityManager();
+		float emaitza = 0;
+		try {
+			db.getTransaction().begin();
+			Profile driver = db.find(Profile.class, d.getUser());
+			emaitza = driver.kalkulatuBalorazioMedia();
+			db.getTransaction().commit();
+
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+		} finally {
+			db.close();
+		}
+		return emaitza;
+	}
+
+	public boolean sortuAlerta(Traveller t, String from, String to, Date when) {
+
+		EntityManager db = JPAUtil.getEntityManager();
+		Alerta alerta = new Alerta(t, from, to, when);
+		boolean emaitza = false;
+		try {
+			db.getTransaction().begin();
+			Traveller traveller = db.find(Traveller.class, t.getUser());
+			Alerta alertaLagun = this.existsAlerta(traveller, from, to, when, db);
+			if (alertaLagun != null) {
+				System.out.println("Existitzen da alerta hau");
+				db.getTransaction().rollback();
+			} else {
+				traveller.addAlerta(from, to, when);
+				db.getTransaction().commit();
+				emaitza = true;
+			}
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+		return emaitza;
+
 	}
 
 	public Alerta getAlerta(Traveller traveller, String from, String to, Date when) {
 		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); TypedQuery<Alerta> query = db.
-		 * createQuery("SELECT a FROM Alerta a WHERE  a.from=?2 AND a.to=?3 AND a.when=?4 AND a.traveller=?5 AND a.ezabatuta=?6"
+		 * EntityManager db = JPAUtil.getEntityManager(); List<Alerta> alertak = new
+		 * ArrayList<Alerta>(); db.getTransaction().begin();
+		 * 
+		 * TypedQuery<Alerta> query = db.createQuery(
+		 * "SELECT a FROM Alerta a WHERE  a.from=?2 AND a.to=?3 AND a.when=?4 AND a.traveller=?5 AND a.ezabatuta=?6"
 		 * , Alerta.class); query.setParameter(2, from); query.setParameter(3, to);
 		 * query.setParameter(4, when); query.setParameter(5, traveller);
 		 * query.setParameter(6, false);
 		 * 
-		 * List<Alerta> alertak = query.getResultList(); if (alertak.size() == 0) {
-		 * return null; } else { return alertak.get(0); }
-		 */
-		return null;
+		 * alertak = query.getResultList(); if (alertak.size() == 0) { return null; }
+		 * else { return alertak.get(0); }
+		 */return null;
+	}
+
+	private Alerta existsAlerta(Traveller traveller, String from, String to, Date when, EntityManager db) {
+
+		List<Alerta> alertak = new ArrayList<Alerta>();
+
+		TypedQuery<Alerta> query = db.createQuery(
+				"SELECT a FROM Alerta a WHERE  a.from=?2 AND a.to=?3 AND a.when=?4 AND a.traveller=?5 AND a.ezabatuta=?6",
+				Alerta.class);
+		query.setParameter(2, from);
+		query.setParameter(3, to);
+		query.setParameter(4, when);
+		query.setParameter(5, traveller);
+		query.setParameter(6, false);
+
+		alertak = query.getResultList();
+		if (alertak.size() == 0) {
+			return null;
+		} else {
+			return alertak.get(0);
+		}
 
 	}
 
@@ -819,14 +989,26 @@ public class HibernateDataAccess {
 	}
 
 	public List<Mezua> getAlerta(Traveller traveller, boolean irakurrita) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); TypedQuery<Mezua> query = db
-		 * .createQuery("SELECT m FROM Mezua m WHERE  m.type=?2 AND m.irakurrita=?3 AND m.p=?4"
-		 * , Mezua.class); query.setParameter(2, 2); query.setParameter(3, irakurrita);
-		 * query.setParameter(4, traveller); List<Mezua> alertaMezuak =
-		 * query.getResultList();
-		 */
-		return null;
+
+		EntityManager db = JPAUtil.getEntityManager();
+		List<Mezua> alertaMezuak = new ArrayList<Mezua>();
+		try {
+			db.getTransaction().begin();
+			TypedQuery<Mezua> query = db
+					.createQuery("SELECT m FROM Mezua m WHERE  m.type=?2 AND m.irakurrita=?3 AND m.p=?4", Mezua.class);
+			query.setParameter(2, 2);
+			query.setParameter(3, irakurrita);
+			query.setParameter(4, traveller);
+			alertaMezuak = query.getResultList();
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+
+		} finally {
+			db.close();
+		}
+		return alertaMezuak;
 	}
 
 	public List<Mezua> ikusitakoAlerta(Traveller traveller) {
@@ -838,34 +1020,77 @@ public class HibernateDataAccess {
 	}
 
 	public List<Alerta> kargatuTravellerAlertak(Traveller traveller) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); TypedQuery<Alerta> query = db.
-		 * createQuery("SELECT a FROM Alerta a WHERE  a.traveller=?2 AND a.ezabatuta=?3"
-		 * , Alerta.class); query.setParameter(2, traveller); query.setParameter(3,
-		 * false);
-		 * 
-		 * List<Alerta> alertak = query.getResultList(); return alertak;
-		 */
-		return null;
+
+		EntityManager db = JPAUtil.getEntityManager();
+		List<Alerta> alertak = new ArrayList<Alerta>();
+		try {
+			db.getTransaction().begin();
+			TypedQuery<Alerta> query = db.createQuery("SELECT a FROM Alerta a WHERE  a.traveller=?2 AND a.ezabatuta=?3",
+					Alerta.class);
+			query.setParameter(2, traveller);
+			query.setParameter(3, false);
+
+			alertak = query.getResultList();
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+
+		} finally {
+			db.close();
+		}
+		return alertak;
+
 	}
 
 	public void deuseztatuAlerta(Alerta alerta) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); db.getTransaction().begin();
-		 * Alerta a = db.find(Alerta.class, alerta.getId()); a.setEzabatuta(true);
-		 * db.getTransaction().commit();
-		 */
+
+		EntityManager db = JPAUtil.getEntityManager();
+		try {
+			db.getTransaction().begin();
+			Alerta a = db.find(Alerta.class, alerta.getId());
+			a.setEzabatuta(true);
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+
 	}
 
 	public boolean isBaloratua(RideRequest request, boolean gidari) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); RideRequest r =
-		 * db.find(RideRequest.class, request.getId()); if (gidari) { return
-		 * r.isBaloratuaTraveller(); } else { return r.isBaloratuaDriver();
-		 * 
-		 * }
-		 */
-		return false;
+		EntityManager db = JPAUtil.getEntityManager();
+		boolean emaitza = false;
+		try {
+			db.getTransaction().begin();
+			Profile nork;
+			Profile nori;
+			if (gidari) {
+				nori = db.find(Profile.class, request.getRide().getDriver().getUser());
+				nork = db.find(Profile.class, request.getTraveller().getUser());
+			} else {
+				nori = db.find(Profile.class, request.getTraveller().getUser());
+				nork = db.find(Profile.class, request.getRide().getDriver().getUser());
+			}
+			nori.getBalorazioLista().size();
+			List<Balorazioa> balorazioak = nori.getBalorazioak();
+			for (Balorazioa bal : balorazioak) {
+				if (bal.getNork().equals(nork) && bal.getBidaia().equals(request.getRide())) {
+					emaitza = true;
+					break;
+				}
+			}
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+
+		return emaitza;
 	}
 
 	public boolean isErreklamatua(RideRequest request, boolean gidari) {
@@ -908,75 +1133,116 @@ public class HibernateDataAccess {
 	}
 
 	// aldatu
-	private void konprobatuAlertak(Ride ride1) {
-		EntityManager db = JPAUtil.getEntityManager();
+	private void konprobatuAlertak(Ride ride, EntityManager db) {
+
 		System.out.println("Alertak konprobatzen...");
 
+		TypedQuery<Alerta> query = db.createQuery("SELECT a FROM Alerta a WHERE  a.when=?4", Alerta.class);
+		query.setParameter(4, ride.getDate());
+
+		List<Alerta> alertak = query.getResultList();
+		System.out.println("lortutako alertak" + alertak);
+
+		for (Alerta alerta : alertak) {
+			if (ride.badaBideSeatekin(alerta.getFrom(), alerta.getTo()) && !alerta.isEzabatuta()) {
+				alerta.getTraveller().toString();
+				Traveller traveller = db.find(Traveller.class, alerta.getTraveller().getUser());
+				System.out.println(traveller + "Alerta sortua");
+				traveller.addAlertaMezu(ride, alerta);
+			}
+		}
+
+	}
+
+	public List<Mezua> getAlertaMezuak(Alerta alerta) {
+		List<Mezua> mezuak = new ArrayList<Mezua>();
+		EntityManager db = JPAUtil.getEntityManager();
 		try {
 			db.getTransaction().begin();
-			Ride ride = db.find(Ride.class, ride1.getRideNumber());
-			TypedQuery<Alerta> query = db.createQuery("SELECT a FROM Alerta a WHERE  a.when=?4", Alerta.class);
-			query.setParameter(4, ride.getDate());
-
-			List<Alerta> alertak = query.getResultList();
-
-			for (Alerta alerta : alertak) {
-				if (ride.badaBideSeatekin(alerta.getFrom(), alerta.getTo()) && !alerta.isEzabatuta()) {
-					alerta.getTraveller().toString();
-					Traveller traveller = db.find(Traveller.class, alerta.getTraveller().getUser());
-					traveller.addAlertaMezu(ride, alerta);
-				}
-			}
+			TypedQuery<Mezua> query = db.createQuery("SELECT a FROM Mezua a WHERE  a.alerta=?4", Mezua.class);
+			query.setParameter(4, alerta);
+			mezuak = query.getResultList();
 			db.getTransaction().commit();
 		} catch (Exception e) {
-			System.out.println("Exception alerta");
+			db.getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
 			db.close();
 		}
+
+		return mezuak;
 	}
 
 	private void konprobatuBidaienEgunak() {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); TypedQuery<Ride> query =
-		 * db.createQuery("SELECT r FROM Ride r", Ride.class); List<Ride> rideP =
-		 * query.getResultList(); db.getTransaction().begin(); Date gaur = new Date();
-		 * for (Ride ride : rideP) { konprobatuBidaia(gaur, ride); }
-		 * db.getTransaction().commit();
-		 */
+		EntityManager db = JPAUtil.getEntityManager();
+		try {
+
+			TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r", Ride.class);
+			List<Ride> rideP = query.getResultList();
+			db.getTransaction().begin();
+			Date gaur = new Date();
+			for (Ride ride : rideP) {
+				konprobatuBidaia(gaur, ride, db);
+			}
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			db.getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			db.close();
+		}
+
 	}
 
-	private void konprobatuBidaia(Date gaur, Ride ride) {
-		/*
-		 * if ((ride.getEgoera().equals(EgoeraRide.MARTXAN) ||
-		 * ride.getEgoera().equals(EgoeraRide.TOKIRIK_GABE)) &&
-		 * ride.getDate().before(new Date())) { bidaiaItxi(ride); } else if
-		 * ((gaur.getTime() - ride.getDate().getTime()) / (1000 * 60 * 60 * 24) > 3) {
-		 * bidaiEskaerakProzesatu(ride); }
-		 */
+	private void konprobatuBidaia(Date gaur, Ride ride, EntityManager db) {
+
+		if ((ride.getEgoera().equals(EgoeraRide.MARTXAN) || ride.getEgoera().equals(EgoeraRide.TOKIRIK_GABE))
+				&& ride.getDate().before(new Date())) {
+			bidaiaItxi(ride, db);
+		} else if ((gaur.getTime() - ride.getDate().getTime()) / (1000 * 60 * 60 * 24) > 3) {
+			bidaiEskaerakProzesatu(ride);
+		}
+
 	}
 
-	private void bidaiaItxi(Ride ride) {
-		/*
-		 * EntityManager db = JPAUtil.getEntityManager(); Ride ri = db.find(Ride.class,
-		 * ride.getRideNumber()); ri.setEgoera(EgoeraRide.PASATUA);
-		 */
+	private void bidaiaItxi(Ride ride, EntityManager db) {
+
+		Ride ri = db.find(Ride.class, ride.getRideNumber());
+		ri.setEgoera(EgoeraRide.PASATUA);
+
 	}
 
 	private void bidaiEskaerakProzesatu(Ride ride) {
-		/*
-		 * if (ride.getEgoera().equals(EgoeraRide.PASATUA)) { for (RideRequest rr :
-		 * ride.getEskakizunak()) { pasatutakoBidaiEskaerakProzesatu(rr); } }
-		 */
+
+		if (ride.getEgoera().equals(EgoeraRide.PASATUA)) {
+			for (RideRequest rr : ride.getEskakizunak()) {
+				pasatutakoBidaiEskaerakProzesatu(rr);
+			}
+		}
+
 	}
 
 	private void pasatutakoBidaiEskaerakProzesatu(RideRequest rr) {
-		/*
-		 * if(rr.getState().equals(EgoeraRideRequest.ACCEPTED)) {
-		 * rr.setState(EgoeraRideRequest.DONE); } rr.setBaloratuaDriver(true);
-		 * rr.setBaloratuaTraveller(true); rr.setErreklamatuaDriver(true);
-		 * rr.setErreklamatuaTraveller(true);
-		 */
+
+		if (rr.getState().equals(EgoeraRideRequest.ACCEPTED)) {
+			rr.setState(EgoeraRideRequest.DONE);
+			Ride ride = rr.getRide();
+			Driver driver = ride.getDriver();
+			driver.gehituDirua(rr.getPrezioa());
+			driver.gehituMezuaTransaction(7, rr.getPrezioa(), rr);
+		}
+		if (rr.getState().equals(EgoeraRideRequest.TRATATU_GABE)) {
+			Traveller t = rr.getTraveller();
+			t.gehituDirua(rr.getPrezioa());
+			rr.setWhenDecided(new Date());
+			rr.setState(EgoeraRideRequest.REJECTED);
+			t.gehituMezuaTransaction(1, rr.getPrezioa(), rr);
+		}
+		rr.setBaloratuaDriver(true);
+		rr.setBaloratuaTraveller(true);
+		rr.setErreklamatuaDriver(true);
+		rr.setErreklamatuaTraveller(true);
+
 	}
 
 	private void erreklamazioaOnartu(Profile nork, Profile nori, Profile admin, float kantitatea, Erreklamazioa e) {
@@ -1015,6 +1281,67 @@ public class HibernateDataAccess {
 		t.gehituDirua(r.getPrezioa());
 		r.setState(EgoeraRideRequest.REJECTED);
 		t.gehituMezuaTransaction(1, r.getPrezioa(), r);
+
+	}
+
+	public List<Ride> getRides(String from) {
+		// System.out.println(">> DataAccess: getRides=> from= " + from + " to= " + to +
+		// " date " + date);
+		EntityManager db = JPAUtil.getEntityManager();
+		this.konprobatuBidaienEgunak();
+		List<Ride> rides = new ArrayList<>();
+		try {
+			db.getTransaction().begin();
+			TypedQuery<Ride> query = db.createQuery("SELECT r FROM Ride r WHERE r.from=?3 ", Ride.class);
+
+			query.setParameter(3, from);
+
+			rides = query.getResultList();
+			
+
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			db.getTransaction().rollback();
+
+		} finally {
+			db.close();
+		}
+		return rides;
+	}
+
+	public Profile getProfileByUser(String user) {
+		EntityManager db = JPAUtil.getEntityManager();
+		Profile emaitza = null;
+		try {
+			db.getTransaction().begin();
+			emaitza = db.find(Profile.class, user);
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			db.getTransaction().rollback();
+
+		} finally {
+			db.close();
+		}
+		return emaitza;
+
+	}
+	public Kotxe getKotxeByMatrikula(String matrikula) {
+		EntityManager db = JPAUtil.getEntityManager();
+		Kotxe emaitza = null;
+		try {
+			db.getTransaction().begin();
+			emaitza = db.find(Kotxe.class, matrikula);
+			db.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			db.getTransaction().rollback();
+
+		} finally {
+			db.close();
+		}
+		return emaitza;
 
 	}
 

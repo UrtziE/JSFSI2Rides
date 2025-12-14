@@ -3,6 +3,7 @@ package eredua.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,8 @@ public class ErreserbatuBean implements Serializable {
 	private String ibilbidea;
 	private int aukeratutakoSeats=1;
 	private float prezioTotala=0;
+	private float wallet=0;
+	private List<Ride> ridesCache;
 
 	public ErreserbatuBean() {
 		
@@ -57,21 +60,30 @@ public class ErreserbatuBean implements Serializable {
 	 @PostConstruct
 	    public void init() {
 	        this.user = loginBean.getOraingoUser();
+	        blfacade=FacadeBean.getBusinessLogic();
+	        setWallet(blfacade.getMoney(user));
 	    }
+	 
+	 private void kargatuRides() {
+		    if (from != null && to != null && data != null) {
+		        this.ridesCache = blfacade.getRides(from, to, data);
+		        
+		        for(Ride ride: this.ridesCache) {
+		            ride.getDriver().setRating(blfacade.getBalorazioMedia(ride.getDriver()));
+		            ride.setPrice(ride.lortuBidaiarenPrezioa(from, to));
+		            ride.setUnekoIbilbide(ride.getIbilbidea(from,to));
+		            ride.setnPlaces(ride.lortuEserlekuKopMin(from, to));
+		        }
+		    } else {
+		        this.ridesCache = new ArrayList<>();
+		    }
+		}
 
 	public List<Ride> getRides() {
-		if (from == null || to == null || data == null) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Eremu bat hutsa dago"));
-			return null;
-		} else {
-			rides = blfacade.getRides(from, to, data);
-			for(Ride ride: rides) {
-				ride.setPrice(ride.lortuBidaiarenPrezioa(from, to));
-				ride.setUnekoIbilbide(ride.getIbilbidea(from,to));
-			}
+		
 			
-			return rides;
-		}
+			return this.ridesCache;
+		
 	}
 
 	public List<String> getFromCities() {
@@ -125,7 +137,7 @@ public class ErreserbatuBean implements Serializable {
 	}
 
 	public void onDateSelect(SelectEvent event) {
-		this.getRides();
+		kargatuRides();
 		setRideRequestGood("");
 		setRideRequestBad("");
 		aukeratutakoBidaia=null;
@@ -133,7 +145,7 @@ public class ErreserbatuBean implements Serializable {
 	}
 
 	public void fromListener(AjaxBehaviorEvent event) {
-		this.getRides();
+		kargatuRides();
 		aurkituDatakBidaiekin();
 		setRideRequestGood("");
 		setRideRequestBad("");
@@ -142,7 +154,7 @@ public class ErreserbatuBean implements Serializable {
 	}
 
 	public void toListener(AjaxBehaviorEvent event) {
-		this.getRides();
+		kargatuRides();
 		aurkituDatakBidaiekin();
 		setRideRequestGood("");
 		setRideRequestBad("");
@@ -197,6 +209,7 @@ public class ErreserbatuBean implements Serializable {
 	}
 	public void aukeratuBidaia(Ride ride) {
 	    this.setAukeratutakoBidaia(ride); 
+	    System.out.println("aukeratutako bidaia:"+ride);
 	    asientoak.clear();
 	    for(int i=1;i<=ride.lortuEserlekuKopMin(from, to);i++) {
 	    	asientoak.add(i);
@@ -204,6 +217,7 @@ public class ErreserbatuBean implements Serializable {
 	    aukeratutakoSeats=1;
 	   
 	    ibilbidea=ride.getIbilbidea(from,to);
+	    System.out.println(ibilbidea+"ibilbidea");
 
 	}
 	public Ride getAukeratutakoBidaia() {
@@ -242,9 +256,9 @@ public class ErreserbatuBean implements Serializable {
 	public void erreserbatu() {
 		System.out.println("Erreserbatu");
 		blfacade=FacadeBean.getBusinessLogic();
-		if(prezioTotala>user.getWallet()) {
+		if(prezioTotala>blfacade.getMoney(user)) {
 			setRideRequestGood("");
-			setRideRequestBad("Ez duzu diru nahikorik erreserba egiteko!!! Zure saldoa:"+user.getWallet()+"€");
+			setRideRequestBad("Ez duzu diru nahikorik erreserba egiteko!!! Zure saldoa:"+blfacade.getMoney(user)+"€");
 		}else {
 		RideRequest rideRequest=new RideRequest(new Date(),aukeratutakoBidaia,(Traveller)user,aukeratutakoSeats,from,to);
 		RideRequest r=blfacade.erreserbatu(rideRequest);
@@ -259,7 +273,7 @@ public class ErreserbatuBean implements Serializable {
 			System.out.println("Gaizki erreserba");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage());
 			setRideRequestGood("");
-			setRideRequestBad("Errore bat egon da erreserba sortzean...");
+			setRideRequestBad("Errore bat egon da erreserba sortzean... Freskatu orrialdea");
 		}
 	
 	}
@@ -281,6 +295,12 @@ public class ErreserbatuBean implements Serializable {
 	}
 	public void setUser(Profile user) {
 		this.user = user;
+	}
+	public float getWallet() {
+		return wallet;
+	}
+	public void setWallet(float wallet) {
+		this.wallet = wallet;
 	}
 
 }

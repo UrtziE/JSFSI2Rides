@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<f:view>
+		<h:head>
+			<title>QUERY RIDES</title>
+			<h:outputStylesheet library="css" name="proba-style.css" />
+		</h:head>
+
+		<h:body>
+			<h:form id="proba" styleClass="form-container">
+
+				<p:dataTable id="bidaiaTaula" var="ride" value="#{proba.rides}"
+					emptyMessage="Ez dago bidairik." styleClass="rides-table"
+					scrollable="true" scrollHeight="600">
+
+					<p:column headerText="DEPART CITY">
+						<h:outputText value="#{ride.from}" />
+					</p:column>
+					<p:column headerText="DRIVER EMAIL">
+						<h:outputText value="#{ride.driver.email}" />
+					</p:column>
+
+					<p:column headerText="RIDE DATE" style="width:100px;">
+						<h:outputText value="#{ride.date}" />
+					</p:column>
+
+					<p:column headerText="PRICE" style="width:80px; text-align: right;">
+						<h:outputText value="#{ride.price}€" />
+					</p:column>
+
+				</p:dataTable>
+				<p>
+					<h:commandButton value="Menu" action="menu" immediate="true"
+						styleClass="back-btn" />
+					<h:commandButton value="Atzera" action="proba" immediate="true"
+						styleClass="back-btn" />
+				</p>
+
+			</h:form>
+
+
+		</h:body>
+	</f:view>
+</ui:composition>
+</html>

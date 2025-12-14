@@ -272,20 +272,20 @@ public class BLFacadeImplementation implements BLFacade {
 	}
 
 	
-	public void baloratu(int balorazioa, Profile nori, RideRequest r) {
-		dbManager.baloratu(balorazioa, nori, r);
+	public void baloratu(int balorazioa, Profile nori, RideRequest r,String mezua,Profile nork) {
+		dbManager.baloratu(balorazioa, nori, r, mezua,nork);
 	}
 
 	
-	public float getBalorazioMedia(Driver driver) {
+	public float getBalorazioMedia(Profile driver) {
 		float media = dbManager.getBalorazioMedia(driver);
 		return media;
 
 	}
 
 	
-	public void sortuAlerta(Traveller t, String from, String to, Date when) {
-		dbManager.sortuAlerta(t, from, to, when);
+	public boolean sortuAlerta(Traveller t, String from, String to, Date when) {
+		return dbManager.sortuAlerta(t, from, to, when);
 	}
 
 	
@@ -394,5 +394,25 @@ public class BLFacadeImplementation implements BLFacade {
 		/*Driver d = dbManager.getDriver(izena);*/
 		return null;
 	}
-	
+	public List<Mezua> getAlertaMezuak(Alerta alerta){
+		return dbManager.getAlertaMezuak(alerta);
+	}
+	public List<Ride> getRides(String from) {
+		List<Ride> rides = dbManager.getRides(from);
+		return rides;
+	}
+	public List<String> getDepartCitiesProba() {
+
+		List<String> departLocations = dbManager.getDepartCitiesProba();
+
+
+		return departLocations;
+
+	}
+	public Profile getProfileByUser(String user) {
+	return dbManager.getProfileByUser(user);
+	}
+	public Kotxe getKotxeByMatrikula(String matrikula) {
+	return dbManager.getKotxeByMatrikula(matrikula);
+}
 }

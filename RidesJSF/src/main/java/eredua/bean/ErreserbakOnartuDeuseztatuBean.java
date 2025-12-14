@@ -119,6 +119,7 @@ public class ErreserbakOnartuDeuseztatuBean implements Serializable {
 			blfacade=FacadeBean.getBusinessLogic();
 			List<RideRequest> requests=blfacade.getRidesRequestsOfRide(aukeratutakoBidaia);
 			for(RideRequest rq:requests) {
+				rq.getTraveller().setRating(blfacade.getBalorazioMedia(rq.getTraveller()));
 				System.out.print(rq+"rideRequest");
 				if(rq.getState().equals(EgoeraRideRequest.TRATATU_GABE)) {
 					System.out.println("Tratatu gabe");
@@ -128,6 +129,7 @@ public class ErreserbakOnartuDeuseztatuBean implements Serializable {
 				}
 			}
 		}
+		Collections.sort(rideRequests,Collections.reverseOrder());
 		return rideRequests;
 	}
 	public void setRideRequests(List<RideRequest> rideRequests) {

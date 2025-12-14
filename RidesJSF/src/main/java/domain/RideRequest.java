@@ -38,6 +38,8 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	private boolean bidaiaEsandaZer=false;
 	private float prezio;
 	
+	private String unekoState;
+	
 	private String ibilbidea;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Traveller traveller;
@@ -108,7 +110,7 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 							if(GureaRatingKop<BesteaRatingKop) {
 								return -1;
 							}else {
-								return 0;
+								return this.whenRequested.compareTo(request.getWhenRequested());
 							}
 						}
 						}
@@ -149,6 +151,9 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 
 	public Ride getRide() {
 		return ride;
+	}
+	public int getRequestId() {
+		return requestId;
 	}
 	
 	public boolean isBaloratuaDriver() {
@@ -204,7 +209,7 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	}
 	public String mezua()
 	{
-		return(" "+seats);
+		return("erreserba id:"+requestId+" eserlekuak:"+seats+ " noiz eskatuta:" +whenRequested+" eskatutako ibilbidea:"+ this.getRide().getIbilbidea(fromRequested, toRequested));
 				//Aldatu
 	}
 	
@@ -216,6 +221,12 @@ public class RideRequest implements Serializable,Comparable<RideRequest>{
 	}
 	public void setPrezio(float prezio) {
 		this.prezio = prezio;
+	}
+	public String getUnekoState() {
+		return unekoState;
+	}
+	public void setUnekoState(String unekoState) {
+		this.unekoState = unekoState;
 	}
 	
 }

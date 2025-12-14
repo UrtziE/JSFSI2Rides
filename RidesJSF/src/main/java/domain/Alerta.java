@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +20,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 
-public class Alerta {
+public class Alerta implements Serializable,Comparable<Alerta>{
 	@Id 
 	
 	
@@ -37,6 +38,7 @@ public class Alerta {
 
 	private Date when;
 	private boolean ezabatuta;
+	private int mezuKopuruaLaguntzaile;
 	private static final String ETIQUETAS = "Etiquetas";
 	public Alerta() {}
 	
@@ -63,12 +65,15 @@ public class Alerta {
 	
 	
 	public String toString() {
-		return("Nondik"+
-				" "+from+" "+"Nora"+
-				" "+ to + " "+"noiz"+ when);
+		return("Alerta id: "+id+" Nondik:"+
+				" "+from+" "+"Nora:"+
+				" "+ to + " "+"noiz:"+ when);
 	}
 	
+	public int compareTo(Alerta alerta) {
+		return this.getMezuKopuruaLaguntzaile()-alerta.getMezuKopuruaLaguntzaile();
 	
+	}
 	
 	/*public boolean berdinaDa(Ride ride) {
 		if(ride.badaBide(from, to)&&ride.getDate().equals(when)) {
@@ -77,6 +82,22 @@ public class Alerta {
 			return false;
 		}
 	}*/
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Alerta other = (Alerta) obj;
+		if (this.getFrom()!=other.getFrom()
+				||this.getTo()!=other.getTo()
+				||(this.getWhen().compareTo(other.getWhen())!=0)
+				||(this.isEzabatuta()!=other.isEzabatuta()))
+			return false;
+			
+		return true;
+	}
 	public Traveller getTraveller() {
 		return traveller;
 	}
@@ -85,5 +106,13 @@ public class Alerta {
 	}
 	public String getTo() {
 		return to;
+	}
+
+	public int getMezuKopuruaLaguntzaile() {
+		return mezuKopuruaLaguntzaile;
+	}
+
+	public void setMezuKopuruaLaguntzaile(int mezuKopuruaLaguntzaile) {
+		this.mezuKopuruaLaguntzaile = mezuKopuruaLaguntzaile;
 	}
 }

@@ -18,6 +18,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
 		<class>domain.Ride</class>
 		<class>domain.Traveller</class>
 		<class>domain.Driver</class>
+		<class>domain.Balorazioa</class>
 		
 		<properties>
 			<property name="hibernate.show_sql" value="true" />

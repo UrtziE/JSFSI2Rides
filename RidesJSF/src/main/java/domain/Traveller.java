@@ -119,4 +119,12 @@ public class Traveller extends Profile implements Serializable
 	}
 	
 	}
+
+	public List<Alerta> getAlertaList() {
+		return alertaList;
+	}
+
+	public void setAlertaList(List<Alerta> alertaList) {
+		this.alertaList = alertaList;
+	}
 	}

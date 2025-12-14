@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Baloratu Bidaia</title>
+	
+	<h:outputStylesheet library="css" name="baloratu-style.css" />
+</h:head>
+
+<h:body styleClass="page-body">
+	<h:form id="baloratuForm" styleClass="form-container">
+		
+		<h3 class="title">Baloratu Esperientzia</h3>
+
+		<div class="rating-box" style="text-align: center; padding: 20px;">
+			
+			<p:outputLabel for="izarrak" value="Puntuazioa:" styleClass="label" style="display:block; margin-bottom:15px; text-align:center; width:100%;" />
+			<p:rating id="izarrak" value="#{ikusiErreserbak.balorazioa}" required="true" 
+					  requiredMessage="Mesedez, hautatu izar kopuru bat"
+					  stars="5" cancel="false" />
+			<h:message for="izarrak" styleClass="error-message" />
+
+			<br /><br />
+
+			<p:outputLabel for="iruzkina" value="Zure iritzia (hautazkoa):" styleClass="label" style="display:block; margin-bottom:10px; text-align:center; width:100%;" />
+			<h:inputTextarea id="iruzkina" value="#{ikusiErreserbak.textua}" 
+							 rows="4" styleClass="input-field" 
+							 style="width: 100%; border-radius: 15px; padding: 15px; height: auto;" />
+		</div>
+
+		<div class="button-row">
+			<h:commandButton value="Gorde Balorazioa" 
+							 action="#{ikusiErreserbak.gordeBalorazioa}" 
+							 styleClass="btn btn-primary" />
+			
+			<h:commandButton value="Atzera" 
+							 action="ikusiErreserbak" 
+							 immediate="true" 
+							 styleClass="btn btn-secondary" />
+		</div>
+
+		
+
+	</h:form>
+</h:body>
+</html>
